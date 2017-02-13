@@ -1,0 +1,58 @@
+﻿{   "succ":true,
+    "total": 50,
+    "pageSize": 5,
+    "pageCount": 2,
+    "currentPage": 1,
+    "records": [
+        {
+			"agentAreaCity":"2015-04-14<br/>12:02:33",
+			"agentAreaCityName":"13213546546647",
+			"truename":"A3264164",
+			"agentAreaCounty":"E保中凑讲台工具综合保险A计划",
+			"agentId":"50.00",
+			"orderAccount":"已支付",
+			"orderId":"微信"
+			
+        },
+		{
+			"agentAreaCity":"2015-04-14<br/> 12:02:33",
+			"agentAreaCityName":"13213546546647",
+			"truename":"A3264164",
+			"agentAreaCounty":"E保中凑讲台工具综合保险A计划",
+			"agentId":"50.00",
+			"orderAccount":"已支付",
+			"orderId":"微信"
+			
+        },
+		{
+			"agentAreaCity":"2015-04-14 <br/>12:02:33",
+			"agentAreaCityName":"13213546546647",
+			"truename":"A3264164",
+			"agentAreaCounty":"E保中凑讲台工具综合保险A计划",
+			"agentId":"50.00",
+			"orderAccount":"已支付",
+			"orderId":"微信"
+			
+        },
+		{
+			"agentAreaCity":"2015-04-14 <br/>12:02:33",
+			"agentAreaCityName":"13213546546647",
+			"truename":"A3264164",
+			"agentAreaCounty":"E保中凑讲台工具综合保险A计划",
+			"agentId":"50.00",
+			"orderAccount":"已支付",
+			"orderId":"微信"
+			
+        },
+		{
+			"agentAreaCity":"2015-04-14 <br/>12:02:33",
+			"agentAreaCityName":"13213546546647",
+			"truename":"A3264164",
+			"agentAreaCounty":"E保中凑讲台工具综合保险A计划",
+			"agentId":"50.00",
+			"orderAccount":"已支付",
+			"orderId":"微信"
+			
+        }
+    ]
+}

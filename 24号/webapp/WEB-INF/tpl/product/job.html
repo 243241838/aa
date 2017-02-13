@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>职业分类-产品参数管理-产品管理</title>
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/base.css">
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/style.css">
+</head>
+
+<body style="">
+	<div class="ui-info-box">
+    <div class="ui-crumbs" id="crumbs">
+    	 <#include "/common/include/power.ftl">
+    </div>
+
+		<div class="ui-datagrid-wrap">
+			<!-- 搜索 -->
+			<div class="search-wrap">
+				<form  id="search-ff" class="ui-search-form">
+					<ul class="search-list fn-clear">
+						<li>
+							<label class="name">关键字</label>
+							<span class="textbox"><input class="textbox-text textbox-prompt" type="text" name="codeName" maxlength=20 /></span>
+						</li>
+						<li>
+							<label class="name  ui-profess-label">最高职业类别</label>
+			           		<select class="ui-info-sel ui-info-selheight" name="codesValue">
+			           			<option value="">不限</option>
+								<option value="1">1</option>
+			         			<option value="2">2</option>
+			         			<option value="3">3</option>
+			         			<option value="4">4</option>
+			         			<option value="5">5</option>
+			         			<option value="6">6</option>
+			         			<option value="7">特别费率</option>
+			           		</select>
+						</li>
+					  <li class="btn-group">
+							  <a href="javascript:void(0)" class="search-btn" onclick="submitForm()">搜索</a>
+				    		<a href="javascript:void(0)" class="search-btn" onclick="clearForm()">重置</a>
+						</li>
+					</ul>
+				</form>
+			</div>
+			<!-- 搜索end -->
+			<!-- 列表 -->
+			<div class="list-item list-noadd fn-clear">
+				<table id="dg-list" class="ebao-datagrid"  style="margin-right:10px;">	
+				</table>
+			</div>
+			<!-- 列表end -->
+		</div>
+	</div>
+	<script type="text/javascript" src="../../../resource/js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../resource/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../resource/js/base.js"></script>
+	<script>
+	$(function(){
+		validExtend();
+		//列表
+		$("#dg-list").datagrid({
+			url:'datagrid_data1.json',
+			method:'post',
+			fitColumns:true,
+			rownumbers:true,
+			nowrap: true,//当数据长度超出列宽时将会自动截取
+			resizable:false,
+			checkOnSelect:false,
+			pagination:true,
+			pageSize:10,
+			columns:[[
+				{field:'codeId',align:'center',width:"12%",title:'一级ID'},
+				{field:'codeName',align:'center',width:"13%",title:'一级分类名称'},
+				{field:'codeId1',align:'center',width:"13%",title:'二级ID'},
+				{field:'codeName1',align:'center',width:"15%",title:'二级分类名称'},
+				{field:'codeId2',align:'center',width:"15%",title:'三级ID'},
+				{field:'codeName2',align:'center',width:"15%",title:'三级分类名称'},
+				{field:'codesValue2',align:'center',width:"15%",title:'职业类别',
+					formatter:function(value,rec){
+							var str = "";
+							if(rec.codesValue2 == 7){
+								str = "特别费率";
+							}else {
+								str = rec.codesValue2;
+							}
+							return str;
+					}
+				}
+			]],
+			queryParams: eb.form2Json("search-ff"),
+	    	loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+	      },
+	      onLoadSuccess:pageCls
+		});
+		//分页
+		pageAction();
+		
+   });
+	
+	
+	</script>
+</body>
+</html>

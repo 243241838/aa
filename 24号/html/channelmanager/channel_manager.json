@@ -1,0 +1,78 @@
+﻿{   "succ":true,
+    "total": 50,
+    "pageSize": 5,
+    "pageCount": 2,
+    "currentPage": 1,
+     "titleDetail":{"alluser":400000000,"newuser":3720000,"countuser":113300},
+    "records": [
+        {
+			"agentAreaCity":"12366",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"10.00-200.00",
+			"agentAreaCounty":"E保APP 京东商城 美团网 淘宝",
+			"agentId":"2015-11-12",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },
+		{
+			"agentAreaCity":"12366",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"10.00-200.00",
+			"agentAreaCounty":"E保APP 京东商城 美团网 淘宝",
+			"agentId":"2015-11-12",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"12366",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"10.00-200.00",
+			"agentAreaCounty":"E保APP 京东商城 美团网 淘宝",
+			"agentId":"2015-11-12",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"12366",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"10.00-200.00",
+			"agentAreaCounty":"E保APP 京东商城 美团网 淘宝",
+			"agentId":"2015-11-12",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"12366",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"10.00-200.00",
+			"agentAreaCounty":"E保APP 京东商城 美团网 淘宝",
+			"agentId":"2015-11-12",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"12366",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"10.00-200.00",
+			"agentAreaCounty":"E保APP 京东商城 美团网 淘宝",
+			"agentId":"2015-11-12",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        }
+        
+    ]
+}

@@ -1,0 +1,58 @@
+﻿{
+	"RESPONSECODE": "000000",
+	"RESPONSECONTENT": "操作成功!",
+	"COUNTS": "6",
+	"TRADETAILS": [{
+        "CATEGORYID": "1006",
+		"name": "产品上架管理",
+		"path": "operatemanager/produceadd.html"
+
+    },{
+        "CATEGORYID": "1007",
+		"name": "营销策略管理",
+		"path": "#",
+		"child":[{
+              "CATEGORYID": "100601",
+		          "name": "定价管理",
+		          "path": "operatemanager/pricemanager.html"
+               },{
+              "CATEGORYID": "100602",
+		          "name": "专题管理",
+		          "path": "operatemanager/specialmanager.html"
+                 }]
+		
+    },{
+        "CATEGORYID": "1007",
+		"name": "展示位管理",
+		"path": "#",
+		"child":[{
+              "CATEGORYID": "100601",
+		          "name": "位置管理",
+		          "path": "operatemanager/placemanager.html"
+               },{
+              "CATEGORYID": "100602",
+		          "name": "展示内容管理",
+		          "path": "operatemanager/showcontent.html"
+                 }]
+		
+    },{
+        "CATEGORYID": "1007",
+		"name": "运营参数管理",
+		"path": "#",
+		"child":[{
+              "CATEGORYID": "100601",
+		          "name": "推荐系数",
+		          "path": "operatemanager/parammodule.html"
+               },{
+              "CATEGORYID": "100602",
+		          "name": "产品标签",
+		          "path": "operatemanager/producelabel.html"
+                 }]
+		
+    },{
+        "CATEGORYID": "1007",
+		"name": "运营统计",
+		"path": "operatemanager/operatecount.html"
+		
+    }]
+}

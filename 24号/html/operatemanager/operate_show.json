@@ -1,0 +1,21 @@
+﻿{   "succ":true,
+    "total": 50,
+    "pageSize": 5,
+    "pageCount": 2,
+    "currentPage": 1,
+    "records": [
+        {
+			"agentAreaCity":"Pla001",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"0.01-100.00",
+			"agentAreaCounty":"50",
+			"agentId":"10000014",
+			"agentProduceName":"E保众筹交通工具综合保险A计划",
+			"agentProduceCount":"2015-01-01 00:25:55",
+			"agentProducePending":"2015-01-01 00:25:55",
+			"angertProduceNo":"待上架",
+			"opt": "新增合作产品"	
+        }
+        
+    ]
+}

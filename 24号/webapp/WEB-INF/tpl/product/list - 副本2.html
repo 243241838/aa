@@ -1,0 +1,219 @@
+
+<!DOCTYPE>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>自研产品管理-产品信息管理-产品管理</title>
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/base.css">
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/style.css">
+	<script type="text/javascript" src="../../../resource/js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../resource/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../resource/js/base.js"></script>	
+</head>
+
+<body style="">
+	<div class="ui-info-box">
+    <div class="ui-crumbs" id="crumbs">
+    	<#include "/common/include/power.ftl">
+    </div>
+		<div class="ui-datagrid-wrap">
+			<!-- 搜索 -->
+			<div class="search-wrap">
+				<form  id="search-ff" class="ui-search-form" action="">
+					<ul class="search-list fn-clear">
+						<li>
+							<label class="name">产品ID</label>
+							<span class="textbox"><input class="textbox-text textbox-prompt intOnly" type="text" name="productId" maxlength=9/>
+							<input class="textbox-text textbox-prompt" type="text" name="productSource" value="1"/>
+							</span>
+						</li>
+						<li>
+							<label class="name">保险名称</label>
+							<span class="textbox"><input class="textbox-text textbox-prompt" type="text" name="productName" value=""/></span>
+						</li>
+						<li>
+							<label class="name">保费范围</label>
+							<select class="ui-combobox" name="bettemoney" id="transaceAmount">
+								<option value="" >全部</option>
+								<option value="1">0-1元</option>
+								<option value="2">1-10元</option>
+								<option value="3">10-50元</option>
+								<option value="4">50-100元</option>
+								<option value="5">100元及以上</option>
+								<option value="6">自定义</option>
+							</select>
+							<span class="ui-hidden fn-hide" id="customToggle">
+								<input name="minProducePrice" type="text" class="textbox-text moneyrange easyui-validatebox ui-cover decimal-pointtwo decimal-ptblur" maxlength="10"  data-options="validType:['customMoney']" id="moneyStart">
+								<em class="ui-channel-titcolor">至</em>
+								<input name="maxProducePrice" type="text" class="textbox-text moneyrange easyui-validatebox ui-cover decimal-pointtwo decimal-ptblur" maxlength="10" data-options="validType:['customMoney','moneycompare[\'#moneyStart\']']">
+								<em class="ui-channel-titcolor">元</em>
+							</span>
+						</li>
+					</ul>
+					<ul class="search-list fn-clear">
+						<li>
+						<label class="name">承保公司</label>
+						<select name="insurerId" class="ui-combobox" id="insurerId">
+						<option value="">全部</option>
+							<#list iList as item>
+	                        	<option value="${item.insurerId}">${item.insurerName}</option>
+	                        </#list>
+                        </select>
+						</li>
+						<li>
+							<label class="name">保险类别</label>
+						<select name="classId" class="ui-combobox" id="classId">
+						<option value="">全部</option>
+							<#list cList as item>
+	                        	<option value="${item.classId}">${item.className}</option>
+	                        </#list>
+                        </select>
+						</li>
+						<li>
+							<label class="name">审核状态</label>
+							<select class="ui-combobox" name="sts" id="sts">
+								<option value="" >全部</option>
+								<option value="1">待审核</option>
+								<option value="2">审核不通过</option>
+								<option value="10" selected ="selected">审核通过</option>
+							</select>
+						</li>
+						<li>
+							<label class="name">产品状态</label>
+							<select class="ui-combobox" name="sts2" id="proSts">
+								<option value="" selected ="selected">全部</option>
+								<option value="10">有效</option>
+								<option value="1">无效</option>
+								<option value="0">尚未编辑完成</option>
+							</select>
+						</li>
+						<li class="btn-group">
+							<a href="javascript:void(0)" class="search-btn" onclick="submitForm()">搜索</a>
+				    		<a href="javascript:void(0)" class="search-btn" onclick="clearForm()">重置</a>
+						</li>
+					</ul>
+				</form>
+			</div>
+			<!-- 搜索end -->
+			<!-- 列表 -->
+			<div class="list-item fn-clear">
+				<div class="ui-top-staticis">截止 ${currDate} 累计 
+				<#if type == "since">
+					自研产品
+				<#else>
+					渠道产品
+				</#if>
+				共有：<font color="#FF0000"> ${productCount} 个 </font>。</div>
+				<a href="${base}/product/toAdd?type=${type}" class="dash-add-btn"><i class="ui-icon ui-icon-add"></i>新增</a>
+				<table id="dg-list" class="ebao-datagrid"  style="margin-right:10px;">	
+				</table>
+			</div>
+			<!-- 列表end -->
+		</div>
+	</div>
+	
+	<script>
+	$(function(){
+		validExtend();
+   		//列表
+   		var dt = "${type}";
+		$("#dg-list").datagrid({
+			url: 'datagrid_data1.json',
+			method:'post',
+			fitColumns:true,
+			rownumbers:true,
+			nowrap: true,
+			idField:'productId',
+			sortName:'createTime',
+			sortOrder:'desc',
+			resizable:false,
+			checkOnSelect:false,
+			pagination:true,
+			pageSize:10,
+			columns:[[
+				{field:'productId',align:'center',width:"6%",title:'产品ID'},
+				{field:'productName',align:'center',width:"18%",title:'保险名称',
+		          	 formatter:function(value,rec){
+			          	 var url='${base}/product/toProductDetail';
+			          	 if(rec.sts==6||rec.sts==7){
+			          	    url='${base}/product/toProductDetail';
+			          	 } else if(rec.sts1==0){
+			          	 	url='${base}/product/productTE';
+			          	 }
+						return '<a class="operation-link" href="'+url+'?productId='+rec.productId+'">'+rec.productName+'</a>';
+					  }
+				},
+				{field:'insurerName',align:'center',width:"10%",title:'承保公司'},
+				{field:'maxQuantity',align:'center',width:"10%",title:'总库存',sortable:true,
+					formatter:function(value,rec){
+			          	var str = "";
+			          	if((Number)(value) <= (Number)(-1)){
+			          		str = "不限";
+			          	} else {
+			          		str = value;
+			          	}
+						return str;
+					}
+				},
+				{field:'totalQuantity',align:'center',width:"10%",title:'当前库存',sortable:true,
+					formatter:function(value,rec){
+			          	var str = 0;
+			          	if((Number)(rec.maxQuantity) <= (Number)(-1)){
+			          		str = "不限";
+			          	} else {
+			          		str = (Number)(rec.maxQuantity)-(Number)(rec.totalQuantity);
+			          	}
+						return str;
+					}
+				},
+				{field:'minPremium',align:'center',width:"10%",title:'保费金额(元)',sortable:true,
+					formatter: function(value,rec){
+						if(rec.minPremium == rec.maxPremium){
+							return (value/100).toFixed(2);
+						} else {
+							if((Number)(rec.minPremium/100) < (Number)(rec.maxPremium/100)){
+	    	                	return (rec.minPremium/100).toFixed(2) +"-"+ (rec.maxPremium/100).toFixed(2);	
+							} else {
+								return (rec.maxPremium/100).toFixed(2) +"-"+ (rec.minPremium/100).toFixed(2);
+							}
+						}
+               		}
+               	},
+				{field:'className',align:'center',width:"13%",title:'保险类别',sortable:true},
+				{field:'sts',align:'center',width:"10%",title:'审核状态',
+					
+				},
+				{field:'sts1',align:'center',width:"10%",title:'产品状态',
+					formatter:function(value,rec){
+						var str = "";
+						if(value == 1 || value == 2){
+							str = "无效";
+						} else if(value >=6 && value <= 10){
+							str = "有效";
+						} else if(value == 0){
+							str = "尚未编辑完成";
+						} else {
+							str = "无效";
+						}
+						return str;
+					}
+				}
+			]],
+			queryParams: eb.form2Json("search-ff"),
+	    loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+      	},
+      	onLoadSuccess:function(data){
+      		pageCls();
+      		sortCell(['maxQuantity','totalQuantity','minPremium']);//排序要显示箭头的，以数组形式传
+      	}
+	 });
+		//分页
+		pageAction();
+		
+   });
+   
+	</script>
+</body>
+</html>

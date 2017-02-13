@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>产品标签</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+</head>
+<body>
+	<div class="ui-info-box">
+        <div class="ui-crumbs">
+        	 <span>当前位置：</span><a href="#">运营管理</a><em>></em><span>运营参数管理</span>
+        </div>
+        <div class="ui-info-main">
+            <div class="ui-informate">
+             	<div class="ui-informate-base ui-channel-baseinfor">
+              
+                    <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-base-label ui-special-label">参数名称:</label>
+                        <span class="ui-base-data">产品标签</span>
+                    </div>
+                    <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-base-label ui-special-label">参数值:</label>
+                        <div class="ui-base-data ui-baseparm-cols ui-parma-data" id="paramItemBox">
+                            <div class="ui-oneparam-item">
+                                 <input type="text" value="女性健康" class="ui-paramlabel-editor">
+                                 <i class="ui-close-red ui-hidden"></i>
+                            </div>
+                             <div class="ui-oneparam-item">
+                                 <input type="text" value="自驾游" class="ui-paramlabel-editor">
+                                 <i class="ui-close-red ui-hidden"></i>
+                            </div>
+                             <div class="ui-oneparam-item">
+                                 <input type="text" value="国外游" class="ui-paramlabel-editor">
+                                 <i class="ui-close-red ui-hidden"></i>
+                            </div>
+                             <div class="ui-oneparam-item">
+                                 <input type="text" value="宝贝计划" class="ui-paramlabel-editor">
+                                 <i class="ui-close-red ui-hidden"></i>
+                            </div>
+                           
+                            <div class="ui-baseparm-cols" id="paramItemOpera">
+                                <a class="ui-toggle-add" href="javascript:;" id="paramAdd"></a>
+                                <a class="ui-toggle-add ui-menu-redue" href="javascript:;" id="pamamDelete"></a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="ui-btn-double">
+                        <input type="button" value="保存" class="ui-btn-blue ui-submit" id="paramSave" />
+                        <input type="button" value="取消"  class="ui-btn-grey ui-back"/>
+                    </div>
+                </div>
+         	</div>
+    	</div>
+        <!--下架确认弹框start-->
+        <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+           <h3 class="ui-dlg-tit">编辑成功！</h3>
+        </div>
+  <!--下架确认弹框start-->
+	</div>
+
+	<script>
+    $(function(){
+
+        var paramopera =  $("#paramItemOpera"),
+            paramadd = $("#paramAdd"),
+            paramdelete = $("#pamamDelete"),
+            parambox = $("#paramItemBox"),
+            iteminput = '<div class="ui-oneparam-item">'+
+                                 '<input type="text" value="" class="ui-paramlabel-editor">'+
+                            '</div>';
+
+        //点击信息参数
+        paramadd.click(function(event) {
+           
+           paramopera.before(iteminput);
+
+        });
+
+        //单击出现关闭图标
+        paramdelete.click(function(event) {
+           
+           parambox.find(".ui-hidden").toggle();
+
+        });
+
+        //单击保存按钮
+        $("#paramSave").click(function(event) {
+            showAlert('dlg')
+
+            setTimeout(function(){
+                location.href="parambaselabel.html";
+            },1000)
+
+
+        });
+
+
+
+
+   })
+       
+    
+    
+    </script>
+   }
+</body>
+</html>

@@ -1,0 +1,14 @@
+﻿{
+	"RESPONSECODE": "000000",
+	"RESPONSECONTENT": "操作成功!",
+	"COUNTS": "6",
+	"TRADETAILS": [{
+        "CATEGORYID": "1006",
+		"name": "用户信息管理",
+		"path": "usermanager/usermessage.html"
+    },{
+        "CATEGORYID": "1007",
+		"name": "用户统计",
+		"path": "usermanager/usercount.html"
+    }]
+}

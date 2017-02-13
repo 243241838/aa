@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" content="text/html; charset=utf-8" >
+	<title>版本管理-客户端管理</title>
+	<link rel="stylesheet" type="text/css" href="../../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../style/style.css">
+</head>
+<body>
+	<div class="ui-info-box">
+    <div class="ui-crumbs">
+    	 <span>当前位置：</span>
+    	 <a href="#">客户端管理</a><em>></em>
+    	 <span>版本管理</span>
+    </div>
+    <form id="infoForm" method="post" action="">
+    <div class="ui-info-main ui-andAdd-main">
+        <h2 class="ui-info-tit">新增版本</h2>
+        <ul class="ui-info-list">
+         	<li class="ui-info-item no-topbor">
+         		<label class="ui-info-lbl">版本号</label>
+            <input type="text" value="" class="easyui-validatebox ui-info-input" 
+                   data-options="required:true,validType:['verNo']" missingMessage="请输入版本号"/>
+         	</li>
+         	<li class="ui-info-item ui-info-item-grey">
+         		<label class="ui-info-lbl">适配系统</label>
+         		<input type="text" value="Android4.0.3以上 IOS5.0以上" class="easyui-validatebox ui-info-input" 
+                   data-options="required:true" missingMessage="请输入适配系统"/> 
+         	</li>
+         	<li class="ui-info-item">
+         		<label class="ui-info-lbl">发布类型</label>
+            <select class="ui-info-sel">
+              <option value=''>请选择</option>
+              <option value='0'>正式发布</option>
+              <option value='1'>预发布</option>
+            </select>
+         	</li>
+          <li class="ui-info-item ui-info-item-grey ui-padb ui-andSource-wrap">
+            <label class="ui-info-lbl">发布渠道</label>
+            <div class="ui-resureLimit-inner ui-resureLimit-fir">
+              <input type="text"  class="easyui-validatebox ui-info-input" 
+                     data-options="required:true,validType:['numLetChina','length[1,20]']" missingMessage="请输入发布渠道"/> 
+              
+              <label class="ui-info-lbl">上传安装包</label>
+              <input type="button" class="ui-btn-blue ui-fileup" value="上传">
+              <input type="file" class="easyui-validatebox file-wrap file-hid" id="" name="file1" 
+                     onchange="uploadFile(this,'/upload/picture');" 
+                     data-options="required:true,validType:['apk']" missingMessage="请上传安装包">
+              <a class="ui-guarant-addfir" href="javascript:;"></a>
+                <!--<a class="ui-guarant-reduce" href="javascript:;"></a>-->
+            </div>
+          </li>
+          <li class="ui-info-item">
+            <label class="ui-info-lbl">更新类型</label>
+            <select class="ui-info-sel">
+              <option value='0'>非强制更新</option>
+              <option value='1'>强制更新</option>
+            </select>
+          </li>
+          <li class="ui-info-item  ui-info-item-grey">
+            <label class="ui-info-lbl">更新信息</label>
+            <textarea class="easyui-validatebox ui-info-txta" 
+                      data-options="required:true" missingMessage="请输入更新信息"></textarea>
+          </li>
+          <li class="ui-info-item">
+            <label class="ui-info-lbl">客户端下载地址</label>
+            <input type="text" value="" class="easyui-validatebox ui-info-input" 
+                   data-options="required:true,validType:['downloadurl']" missingMessage="请输入客户端下载地址"/> 
+          </li>
+        </ul>
+  	</div>
+    <div class="ui-btn-double">
+      <input type="button" value="保存" class="ui-btn-blue" onclick="doSubmit(this);"/>
+      <input type="button" value="取消"  class="ui-btn-grey" onclick="formCancel('dlg');"/>
+    </div>
+   </form>
+<!--弹框-->  
+  <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+    <h3 class="ui-dlg-tit">您的操作尚未保存，确定要取消吗？</h3>
+    <input type="button" class="ui-dlgOk-btn" value="确定"/>
+    <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+  </div>
+
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../js/kindeditor/kindeditor.js"></script>
+	<script type="text/javascript" src="../../js/base.js"></script>
+	<script>
+   $(function(){
+    validExtend();
+    moreLine($('.ui-andSource-wrap'));
+	});
+   
+  
+	</script>
+</body>
+</html>

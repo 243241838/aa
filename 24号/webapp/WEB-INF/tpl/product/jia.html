@@ -1,0 +1,430 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>计价公司</title>
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/base.css">
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/style.css">
+  
+  <script type="text/javascript" src="../../../resource/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../../../resource/js/jquery.easyui.min.js"></script>
+  <script type="text/javascript" src="../../../resource/js/base.js"></script>	
+  <link rel="stylesheet" type="text/css" href="company.css">
+
+</head>
+<body>
+
+	<div class="ui-datagrid-wrap">
+		<!-- ========================搜索=============================================== -->
+		<div class="search-wrap">
+			<form  id="search-ff" class="ui-search-form" action="">
+				<ul class="search-list fn-clear">
+					<li>
+						<label class="name">产品ID</label>
+						<span class="textbox"><input class="textbox-text textbox-prompt intOnly" type="text" name="productId" maxlength=9/>
+							<input class="textbox-text textbox-prompt" type="text" name="productSource" value="1"/>
+						</span>
+					</li>
+					<li>
+						<label class="name">保险名称</label>
+						<span class="textbox"><input class="textbox-text textbox-prompt" type="text" name="productName" value=""/></span>
+					</li>
+					<li class="btn-group">
+						<a href="javascript:void(0)" class="search-btn" id='seach' onclick="submitForm1()">搜索</a>
+						<a href="javascript:void(0)" class="search-btn" onclick="clearForm()">重置</a>
+					</li>
+				</ul>
+			</form>
+		</div>
+		<!-- ========================搜索end =============================-->
+
+		<div class="list-item fn-clear">
+
+			<a href="javascript:;" class="dash-add-btn" onclick='job_add()'><i class="ui-icon ui-icon-add" ></i>新增</a>
+
+			<table id="dg-list" class="easyui-datagrid ebao-datagrid"  style="margin-right:10px;"></table>
+
+
+    </div>
+
+
+    <!--=======================最后=================================================================-->
+  </div>
+
+
+
+  <div id="isReset" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true" style="width: 593px; height: 370px;text-align:left; padding:0">
+   <h3>新增保险公司</h3>
+   <form method="post" action="" id='form123'>
+    <div class="top">
+      <div class="left">
+       <p class="p1"><span>上级公司</span><input type="text" name="" value="" id='box'></p>
+       <p class="p2">保险公司名称<input name="" value="太平洋" class='easyui-validatebox' data-opotions='reuired:true'></p>
+       <p class="p3">客服电话<input name="" value="" class="easyui-validatebox" data-options="required:true,validType:'tele'">
+         <p class="p4">联系人<input name="" value="" class="easyui-validatebox" data-options="required:true">
+          <p class="p5"> 联系人电话<input name="" value="" class="easyui-validatebox" data-options="required:true,validType:'phone'">
+           <p class="p6"><span>简介</span><textarea name="" id="" cols="30" rows="3"></textarea></p>
+         </div>
+         <!-- logo左边 -->
+         <div class="right" id='img_right' style=" width: 250px; height: 175px;background:;position:absolute;left:320px;top:40px; padding-top:20px;
+         ">
+         <input type="file" id="pstimg" style="width:70px;height:30px;margin-top:5px; outline:none;"/>
+
+         <img src="img.png" id="loc_img" style="position:absolute;left:100px;z-index:2;width:80px;height:80px;border:1px solid #ccc;}
+         #txt1{position:absolute;z-index:1;" alt="logo" />  
+
+       </div>
+     </div>
+     <p class="p7">
+       <input class='list_save' type="submit" name="" onclick='add_save()' value="保存">
+       <input type="button" onclick='add_close()' name="" value="取消">
+     </p>
+
+   </form>
+ </div>
+
+
+
+</body>
+
+<script>
+ $(function(){
+
+
+
+
+
+ })
+// 搜索提交
+function submitForm1(form,table){
+
+  if(!form){
+    form=$('#search-ff');
+  }
+  if(!table){
+    table=$("#dg-list");
+  }
+  if(form.form('validate')){
+        // eb.backToFstPage("#datagrid");
+        table.treegrid({queryParams : eb.form2Json(form.attr('id'))});
+        pageAction1();
+      }
+    }
+
+
+
+
+
+
+
+// 分页
+function pageAction1(){
+  var page=$("#dg-list").treegrid("getPager");
+  $(page).pagination({
+    total:10,
+    pageSize:10,
+    displayMsg:"",
+    layout:['list','sep','first','prev','links','next','last','manual', ],
+    beforePageText: '<span class="ui-page-text ui-page-fir">共10页</span>  <span class="ui-page-text">去第</span>',
+    afterPageText: '<span class="ui-page-text ui-page-last">页</span>',
+    showPageList:false,
+  });  
+}
+
+
+// 分页样式
+function pageCls1(){
+ $('.pagination-first').text('首页');
+ $('.pagination-prev').text('上一页');
+ $('.pagination-next').text('下一页');
+ $('.pagination-last').text('末页');
+ $('.datagrid-pager').find('td').each(function(index){
+  if(index==0||index==4){
+   $(this).find('.l-btn').css({'margin-left':'10px','border-right':0});
+ }
+ if(index==3){
+   $(this).find('.l-btn').css('border-right',0);
+ }
+});
+ $('.ui-page-fir').text('共'+totalPage+'页,'+totalNumber+'条记录');
+
+}
+
+
+
+
+
+
+
+
+$(function(){
+ validExtend();
+        //搜索
+      /*  $('#seach').click(function(){
+        	$('#search-ff').form({
+        		url:'',
+        	})
+});*/
+
+
+//列表
+var dt = "${type}";
+$("#dg-list").treegrid({
+  width:1880,
+  url: 'treegrid_data2.json',
+        method:'get',//
+        fitColumns:true, //自适应
+        rownumbers:true, //显示行号
+        nowrap: true,//如果为true，则在同一行中显示数据。设置为true可以提高加载性能。
+        idField:'productId', //指明哪一个字段是标识字段。
+        sortName:'createTime',
+        sortOrder:'desc',//排序
+        resizable:false,//改变大小
+        checkOnSelect:false,//复选框选中取消
+        singleSelect:true,//只能选择一行
+        pagination:true,//如果为true，则在DataGrid控件底部显示分页工具栏。
+        pageSize:10,//在设置分页属性的时候初始化页面大小。
+        idField: 'id',
+        treeField:'name',//哪个显示树形结构
+        columns:[[
+        {field:'eqw',align:'center',width:"8%",title:'快速操作',
+        formatter:function(value,rec){
+         return '<a class="list-copy" href="javascript:;" onclick="job_admit()">编辑</a>&nbsp;<a class="list-redact" href="javascript:;" onclick="job_remove()" >删除</a>'
+       }
+
+     },
+     {field:'name',align:'center',width:"15%",title:'保险公司ID',},
+     {field:'data',align:'center',width:"15%",title:'保险公司logo'},
+     {field:'id',align:'center',width:"13%",title:'保险公司/机构名称'},
+     {field:'orderAmount',align:'center',width:"10%",title:'客服电话'},
+     {field:'orderAmount',align:'center',width:"10%",title:'联系人'},
+
+     {field:'orderStatus',align:'center',width:"10%",title:'联系电话'},
+     {field:'agentAreaProvinceName',align:'center',width:"17%",title:'简介'}
+     ]],
+     queryParams: eb.form2Json("search-ff"),
+    /* loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+          },*/
+          onLoadSuccess:function(data){
+            pageCls1();
+          // sortCell(['maxQuantity','totalQuantity','minPremium']);//排序要显示箭头的，以数组形式传
+        },
+      }),
+      //分页
+      pageAction1()
+
+
+
+    });
+
+
+
+
+
+// 新增
+function job_add(){
+  aa=true;
+  showAlert('isReset');
+
+
+  $('#form123 input').validatebox({
+    required:true,
+  });
+};
+/*=========================================编辑====================================*/
+
+function reload(){
+  $("#dg-list").treegrid({
+    width:1880,
+    url: 'treegrid.json',
+        method:'get',//
+        fitColumns:true, //自适应
+        rownumbers:true, //显示行号
+        nowrap: true,//如果为true，则在同一行中显示数据。设置为true可以提高加载性能。
+        idField:'productId', //指明哪一个字段是标识字段。
+        sortName:'createTime',
+        sortOrder:'desc',//排序
+        resizable:false,//改变大小
+        checkOnSelect:false,//复选框选中取消
+        singleSelect:true,//只能选择一行
+        pagination:true,//如果为true，则在DataGrid控件底部显示分页工具栏。
+        pageSize:10,//在设置分页属性的时候初始化页面大小。
+        idField: 'id',
+        treeField:'name',//哪个显示树形结构
+        columns:[[
+        {field:'eqw',align:'center',width:"8%",title:'快速操作',
+        formatter:function(value,rec){
+         return '<a class="list-copy" href="javascript:;" onclick="job_admit()">编辑</a>&nbsp;<a class="list-redact" href="javascript:;" onclick="job_remove()" >删除</a>'
+       }
+
+     },
+     {field:'name',align:'center',width:"15%",title:'保险公司ID',},
+     {field:'data',align:'center',width:"15%",title:'保险公司logo'},
+     {field:'id',align:'center',width:"13%",title:'保险公司/机构名称'},
+     {field:'orderAmount',align:'center',width:"10%",title:'客服电话'},
+     {field:'orderAmount',align:'center',width:"10%",title:'联系人'},
+
+     {field:'orderStatus',align:'center',width:"10%",title:'联系电话'},
+     {field:'agentAreaProvinceName',align:'center',width:"17%",title:'简介'}
+     ]],
+     queryParams: eb.form2Json("search-ff"),
+     loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+          },
+          onLoadSuccess:function(data){
+            pageCls1();
+          // sortCell(['maxQuantity','totalQuantity','minPremium']);//排序要显示箭头的，以数组形式传
+        },
+      }),
+      //分页
+      pageAction1()
+
+    }
+
+    function job_admit(){
+
+      showAlert('isReset');
+      admit=true;
+      $('#form123 input').validatebox({
+        required:false,
+      });
+      $('#dg-list').treegrid({
+
+        onClickRow:function(row){
+         admit_id=row.id;
+         console.log(row);
+
+         //点击获取获取
+      /*   $('#isReset .p1 input').val(rowData.businessName);
+         $('#isReset .p2 input').val(rowData.businessName);
+         $('#isReset .p3 input').val(rowData.businessName);
+         $('#isReset .p4 input').val(rowData.businessName);
+         $('#isReset .p5 input').val(rowData.businessName);
+         $('#isReset .p6 textarea').val(rowData.businessName);*/
+       },
+
+     })
+      reload()
+
+
+    };
+//下拉框
+$('#box').combotree({
+  url:'tree.json',
+  width:200,
+  hieght:10,
+  required:true,
+  editable:false,
+  formatter:function(row){
+   return row.id
+ }
+});
+//保存
+
+function add_save(){
+  var flag =$('#form123').form('validate');
+  alert(flag);
+  if(admit){
+    admit_url=''; //编辑url
+  }else{
+    admit_url='';//保存urll
+  }
+  if(flag){
+    alert('验证成功');
+    $('#form123').form({
+     url:admit_url,
+     data:admit_id,
+     onSubmit:function(){
+      return $(this).form('validate');
+
+              // $('#da-list').treegrid('reload','datagrid_data1.json');
+            },
+            success:function(data){
+             alert('陈宫');
+
+           },
+           error:function(){
+            alert('失败')
+          },
+        });
+    $('#isReset').dialog({
+      closed:true
+    });
+    $('#form123').form('reset');
+
+  }else{
+    // alert('失败');
+    $('#isReset').dialog({
+      closed:false
+    });
+  }
+  reload()
+}
+//关闭
+function add_close(){
+  $('#isReset').dialog({
+    closed:true
+  });
+  $('#form123').form('reset');
+
+}
+
+//删除
+function job_remove(){
+  $('#dg-list').treegrid({
+    onClickRow:function(row){
+     var oIndex=row.id;//获取的iD
+     console.log(oIndex);
+     $.messager.confirm
+     $.messager.confirm('确认','您确认想要删除记录吗？',function(r){    
+      if (r){    
+       $.ajax({
+         type: "POST",
+         url: "",
+         data: "",
+         success: function(data){
+           alert('成功');
+           $('#dg-list').treegrid('reload');
+         },
+         erro:function(){
+           alert('删除失败，请重新删除');
+         }
+
+       })
+     }    
+   });  
+
+   }
+ })
+  reload()
+}
+
+
+
+
+
+$(function(){  
+  $("#pstimg").change(function(){  
+    var file = this.files[0];  
+        //alert("文件大小:"+(file.size / 1024).toFixed(1)+"kB");  
+        if (window.FileReader) {  
+          var reader = new FileReader();  
+          reader.readAsDataURL(file);  
+            //监听文件读取结束后事件  
+            reader.onloadend = function (e) {  
+              showXY(e.target.result,file.fileName);  
+            };  
+          }  
+        });  
+});  
+function showXY(source){  
+  var img = document.getElementById("loc_img");  
+  img.src = source;  
+    //alert("Width:"+img.width+", Height:"+img.height);  
+  }  
+
+
+</script>
+</html>

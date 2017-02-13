@@ -1,0 +1,33 @@
+﻿{
+	"RESPONSECODE": "000000",
+	"RESPONSECONTENT": "操作成功!",
+	"COUNTS": "6",
+	"TRADETAILS": [{
+        "CATEGORYID": "1006",
+		"name": "分销渠道管理",
+		"path": "#",
+		"child":[{
+              "CATEGORYID": "100601",
+		          "name": "分销商信息管理",
+		          "path": "channelmanager/channelinformanager.html"
+               },{
+              "CATEGORYID": "100602",
+		          "name": "产品合作渠道管理",
+		          "path": "channelmanager/channelproduce.html"
+                 }]
+
+    },{
+        "CATEGORYID": "1007",
+		"name": "分销渠道统计",
+		"path": "#",
+		"child":[{
+              "CATEGORYID": "100601",
+		          "name": "分销商数量",
+		          "path": "channelmanager/channelamount.html"
+               },{
+              "CATEGORYID": "100602",
+		          "name": "分销商销量",
+		          "path": "channelmanager/channelsales.html"
+                 }]
+    }]
+}

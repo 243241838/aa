@@ -1,0 +1,32 @@
+﻿{
+	"RESPONSECODE": "000000",
+	"RESPONSECONTENT": "操作成功!",
+	"COUNTS": "6",
+	"TRADETAILS": [{
+        "CATEGORYID": "1006",
+		"name": "产品发布管理",
+		"path": "#",
+    	"child":[{
+              "CATEGORYID": "100601",
+		          "name": "自研产品管理",
+		          "path": "list.html"
+               },{
+              "CATEGORYID": "100602",
+		          "name": "渠道产品管理",
+		          "path": "detail.html"
+                 }]
+    },{
+        "CATEGORYID": "1006",
+		"name": "产品参数管理",
+		"path": "#",
+    	"child":[{
+              "CATEGORYID": "100601",
+		          "name": "保险类别",
+		          "path": "list.html"
+               }]
+    },{
+        "CATEGORYID": "1007",
+		"name": "职业分类",
+		"path": "list.html"
+    }]
+}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/base.css">
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/style.css">	
+</head>
+<body> 
+    <div id="dlgProfit" class="ui-dlg-list ui-dlgProfit guarante-newlist" style="border-bottom:0;">
+		<div id="dlgGuarante" >
+		   <!--保障期限弹框-->
+            <ul class="fn-clear guarante-list " id="dealinelist">
+            	<#if periodsList?if_exists>
+            		<#list periodsList as item>
+            			<li class="guarante-item dealine-sitem">
+            				<input type="checkbox" id="${item.periodId}" value="
+	            				<#if item.minGuarantee == item.maxGuarantee>
+	            					${item.minGuarantee}
+	            				<#else>
+	            					${item.minGuarantee}-${item.maxGuarantee} 
+	            				</#if>
+	            				<#if item.guaranteeType==4>
+	            					年
+	            				<#elseif item.guaranteeType==3>
+	            					个月
+	            				<#elseif item.guaranteeType==2>
+	            					周
+	            				<#else>
+	            					天
+	            				</#if>
+            				"/>
+		                    <em class="dealine-start">
+		                    	<#if item.minGuarantee == item.maxGuarantee>
+	            					${item.minGuarantee}
+	            				<#else>
+	            					${item.minGuarantee}-${item.maxGuarantee} 
+	            				</#if>
+							</em>
+		                    <span class="dealine-type">
+		                    	<#if item.guaranteeType==4>
+	            					年
+	            				<#elseif item.guaranteeType==3>
+	            					个月
+	            				<#elseif item.guaranteeType==2>
+	            					周
+	            				<#else>
+	            					天
+	            				</#if>
+		                    </span>
+            			</li>
+            		</#list>
+            	</#if>
+            </ul>
+            <h3 style="text-align:center;padding:20px 0;">*若您要添加的产品不含以上保障期限，您可选择手动输入后添加</h3>
+            <form style="text-align:center;">
+                <input  name="minGuarantee" type="text" value="" class="easyui-validatebox ui-info-sinput produce-item-toggle"
+                data-options="required:true,validType:['integer']" missingMessage="请输入保障期限" id="prededDay"/>
+                <a href="javascript:void(0);" class="ui-info-to newget-limit" data-type="true">至</a>
+                <input name="maxGuarantee" type="text" value="" class="ui-info-sinput produce-item-toggle fn-hide" id="predeRange"/><em class="fn-hide"></em>
+                <select class="ui-info-sel" name="guaranteeType" id="predeType">
+                    <option value="1">天</option>
+                    <option value="3">月</option>
+                    <option value="4">年</option>
+                </select>
+                <input type="button" value="添加" class="ui-file-link" id="proDeadline2"  />
+            </form>
+            <div class="ui-dlg-submit">
+            <input type="button" class="ui-dlgOk-btn" value="确定" id="produceConfirm"/>
+            <input type="button" class="ui-dlgCancel-btn" value="取消" id="produceCancel"/>
+            </div>
+		</div>
+	</div>
+    <script type="text/javascript" src="${base}/resource/js/jquery.min.js"></script>
+	<script type="text/javascript" src="${base}/resource/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="${base}/resource/js/base.js"></script>
+	<script type="text/javascript">
+	$(window).load(function(){
+		//点击添加
+		$("#proDeadline2").click(function(){
+			var form = $(this).parents('form');
+			if(form.form('validate')){
+				$.ajax({
+		 	        url: '${base}/product/addPeriods',
+		 	        type: 'post',
+		 	        data : form.serialize(),
+		 	        datatype: 'json',
+		 	        success: function(result) {
+		 				if(result.succ){
+		 					location.reload();
+		 				} else {
+		 					alert(result.entity);
+		 				}
+		 	        },
+		 	        error:function(result){
+		 	        	alert(result.entity);
+		 	        }
+		 		});
+			}
+		})
+		//确定
+		$("#produceConfirm").click(function(){
+			var $p = $(parent.document.body);
+			var selearrs = $(".guarante-item").find('input[type=checkbox]'),
+				arrs=['<div class="produce-newdates">'],
+				len = selearrs.length,datecheck = 0,ids = '';
+		
+			$.each(selearrs,function(i,v){
+				if($(v).is(':checked')){
+					arrs[i+1] = '<span class="ui-menuoptmargin">'+v.value+'</span>';
+					ids += v.id+',';
+					datecheck++;
+				} 
+			})
+			arrs[len+1] = ['</div>'];
+			if(datecheck == 0){
+				alert("请选择最少一个保障期限！");
+			}else{
+				$p.find("#addItemDates").html(arrs.join(""));
+				$p.find("#guaranteDate").val(ids.substring(0,ids.length-1));
+				$p.find("#guarantInfor").css('display','none');
+				$p.find("#produceConfigBox").html("");
+				 
+				closeIframe($p);
+			}
+		});
+		
+		$(".newget-limit").click(function(){
+	            var flag = $(this).data('type'),
+	                $changbox = $(this).next();
+	            $(this).data('type',!flag);
+	            if(flag){
+	            $changbox.show();
+	            }else{
+	            $changbox.hide();
+	            }
+	            
+	       })
+
+		
+		//取消
+		$("#produceCancel").click(function(){
+			var $p = $(parent.document.body);
+			closeIframe($p);
+		});
+	
+	})
+	  	
+	</script>
+</body>
+</html>

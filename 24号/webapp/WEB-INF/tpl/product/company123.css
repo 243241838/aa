@@ -1,0 +1,117 @@
+/*//编辑*/
+.company{
+  position: absolute;
+  left: 31%; top:27%;
+  width: 593px; height: 350px;
+  background:#F7F7F7;
+  z-index: 3;
+  cursor: pointer;
+
+  display: none;
+  border:1px solid #ccc;
+
+}
+.company h3{
+  background: #F0F0F0;
+  line-height: 35px;
+  padding-left:5px;
+
+}
+.company h3 span{
+  float: right;
+  width: 25px; height:25px;
+  text-align: center;
+  line-height: 25px;
+  background: #fff;
+  margin:5px 5px 0 0;
+  font:20px/25px '楷体';
+} 
+.company .top {
+ width: 593px; clear: both;overflow: hidden;
+ height: 260px; 
+}
+.company .top .left{
+  float: left;
+
+}
+
+.company .top input{
+  margin-left:10px;
+  height: 23px;
+  width: 200px
+}
+.company .top .p1 span{
+ margin-right:10px;
+}
+.company .top .p1 .textbox, .easyui-datebox {
+ height: 22px!important;
+}
+.company .top p {
+  margin-bottom:10px;
+  font-size:12px;
+
+}
+
+.company .top .p1{
+  margin-left:70px;
+}
+.company .top .p2{
+  margin-left:46px;
+}
+.company .top .p3{
+  margin-left:70px;
+}
+.company .top .p4{
+  margin-left:82px;
+}
+.company .top .p5{
+ margin-left:58px;
+}
+.company .top .p6{
+ margin-left:95px; 
+
+}
+.company .top .p6 span{
+  margin-right: 10px;
+  float: left;
+
+}
+.company .top .p6 textarea{
+  width: 400px;  height: 60px;
+}
+.company .top .right{
+position:absolute;
+}
+
+.company .p7{
+  text-align: center;
+  margin:0 auto;
+  width: 480px; border-top:1px solid #ccc;
+  padding-top:20px;
+}
+.company .p7 input{
+  width: 60px; height: 25px;
+  margin-right:20px;
+  border-radius: 7px;
+}
+.messager-body{
+  z-index: 1;
+}
+
+.messager-window{
+
+
+  background: #D7DEF0;
+  opacity: 1;
+}
+
+/*幕布*/
+
+.mubu{
+  width: 100%; height: 100%; 
+  background: #ccc;
+  position: absolute;left: 0; top:0;
+  z-index:2; 
+  opacity: 0.3;
+  display: none;
+}

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>保障利益-产品参数管理-产品管理</title>
+  <link rel="stylesheet" type="text/css" href="../style/base.css">
+  <link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../style/style.css">
+</head>
+<body>
+  <div class="ui-info-box">
+    <div class="ui-crumbs">
+       <span>当前位置：</span>
+       <a href="#">产品管理</a><em>></em>
+       <a href="#">产品参数管理</a><em>></em>
+       <span>保障利益</span>
+    </div>
+    <form id="infoForm" method="post" action="">
+    <div class="ui-info-main">
+      <div class="search-wrap">
+        <form  id="search-ff" class="ui-search-form">
+          <ul class="search-list info-search fn-clear">
+            <li>
+              <label class="name">关键字</label>
+              <span class="textbox ui-textbox-long">
+                <input class="textbox-text textbox-prompt" type="text" name="" value="" placeholder="保障利益标题/保障内容"/>
+              </span>
+            </li>
+            <li class="btn-group">
+              <a href="javascript:void(0)" class="search-btn" onclick="submitForm()">搜索</a>
+                <a href="javascript:void(0)" class="search-btn" onclick="clearForm()">重置</a>
+            </li>
+          </ul>
+        </form>
+      </div>
+      <a href="javascript:showAlert('dlgList');" class="dash-add-btn dash-addOne-btn">新增一级</a>
+
+      <ul class="ui-info-list ui-insurance-info ui-profit-info" id="">
+        
+        <li class="ui-info-item" >
+         
+               <!-- <div class="ui-guarant-tit">
+                  <a href="javascript:;" onclick="toggleSub(this,'yes');" class="ui-gone">
+                    <strong>意外险</strong><i class="ui-icon-arrow"></i>
+                  </a>
+                  <span class="ui-gtwo">
+                  </span>
+                  <span class="ui-gthree">
+                    <a class="ui-guarant-addfir" href="javascript:;" onclick="showAddDlg(this,'dlgList2');">
+                      <div class="ui-guatip">新增子分类</div>
+                    </a>
+                    <input type="button" value="编辑" class="ui-btn-green" onclick="showEditDlg(this,'dlgEdit');"/>
+                    <input type="button" value="删除" class="ui-btn-org" onclick="showAlert('dlg');"/>
+                  </span>
+                </div>-->
+          <table class="ui-guarant-tit" width='100%'>
+            <tr class="ui-profit-toptit">
+              <td width="35%" class="ui-td-fir">
+                  <label class="ui-info-lbl">保障利益标题</label>
+              </td>
+              <td width="45%" >
+                <label class="ui-info-lbl">保障内容</label>
+              </td>
+              <td width="20%">
+                 <label class="ui-info-lbl ui-lbl-last">操作</label>
+              </td>
+            </tr>
+            <tr class="ui-profit-tit">
+              <td class="ui-td-fir ui-gone">
+                  <a href="javascript:;" onclick="toggleSub(this,'yes');">
+                   <strong>一般意外</strong><i class="ui-icon-arrow"></i>
+                 </a>
+              </td>
+              <td></td>
+              <td class="ui-relative">
+                  <a class="ui-guarant-addfir" href="javascript:;" onclick="showAddDlg(this,'dlgList2');">
+                    <div class="ui-guatip">新增子分类</div>
+                  </a>
+                  <input type="button" value="编辑" class="ui-btn-green" onclick="showEditDlg(this,'dlgEdit','1');"/>
+                  <input type="button" value="删除" class="ui-btn-org" onclick="showAlert('dlg');"/>
+              </td>
+            </tr>
+          </table>
+          <table class="ui-guarant-tab" width='100%'>
+            <tr>
+              <td width="35%" class="ui-td-fir">意外身故、伤残意外身故、伤残</td>
+              <td width="45%" class="ui-td-article">
+                <p >在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条</p>
+                <div class="ui-hover-tip"></div>
+              </td>
+              <td width="20%" class="ui-profit-btns">
+                <input type="button" value="编辑" class="ui-btn-green" onclick="showEditDlg(this,'dlgEdit');"/>
+                <input type="button" value="删除" class="ui-btn-org" onclick="showAlert('dlg');"/>
+              </td>
+            </tr>
+            <tr class="ui-tab-last">
+              <td class="ui-td-fir">意外医疗</td>
+              <td class="ui-td-article">
+                <p>在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条
+                </p>
+                <div class="ui-hover-tip"></div>
+              </td>
+              <td class="ui-profit-btns" >
+                <input type="button" value="编辑" class="ui-btn-green" onclick="showAlert('dlgEdit');"/>
+                <input type="button" value="删除" class="ui-btn-org" onclick="showAlert('dlg');"/>
+              </td>
+            </tr> 
+          </table>
+        </li>
+        <li class="ui-info-item ui-guarant-item" >
+          <table class="ui-guarant-tit" width='100%'>
+            <tr class="">
+              <td class="ui-td-fir ui-gone" width="35%">
+                  <a href="javascript:;" onclick="toggleSub(this,'yes');">
+                   <strong>一般意外</strong><i class="ui-icon-arrow ui-icon-arrow-up"></i>
+                 </a>
+              </td>
+              <td width="45%"></td>
+              <td width="20%" class="ui-relative">
+                  <a class="ui-guarant-addfir" href="javascript:;" onclick="showAddDlg(this,'dlgList2');">
+                    <div class="ui-guatip">新增子分类</div>
+                  </a>
+                  <input type="button" value="编辑" class="ui-btn-green" onclick="showEditDlg(this,'dlgEdit','1');"/>
+                  <input type="button" value="删除" class="ui-btn-org" onclick="showAlert('dlg');"/>
+              </td>
+            </tr>
+          </table>
+          <table class="ui-guarant-tab  fn-hide" width='100%'>
+            <tr>
+              <td width="35%" class="ui-td-fir">意外身故、伤残意外身故、伤残</td>
+              <td width="45%" class="ui-td-article">
+                <p >在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条</p>
+                <div class="ui-hover-tip"></div>
+              </td>
+              <td width="20%" class="ui-profit-btns">
+                <input type="button" value="编辑" class="ui-btn-green" onclick="showEditDlg(this,'dlgEdit');"/>
+                <input type="button" value="删除" class="ui-btn-org" onclick="showAlert('dlg');"/>
+              </td>
+            </tr>
+            <tr class="ui-tab-last">
+              <td class="ui-td-fir">意外医疗</td>
+              <td class="ui-td-article">
+                <p>在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条
+                </p>
+                <div class="ui-hover-tip"></div>
+              </td>
+              <td class="ui-profit-btns" >
+                <input type="button" value="编辑" class="ui-btn-green" onclick="showAlert('dlgEdit');"/>
+                <input type="button" value="删除" class="ui-btn-org" onclick="showAlert('dlg');"/>
+              </td>
+            </tr> 
+          </table>
+        
+        </li>
+        <li class="ui-info-item ui-guarant-item" >
+          <table class="ui-guarant-tit" width='100%'>
+            <tr class="">
+              <td class="ui-td-fir ui-gone" width="35%">
+                  <a href="javascript:;" onclick="toggleSub(this,'yes');">
+                   <strong>一般意外</strong><i class="ui-icon-arrow ui-icon-arrow-up"></i>
+                 </a>
+              </td>
+              <td width="45%"></td>
+              <td width="20%" class="ui-relative">
+                  <a class="ui-guarant-addfir" href="javascript:;" onclick="showAddDlg(this,'dlgList2');">
+                    <div class="ui-guatip">新增子分类</div>
+                  </a>
+                  <input type="button" value="编辑" class="ui-btn-green" onclick="showEditDlg(this,'dlgEdit','1');"/>
+                  <input type="button" value="删除" class="ui-btn-org" onclick="showAlert('dlg');"/>
+              </td>
+            </tr>
+          </table>
+          <table class="ui-guarant-tab  fn-hide" width='100%'>
+            <tr>
+              <td width="35%" class="ui-td-fir">意外身故、伤残意外身故、伤残</td>
+              <td width="45%" class="ui-td-article">
+                <p >在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条</p>
+                <div class="ui-hover-tip"></div>
+              </td>
+              <td width="20%" class="ui-profit-btns">
+                <input type="button" value="编辑" class="ui-btn-green" onclick="showEditDlg(this,'dlgEdit');"/>
+                <input type="button" value="删除" class="ui-btn-org" onclick="showAlert('dlg');"/>
+              </td>
+            </tr>
+            <tr class="ui-tab-last">
+              <td class="ui-td-fir">意外医疗</td>
+              <td class="ui-td-article">
+                <p>在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条
+                </p>
+                <div class="ui-hover-tip"></div>
+              </td>
+              <td class="ui-profit-btns" >
+                <input type="button" value="编辑" class="ui-btn-green" onclick="showAlert('dlgEdit');"/>
+                <input type="button" value="删除" class="ui-btn-org" onclick="showAlert('dlg');"/>
+              </td>
+            </tr> 
+          </table>
+        
+        </li>
+        <li class="ui-info-item ui-guarant-item  ui-guarant-item-inslast" >
+          <table class="ui-guarant-tit" width='100%'>
+            <tr class="">
+              <td class="ui-td-fir ui-gone" width="35%">
+                  <a href="javascript:;" onclick="toggleSub(this,'yes');">
+                   <strong>一般意外</strong><i class="ui-icon-arrow ui-icon-arrow-up"></i>
+                 </a>
+              </td>
+              <td width="45%"></td>
+              <td width="20%" class="ui-relative">
+                  <a class="ui-guarant-addfir" href="javascript:;" onclick="showAddDlg(this,'dlgList2');">
+                    <div class="ui-guatip">新增子分类</div>
+                  </a>
+                  <input type="button" value="编辑" class="ui-btn-green" onclick="showEditDlg(this,'dlgEdit','1');"/>
+                  <input type="button" value="删除" class="ui-btn-org" onclick="showAlert('dlg');"/>
+              </td>
+            </tr>
+          </table>
+          <table class="ui-guarant-tab  fn-hide" width='100%'>
+            <tr>
+              <td width="35%" class="ui-td-fir">意外身故、伤残意外身故、伤残</td>
+              <td width="45%" class="ui-td-article">
+                <p >在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条</p>
+                <div class="ui-hover-tip"></div>
+              </td>
+              <td width="20%" class="ui-profit-btns">
+                <input type="button" value="编辑" class="ui-btn-green" onclick="showEditDlg(this,'dlgEdit');"/>
+                <input type="button" value="删除" class="ui-btn-org" onclick="showAlert('dlg');"/>
+              </td>
+            </tr>
+            <tr class="ui-tab-last">
+              <td class="ui-td-fir">意外医疗</td>
+              <td class="ui-td-article">
+                <p>在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条在保险期间内，被保险人不幸遭受意外事故导致身故或伤残，我们按条
+                </p>
+                <div class="ui-hover-tip"></div>
+              </td>
+              <td class="ui-profit-btns" >
+                <input type="button" value="编辑" class="ui-btn-green" onclick="showAlert('dlgEdit');"/>
+                <input type="button" value="删除" class="ui-btn-org" onclick="showAlert('dlg');"/>
+              </td>
+            </tr> 
+          </table>
+        
+        </li>
+      </ul>
+    </div>
+   </form>
+<!--弹框一级-->  
+  <div id="dlgList" class="easyui-dialog ui-dlg-list ui-dlg-fixlen"  data-options="modal:true,closed: true">
+    <ul class="ui-dlg-ins-list" >
+      <li class="ui-dlg-ins-item">
+        <label>一级保险类别</label>
+        <input type="text" class="easyui-validatebox ui-info-input" 
+               data-options="required:true,validType:['chinese','length[1,10]']" missingMessage="请输入保险类别"/>
+        <a class="ui-guarant-addfir" href="javascript:;" onclick="addInsLine(this);"></a>
+      </li>
+    </ul>
+    <div class="ui-dlg-submit">
+      <input type="button" class="ui-dlgOk-btn" value="保存并返回"/>
+      <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+    </div>
+  </div>
+<!--弹框二级-->  
+  <div id="dlgList2" class="easyui-dialog ui-dlg-list ui-dlg-fixlen"  data-options="modal:true,closed: true">
+
+    <ul class="ui-dlg-ins-list" id="dlgInsList">
+      <li class="ui-dlg-ins-item">
+        <label>一级保险类别</label>
+        <span id="ins-oneType"></span>
+      </li>
+      <li class="ui-dlg-ins-item ui-info-item-grey">
+        <label>二级保险类别</label>
+        <input type="text" class="easyui-validatebox ui-info-input" 
+               data-options="required:true,validType:['chinese','length[1,10]']" missingMessage="请输入保险类别"/>
+        <a class="ui-guarant-addfir" href="javascript:;" onclick="addInsLine(this);"></a>
+       <!-- <a class="ui-guarant-reduce" href="javascript:;"></a>-->
+      </li>
+    </ul>
+    <div class="ui-dlg-submit">
+      <input type="button" class="ui-dlgOk-btn" value="保存并返回"/>
+      <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+    </div>
+  </div>
+<!--编辑-->
+  <div id="dlgEdit" class="easyui-dialog ui-dlg-list"  data-options="modal:true,closed: true">
+   <ul class="ui-dlg-ins-list" id="dlgInsList">
+      <li class="ui-dlg-ins-item">
+        <label>一级保险类别</label>
+        <span id="ins-oneType2"></span>
+      </li>
+      <li class="ui-dlg-ins-item ui-info-item-grey">
+        <label>二级保险类别</label>
+        <input type="text" class="easyui-validatebox ui-info-input" 
+               data-options="required:true,validType:['chinese','length[1,10]']" missingMessage="请输入保险类别"/>
+        
+      </li>
+    </ul>
+    <div class="ui-dlg-submit">
+      <input type="button" class="ui-dlgOk-btn" value="保存并返回"/>
+      <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+    </div>
+  </div>
+<!--删除-->  
+  <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+    <h3 class="ui-dlg-tit">确定要删除该类别吗？</h3>
+    <input type="button" class="ui-dlgOk-btn" value="确定"/>
+    <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+  </div>
+
+  <script type="text/javascript" src="../js/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+  <script type="text/javascript" src="../js/kindeditor/kindeditor.js"></script>
+  <script type="text/javascript" src="../js/base.js"></script>
+  <script>
+   $(function(){
+    validExtend();
+    $('.ui-td-article').hover(function(){
+        $(this).children('.ui-hover-tip').text($(this).find('p').text()).show();
+    },function(){
+         $(this).children('.ui-hover-tip').hide();
+    });
+  });
+   
+  
+  </script>
+</body>
+</html>

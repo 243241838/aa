@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>自研产品管理-产品信息管理-产品管理</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+</head>
+<body>
+	<div class="ui-info-box">
+    <div class="ui-crumbs">
+    	 <span>当前位置：</span>
+    	 <a href="#">产品管理</a><em>></em>
+    	 <a href="#">产品信息管理</a><em>></em>
+    	 <span>自研产品管理</span>
+    </div>
+    <form id="infoForm" method="post" action="product_add_sure.html">
+    <div class="ui-info-main ui-infosure-main">
+        <ul class="ui-info-list">
+         	<li class="ui-info-item ui-infosure-fir">
+         		<label class="ui-info-lbl">保险名称</label>
+         		<span>请输入保险名称</span>
+         	</li>
+         	<li class="ui-info-item ui-info-item-grey">
+         		<label class="ui-info-lbl">保险类别</label>
+         		<span>请输入保险名称</span>
+         	</li>
+         	<li class="ui-info-item">
+         		<label class="ui-info-lbl">承保公司</label>
+         		<span>请输入保险名称</span>
+         	</li>
+         	<li class="ui-info-item ui-info-item-grey">
+         		<label class="ui-info-lbl">产品总量</label>
+         		<span>10000</span> 份
+         	</li>
+         	<li class="ui-info-item">
+         		<div class="ui-info-subitem">
+  	       		<label class="ui-info-lbl">承保年龄</label>
+  	       		<span></span> 周岁
+  	       	</div>
+
+         		<label class="ui-info-lbl ui-info-lblw">保险经纪人</label>
+         		<span></span>
+         	</li>
+         	<li class="ui-info-item ui-info-item-grey">
+  	       		<label class="ui-info-lbl">保障期限</label>
+              <span>1 至 90天</span>
+              <label class="ui-info-lbl ui-info-lblw">标准价格</label>
+              <span>1 33</span> 元
+         	</li>
+          <li class="ui-info-item ui-resureLimit-sure">
+            <label class="ui-info-lbl"></label>
+            <span>1 至 90天</span>
+            <label class="ui-info-lbl ui-info-lblw">标准价格</label>
+            <span>1 33</span> 元
+          </li>
+          <li class="ui-info-item ui-info-item-grey ui-resureLimit-sure">
+            <label class="ui-info-lbl"></label>
+            <span>1 至 90天</span>
+            <label class="ui-info-lbl ui-info-lblw">标准价格</label>
+            <span>1 33</span> 元
+          </li>
+         	<li class="ui-info-item">
+         		<label class="ui-info-lbl">适用人群</label>
+         		<span>1 至 90天</span>
+         	</li>
+         	<li class="ui-info-item ui-info-item-grey">
+         		<label class="ui-info-lbl">最高职业类别</label>
+         		<span>1 至 90天</span>
+         	</li>
+         	<li class="ui-info-item">
+         		<label class="ui-info-lbl">产品亮点</label>
+         		<span>1 至 90天</span>
+         	</li>
+         	<li class="ui-info-item ui-info-item-grey ui-guarant-item" id="guarantList">
+         		<label class="ui-info-lbl">保障利益</label>
+         		<div class="ui-guarant-wrap">
+         			<ul class="ui-guarant-list">
+                <li>
+                	<span class="ui-gone">保障利益标题</span>
+                	<span class="ui-gtwo">保障价格</span>
+                	<span class="ui-gthree"></span>
+                </li>
+                <li>
+                	<div class="ui-guarant-tit">
+  	              	<a href="javascript:;" onclick="toggleSub(this);" class="ui-gone">
+  	              		<strong>医疗保障</strong><i class="ui-icon-arrow"></i>
+  	              	</a>
+  	              	<span class="ui-gtwo">20万</span>
+  	              	<span class="ui-gthree">
+  	              	</span>
+  	              </div>
+                	<table class="ui-guarant-tab" width='100%'>
+                		<tr>
+  		       					<td width="40%" class="ui-td-fir">紧急救援</td>
+  		       					<td width="25%">5万</td>
+  		       					<td width="30%">
+  		       					</td>
+  		       				</tr>
+  		       				<tr class="ui-tab-last">
+  		       					<td class="ui-td-fir">意外医疗</td>
+  		       					<td>10万</td>
+  		       					<td>
+  		       					</td>
+  		       				</tr>
+  		       			</table>
+                </li>
+         			</ul>
+         			
+         			
+         		</div>
+         	</li>
+         	<li class="ui-info-item ui-relative">
+         		<label class="ui-info-lbl">保险条款</label>
+         		<span><a href="javscript:;" class="ui-info-link">《泰康附加e顺意外伤害医疗保险条款》</a></span>
+         	</li>
+         	<li class="ui-info-item ui-info-item-grey ">
+         		<label class="ui-info-lbl">投保须知</label>
+         		  <span>eeeeeeeeeeeeeeeee</span>
+         	</li>
+         	<li class="ui-info-item">
+         		<label class="ui-info-lbl">理赔指南</label>
+         		  <span>eeeeeeeeeeeeeeeee</span>
+         	</li>
+         	<li class="ui-info-item ui-info-item-grey ">
+         		<label class="ui-info-lbl">温馨提示</label>
+         		  <span>eeeeeeeeeeeeeeeee</span>
+         	</li>
+         </ul>
+	    </div>
+      <div class="ui-btn-double">
+        <input type="button" value="下一步" class="ui-btn-blue ui-submit"/>
+        <input type="button" value="返回" class="ui-btn-grey ui-back"/>
+      </div>
+  </form>
+<!--弹框-->  
+	<div id="dlgList" class="easyui-dialog ui-dlg-list"  data-options="closed: true">
+
+    <table class="ui-dlg-tab" width="100%">
+    	<tr>
+    		<td width="33%" class="ui-dlgtab-left">上级分类</td>
+    		<td width="67%">
+    			<select class="ui-info-sel" id="profitTit">
+     			  <option value=''>主分类</option>
+     			  <option value='1'>医疗保险</option>
+     		  </select>
+     	  </td>
+    	</tr>
+    	<tr class="ui-dgrey">
+    		<td class="ui-dlgtab-left">保障利益标题</td>
+    		<td>
+    			<input type="text" value="" class="ui-info-input"/>
+     	  </td>
+    	</tr>
+    	<tr>
+    		<td class="ui-dlgtab-left">赔付价格(元)</td>
+    		<td>
+    			<input type="text" value="" class="ui-info-input"/>
+     	  </td>
+    	</tr>
+    	<tr class="ui-dgrey">
+    		<td class="ui-dlgtab-left">保障说明</td>
+    		<td>
+    			<textarea class="ui-dlg-tet"></textarea>
+     	  </td>
+    	</tr>
+    </table>
+    <input type="hidden" id="mainOrsub" value="0"/>
+    <div class="ui-dlg-submit">
+			<input type="button" class="ui-dlgOk-btn" value="保存并返回"/>
+			<input type="button" class="ui-dlgCancel-btn" value="取消"/>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/kindeditor/kindeditor.js"></script>
+	<script type="text/javascript" src="../js/base.js"></script>
+	<script>
+   $(function(){
+    validExtend();
+   	richEdit();
+    $('.ui-submit').click(function(){
+      var f=$(this).parents('form');
+      if(!f.form('validate')){
+        //表单信息未填全
+      }
+      f.submit();
+    });
+  
+
+    
+	});
+   
+  
+	</script>
+</body>
+</html>

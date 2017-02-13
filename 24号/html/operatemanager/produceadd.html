@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>产品上架管理</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/base.js"></script>
+</head>
+
+<body style="">
+	<div class="ui-info-box">
+    <div class="ui-crumbs">
+    	 <span>当前位置：</span><a href="#">运营管理</a><em>></em><span>产品上架管理</span>
+    </div>
+
+		<div class="ui-datagrid-wrap">
+			<!-- 搜索 -->
+			<div class="search-wrap">
+				<form  id="search-ff" class="ui-search-form">
+					<ul class="search-list fn-clear">
+						<li>
+							<label class="name ui-change-item-label">产品ID：</label>
+							<span class="textbox"><input class="textbox-text textbox-prompt" type="text" maxlength="20"/></span>
+						</li>
+						<li>
+							<label class="name ui-change-item-label">保险名称：</label>
+							<span class="textbox"><input class="textbox-text textbox-prompt" type="text" maxlength="40"/></span>
+						</li>
+						<li>
+							<label class="name ui-change-item-label">保费范围：</label>
+							<select class="ui-combobox" name="" id="transaceAmount">
+								<option value="" selected ="selected">全部</option>
+								<option value="">0-1元</option>
+								<option value="">1-10元</option>
+								<option value="">10-50元</option>
+								<option value="">50-100元</option>
+								<option value="">100元及以上</option>
+								<option value="自定义">自定义</option>
+							</select>
+							<span class="ui-hidden" id="customToggle">
+								<input type="text" class="textbox-text moneyrange easyui-validatebox ui-cover" maxlength="10"  data-options="validType:['money']" id="moneyStart">
+								<em class="ui-channel-titcolor">至</em>
+								<input type="text" class="textbox-text moneyrange easyui-validatebox ui-cover" maxlength="10" data-options="validType:['money','moneycompare[\'#moneyStart\']']">
+								<em class="ui-channel-titcolor">元</em>
+							</span>
+						</li>
+						
+					</ul>
+					<ul class="search-list fn-clear">
+						<li>
+							<label class="name ui-change-item-label">上架状态：</label>
+							<select class="ui-combobox" name="" id="transaceAmount">
+								<option value="" selected ="selected">全部</option>
+								<option value="">待上架</option>
+								<option value="">已上架</option>
+								<option value="">未上架</option>
+							</select>	
+						</li>	
+						<li class="date">
+							<label class="name ui-change-item-label">上下架时间：</label>
+							<input id="startTime" class="easyui-datebox" data-options="editable:false" vlaue="" validType="md['#endTime']">
+							<em class="ui-channel-titcolor">至</em>
+							<input id="endTime" class="easyui-datebox" data-options="editable:false" vlaue="" validType="md['#startTime']">
+						</li>
+						<li class="btn-group">
+							<a href="javascript:void(0)" class="search-btn" onclick="submitForm()">搜索</a>
+				    		<a href="javascript:void(0)" class="search-btn" onclick="clearForm()">重置</a>
+						</li>
+					</ul>
+				</form>
+			</div>
+			<!-- 搜索end -->
+			<!-- 列表 -->
+			<div class="list-item fn-clear">
+				<a href="#" class="search-btn policy-newcontent">新增上架产品</a>
+				<table id="dg-list" class="easyui-datagrid"  style="margin-right:10px;">	
+				</table>
+			</div>
+			<!-- 列表end -->
+		</div>
+	</div>
+
+	<script>
+	$(function(){
+		validExtend();
+
+		//列表
+		$("#dg-list").datagrid({
+			url:'operate_produce.json',
+			method:'post',
+			fitColumns:true,
+			rownumbers:true,
+			nowrap: true,//当数据长度超出列宽时将会自动截取
+			//idField:'userid',//id字段
+			//sortName:'userid',//当数据表格初始化时以哪一列来排序
+			//sortOrder:'desc',//'asc'/'desc'（正序/倒序）
+			//remoteSort: false,//定义是否通过远程服务器对数据排序
+			resizable:false,
+			checkOnSelect:false,
+			pagination:true,
+			pageSize:10,
+			columns:[[
+				{field:'agentId',align:'center',width:"10%",title:'产品ID',
+					formatter:function(value,rec){
+						
+							return '<a class="detail-link" href="produceeditor.html">'+value+'</a>';
+					}
+				},
+				{field:'agentProduceName',align:'center',width:"20%",title:'保险名称'},
+				{field:'truename',align:'center',width:"10%",title:'保费金额'},
+				{field:'agentAreaCounty',align:'center',width:"6%",title:'销售数量'},
+				{field:'angertProduceNo',align:'center',width:"10%",title:'上架状态'},
+				{field:'agentProduceCount',align:'center',width:"20%",title:'上架时间'},
+				{field:'agentProducePending',align:'center',width:"20%",title:'下架时间'}
+			]],
+			queryParams: eb.form2Json("search-ff"),
+	   loadFilter:function(data){
+	
+	            return eb.loadFilter(data);//自定义过滤方法
+
+      },
+      onLoadSuccess:pageCls
+		});
+		//分页
+		pageAction();
+
+		//自定义保费范围输入框
+		var custombox = $("#customToggle");
+		$("#transaceAmount").change(function(event) {
+			
+			var val = $(this).val();
+			if(val == "自定义"){
+					custombox.show();
+			}else{
+					custombox.hide();
+			}
+		});
+		
+   });
+	
+
+	</script>
+</body>
+</html>

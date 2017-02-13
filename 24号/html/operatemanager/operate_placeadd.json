@@ -1,0 +1,30 @@
+﻿{   "succ":true,
+    "total": 50,
+    "pageSize": 5,
+    "pageCount": 2,
+    "currentPage": 1,
+    "records": [
+        {
+			"agentAreaCity":"201501262201",
+			"agentAreaCityName":"banner轮播位5",
+			"truename":"删除"
+        }, {
+            "agentAreaCity":"201501262201",
+            "agentAreaCityName":"banner轮播位5",
+            "truename":"删除"
+        }, {
+            "agentAreaCity":"201501262201",
+            "agentAreaCityName":"banner轮播位5",
+            "truename":"删除"
+        }, {
+            "agentAreaCity":"201501262201",
+            "agentAreaCityName":"banner轮播位5",
+            "truename":"删除"
+        }, {
+            "agentAreaCity":"201501262201",
+            "agentAreaCityName":"banner轮播位5",
+            "truename":"删除"
+        }
+        
+    ]
+}

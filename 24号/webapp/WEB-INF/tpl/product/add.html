@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>自研产品管理-产品信息管理-产品管理添加一</title>
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/base.css">
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/style.css">
+	<script type="text/javascript" src="../../../resource/js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../resource/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../resource/js/base.js"></script>
+	<script type="text/javascript" src="../../../resource/js/jquery.form.js"></script>
+</head>
+<body>
+<div id="produce-add">
+	<div class="ui-info-box">
+    <div class="ui-crumbs" id="crumbs">
+    	 <#include "/common/include/power.ftl">
+    </div>
+    <form id="infoForm" method="post" action="" >
+    <div id="frm1">
+      <div class="ui-info-main">
+        <h2 class="ui-info-tit">产品信息</h2>
+          <ul class="ui-info-list">
+           	<li class="ui-info-item">
+           		<label class="ui-info-lbl">保险名称</label>
+           		<input  name="productName" type="text"  class="easyui-validatebox ui-info-linput"
+               data-options="required:true,validType:['length[1,40]','ajaxInsure']" missingMessage="请输入保险名称" />
+           	</li>
+           	<li class="ui-info-item ui-info-item-grey">
+           		<label class="ui-info-lbl">保险类别</label>
+           		<select class="easyui-validatebox ui-info-sel" data-options="required:true" missingMessage="请选择!" onchange="getChildClass(this);" id="insureSort" name="classId">
+           			<option value="" >请选择</option>
+					<#list parentClassList as item>
+	                      <option value="${item.classId}">${item.className}</option>
+	                </#list>
+           		</select>
+           		<#--
+           		<select class="ui-info-sel" id="childSel" name="classId" onchange="findVal(this);">
+           			<option>请选择</option>
+           		</select>
+				-->
+           		<input type="hidden" name="className" value="" />
+           		<input type="hidden" name="className2" value="" />
+           	</li>
+           	<li class="ui-info-item">
+           		<label class="ui-info-lbl">承保公司</label>
+           		<!--必填的样式<select class="easyui-combobox ui-info-sel" required="true" validtype="selectRequired">-->
+              <select class="easyui-validatebox ui-info-sel" name="insurerId" data-options="required:true" missingMessage="请选择!" id="insureVal" onchange="findCompVal(this)">
+           			<option value=''>请选择</option>
+                    <#list iList as item>
+	                      <option value="${item.insurerId}">${item.insurerName}</option>
+ 	                </#list>
+           	  </select>
+           	  <input type="hidden" name="insurerName" />
+
+	              <!--<select class="easyui-combobox ui-info-sel" name="insurerId" validtype="selectRequired" id="insureVal">
+	           			<option>请选择</option>
+	                    <#list iList as item>
+		                      <option value="${item.insurerId}">${item.insurerName}</option>
+		                </#list>
+	           	  </select>
+	           	  <input type="hidden" name="insurerName" />-->
+           	</li>
+           	<li class="ui-info-item ui-relative">
+           		<label class="ui-info-lbl">产品配图</label>
+				<img src="" class="addimg" width="120" height="120"/>
+				<input type="button" class="ui-file-link" value="点击上传">
+				<input type="file" name="insuranceTerms" class="file-wrap" id="prodimg-file"  onchange="uploadImg('prodimg-file','${base}/product/fileUpload','product');" style="left:170px;width:60px;">
+				<input type="text" id="productLogo" name="productLogo" class="easyui-validatebox  ui-unvisib" required="true" value=""/>
+           	</li>
+           	<li class="ui-info-item ui-info-item-grey" id="aa" >
+           		<label class="ui-info-lbl">当前库存</label>
+           		&nbsp;0 份
+           		<label class="ui-info-lbl">分配数量</label>
+           		<input name="maxQuantity" type="text" class="easyui-validatebox ui-info-input" 
+
+           		data-options="required:true,validType:'plusNum'"  onKeyup="findVal(this);" id="dealiNum" /> 份 &nbsp;
+           		<input type="checkbox" name="maxQuantity1" value="1" onclick="findVal2(this)" /> 不限
+
+           		<!--data-options="validType:'plusNum'" onKeyup="findVal(this);" /> 份 &nbsp;
+           		<input type="checkbox" name="maxQuantity1" value="1" onclick="findVal2(this);" /> 不限-->
+
+           		<label class="ui-info-lbl">总库存</label>
+           		<span id="totalNum">
+           			0份
+           		</span>
+           	</li>
+           	<li class="ui-info-item">
+              <label class="ui-info-lbl ui-info-small">产品有效期</label>
+              <span data-qb="qb">
+              <!-- required:true, -->
+                <input type="text" name="effTime1" id="starteffTime1" class="easyui-datebox ui-info-sinput" data-options="editable: false"/>
+                 <em>至</em>
+                <input type="text" name="expTime1" id="expTime1" class="easyui-datebox ui-info-sinput" data-options="editable: false" validType="mdMs['#starteffTime1']"/> &nbsp;
+                <input type="checkbox" name="longTime" value="1" onclick="findVal3(this);" /> 长期 
+              </span>
+            </li>
+           	<li class="ui-info-item">
+           		<div class="ui-info-subitem">
+    	       		<label class="ui-info-lbl">承保年龄</label>
+    	       		<input name="minAge" id="minAge" type="text" value="" class="easyui-validatebox ui-info-sinput" 
+                  data-options="required:true,validType:['integer','length[1,3]']" missingMessage="请输入承保年龄"/>
+    	       		<em class="ui-info-to">至</em>
+    	       		<input name="maxAge" type="text" value="" class="easyui-validatebox ui-info-sinput" 
+                  data-options="required:true,validType:['moneycompare[\'#minAge\']','length[1,3]']" missingMessage="请输入承保年龄"/>
+    	       		周岁
+    	       	</div>
+				<#--
+           		<label class="ui-info-lbl ui-info-lblw">保险经纪人</label>
+           		<input name="productAgent" type="text" value="" class="easyui-validatebox ui-info-input" 
+              	data-options="required:true,validType:['letchi','length[1,10]']" missingMessage="请输入保险经纪人"/>
+              	-->
+           	</li>
+           	<li class="ui-info-item ui-info-item-grey ui-resureLimit-wrap fn-clear" id="addreduceItem">
+    	       	<label class="ui-info-lbl">保障期限</label>
+                <div class="ui-resureLimit-inner ui-resureLimit-fir">
+      	       		<input  name="pricesMap[1].minGuarantee" type="text" value="" class="easyui-validatebox ui-info-sinput produce-item-toggle" 
+                        data-options="required:true,validType:['integer']" missingMessage="请输入保障期限"/>
+                  <select class="ui-info-sel ui-info-ssel produce-item-toggle" name="pricesMap[1].guaranteeType"  onchange="changeVal(this);">
+                    <option value="1">天</option>
+                    <option value="3">月</option>
+                    <option value="4">年</option>
+                  </select>
+                  <input type="hidden" name="pricesMap[1].guaranteeType2" class="produce-item-toggle" value="天" />
+      	       		<a href="javascript:void(0);" class="ui-info-to get-limit">至</a>
+                  <input name="pricesMap[1].maxGuarantee" type="text" value="" class="ui-info-sinput fn-hide produce-item-toggle"/><em class="fn-hide"></em>
+
+               		<label class="ui-info-lbl ui-info-lblw">标准价格</label>
+					<input name="pricesMap[1].productPremium1" type="text" value="" class="ui-info-sinput easyui-validatebox easyui-millesimal produce-item-toggle" 
+                         data-options="required:true,validType:['money']" missingMessage="请输入标准价格"/> 元
+                    <label class="ui-contentmargin">保险公司产品代码:</label>
+					<input name="pricesMap[1].productCode" type="text" value="" class="ui-info-sinput easyui-validatebox  produce-item-toggle" 
+                         data-options="required:true,validType:['certNum']" missingMessage="请输入"/>
+                  <a class="ui-guarant-addfir" href="javascript:;"></a>
+                  <!--<a class="ui-guarant-reduce" href="javascript:;"></a>-->
+              </div>
+           	</li>
+           	<li class="ui-info-item">
+           		<label class="ui-info-lbl">适用人群</label>
+           		<input name="suitablePeople" type="text"  class="easyui-validatebox ui-info-linput"
+                     data-options="required:true,validType:['length[0,40]']"  />
+           	</li>
+           	<li class="ui-info-item ui-info-item-grey">
+           		<label class="ui-info-lbl">最高职业类别</label>
+           		<select class="easyui-validatebox ui-info-sel" name="occupationClass">
+           			<option value="9">不限</option>
+					<option value="1">1</option>
+         			<option value="2">2</option>
+         			<option value="3">3</option>
+         			<option value="4">4</option>
+         			<option value="5">5</option>
+         			<option value="6">6</option>
+         			<option value="7">特别费率</option>
+           		</select>
+           	</li>
+           	<li class="ui-info-item">
+           		<label class="ui-info-lbl">产品亮点</label>
+           		<input name="perferWords" type="text" value="" class="ui-info-linput"/>
+           	</li>
+           	<li class="ui-info-item ui-info-item-grey ui-guarant-item" id="guarantList">
+           		<label class="ui-info-lbl">保障利益</label>
+                
+           		<div class="ui-guarant-wrap" style="display:none;">
+           			<ul class="ui-guarant-list">
+	                  <li>
+	                  	<span class="ui-gone">保障利益标题</span>
+	                  	<span class="ui-gtwo">保障价格</span>
+	                  	<span class="ui-gthree">保障次/天数</span>
+	                  </li>
+           			</ul>
+           		</div>
+           		<input type="button" value="选择保障利益" class="ui-file-link ui-profit-chose"  data-url="${base}/product/param/findInsuranceType" />
+           	</li>
+           	<li class="ui-info-item ui-relative">
+           		<label class="ui-info-lbl">保险条款</label>
+				<input type="button" class="ui-file-link" value="选择保险条款">
+				<input name="insuranceTerms" type="file" class="file-wrap" id="file-wrap"  onchange="uploadFile(this,'${base}/product/fileUpload','showPath','product');" style="left:168px;">
+           		<div class="channel-infor-item" id="filePath">
+           		
+           		</div>
+           		<input type="text" id="validval"  class="easyui-validatebox ui-unvisib" required=true />
+           	</li>
+           	<li class="ui-info-item ui-info-item-grey ui-rich-wrap">
+           		<label class="ui-info-lbl">投保须知</label>
+           		  <textarea name="productStatement" class="richEditor"></textarea>
+           	</li>
+           	<li class="ui-info-item ui-rich-wrap">
+           		<label class="ui-info-lbl">理赔指南</label>
+           		  <textarea name="claimsGuide" class="richEditor"></textarea>
+           	</li>
+           	<li class="ui-info-item ui-info-item-grey ui-rich-wrap">
+           		<label class="ui-info-lbl">温馨提示</label>
+           		  <textarea class="richEditor" name="productPrompt"  ></textarea>
+           	</li>
+          </ul>
+    	</div>
+      <div class="ui-btn-double">
+        <input type="button" value="下一步" class="ui-btn-blue" onclick="submitAddfirst();"/>
+        <input type="button" value="返回"  class="ui-btn-grey ui-back"/>
+      </div>
+   </div>
+  <#-- 第二部分 -->
+  <div id="frm2" style="display:none">
+    	<div class="ui-info-main ui-insure-main">
+        <h2 class="ui-info-tit">投保信息</h2>
+          <ul class="ui-info-list">
+           	<li class="ui-info-item">
+           		<label class="ui-info-lbl ui-info-small">是否即时生效</label>
+           		<span>
+                <input type="radio" name="thisTime" id="oneo" value="1" onclick="ctrlVal(this)" /> <label class="ui-rdo-left" for="oneo">是</label>
+                <input type="radio" name="thisTime" id="onet" value="0" onclick="ctrlVal(this)" checked/><label for="onet">否</label>
+              </span> 
+           	</li>
+           	<li class="ui-info-item  ui-info-item-grey">
+              <label class="ui-info-lbl ui-info-small">支持电子保单</label>
+              <span>
+                <input type="radio" name="policyType" id="tow1" value="3" checked/> <label class="ui-rdo-left" for="tow1">是</label>
+                <input type="radio" name="policyType" id="tow2" value="2" /><label for="tow2">否</label>
+              </span> 
+            </li>
+            <li class="ui-info-item">
+              <label class="ui-info-lbl ui-info-small">是否支持退保</label>
+              <span>
+              	<select id="refundFlag" class="ui-info-sel" name="refundFlag">
+              		<option value="0" checked>不支持</option>
+         			<option value="1">仅支持生效前退保</option>
+         			<option value="2">支持</option>
+              	</select>
+              </span> 
+            </li>
+            <li class="ui-info-item  ui-info-item-grey">
+              <label class="ui-info-lbl ui-info-small">最多投保份数</label>
+              <input name="buyQuota" type="text" value="" class="easyui-validatebox ui-info-sinput" id="buyQuotaId" data-options="required:true,validType:['integer','maxbuyQuota']" missingMessage="请输入最多投保份数"/> 份
+            </li>
+            <li class="ui-info-item">
+              <label class="ui-info-lbl ui-info-small">受益人自定义</label>
+              <span>
+                <input type="radio" name="beneficiaryNum" id="four1" value="1" /> <label class="ui-rdo-left" for="four1">是</label>
+                <input type="radio" name="beneficiaryNum" id="four2" value="0" checked/><label for="four2">否</label>
+              </span> 
+            </li>
+            <li class="ui-info-item" id="maxBenef" style="display:none;">
+              <label class="ui-info-lbl ui-info-small">最多受益人数</label>
+               <input name="beneficiaryNum1" type="text" value="" class="ui-info-sinput" onkeyup="checkVal(this)"; /> 人
+            </li>
+          <li class="ui-info-item">
+            <#--
+            <li class="ui-info-item">
+              <label class="ui-info-lbl ui-info-small">产品承保起止时间</label>
+              <span data-qb="qb">
+           
+                <input type="text" class="ui-info-sinput" name="startTime1" id="startTime1"  />
+                <em>至</em>
+                <input type="text" class="ui-info-sinput" name="endTime1" id="endTime1" />
+                <input type="text" name="startTime1" id="startTime1" class="easyui-datebox easyui-validatebox ui-info-sinput"
+                	 data-options="editable:false" validType="md['#endTime1']" />
+                 <em>至</em>
+                <input type="text" name="endTime1" id="endTime1" class="easyui-datebox easyui-validatebox ui-info-sinput"
+                	 data-options="editable:false" validType="md['#startTime1']"/>
+              </span>
+            </li>
+             --> 
+            <li class="ui-info-item">
+              <label class="ui-info-lbl ui-info-small">是否需要激活</label>
+              <span>
+                <input type="radio" name="activation" id="four1" value="1" /> <label class="ui-rdo-left" for="four1">是</label>
+                <input type="radio" name="activation" id="four2" value="0" checked/><label for="four2">否</label>
+              </span> 
+            </li>
+            <li class="ui-info-item">
+              <label class="ui-info-lbl ui-info-small">是否支持线上理赔</label>
+              <span>
+              	<select id="" class="ui-info-sel" name="claimOnLine">
+              		<option value="1" selected>支持</option>
+         			<option value="0">不支持</option>
+              	</select>
+              </span> 
+            </li>
+          </ul>
+  	  </div>
+      <div class="ui-btn-double">
+        <input type="button" value="下一步" class="ui-btn-blue " onclick="forSubmit()"/>
+        <input type="button" value="上一步" class="ui-btn-grey" onclick="showOrHidden()"/>
+      </div>
+      <input type="hidden" name="type" value="${type}" />
+    </form>
+  </div>
+<#---保障利益的弹框-->
+<iframe id="dlg-box" class="dlg-box" scrolling="auto" frameborder="0"  style="width:600px;height:500px;"></iframe>
+<#-- 弹框提示 -->
+  <div id="alt" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+    <h3 class="ui-dlg-tit" id="altText">请将信息填写完整!</h3>
+    <input type="button" class="ui-dlgOk-btn ui-dlgOkcancel-btn" value="确定"/>
+  </div>
+  </div>
+    </div>
+<div id="produce-result" style="display:none">
+
+</div>
+<script>
+$(function(){
+	 validExtend();
+    richEdit();
+    prodProfit();
+    
+
+           
+    $("body").on('click', '#back', function() {
+        $("#produce-add").show();
+        $("#frm1").show();
+        $("#frm2").hide();
+        $("#produce-result").hide().empty();
+    });
+    // <#-- 清空数据 -->
+    $("#productLogo").val("");
+    $('#validval').val("");
+    // <#-- 受益人自定义 -->
+    $('input[name="beneficiaryNum"]').click(function() {
+        if ($(this).val() == '1') {
+            $('#maxBenef').show();
+        } else {
+            $('#maxBenef').hide();
+        }
+    });
+    // <#-- 选择即时生效，则起保时间不必填 -->
+    var s1 = $('#startTime1'),
+        e1 = $('#endTime1');
+    s1.validatebox('remove');
+    e1.validatebox('remove');
+    $('input[name="thisTime"]').click(function() {
+        var start = $('input[name="startTime1"]').prev('.textbox-text'),
+            end = $('input[name="endTime1"]').prev('.textbox-text');
+        if ($(this).val() == '1') {
+            start.validatebox('remove');
+            end.validatebox('remove');
+            $('.datebox').css('background', '#fff');
+        } else {
+            start.validatebox('reduce');
+            end.validatebox('reduce');
+           
+            $('.datebox').css('background', '#fff3f3');
+        }
+    });
+})
+// <#-- 查询保险种类二级分类 -->
+	function getChildClass(obj) {
+	    var parentId = obj.value;
+	    var childSel = document.getElementById("childSel");
+	    $('input[name="className"]').val($(obj).find('option:selected').text());
+	    $('input[name="className2"]').val($(obj).val());
+	    return false;
+	    if (parentId != null) {
+	        $.ajax({
+	            url: '${base}/product/findChildClass?parentId=' + parentId,
+	            type: 'get',
+	            datatype: 'json',
+	            success: function(result) {
+	                // <#--//根据id查找对象，-->
+	                var obj = document.getElementById("childSel");
+	                // <#--删除所有节点 -->
+	                obj.options.length = 0;
+	                obj.add(new Option("请选择", ""));
+	                for (var i = 0; i < result.length; i++) {
+	                    obj.add(new Option(result[i].className, result[i].classId));
+	                };
+	                $("#className2").attr("value", obj.prev('.ui-info-sel').children('option:selected').text());
+	            }
+	        });
+	    } else {
+	        $.messager.alert('提示消息', '无下属分类！', 'warn');
+	    }
+	};
+
+	function findVal2(obj) {
+	    $('input[name="className2"]').val($(obj).find('option:selected').text());
+	}
+	function findVal(obj) {
+	    obj.value = obj.value.replace(/\D/g, '0');
+	    var tot = obj.value;
+	    if (tot == null || tot == "" || tot <= 0) {
+	        $("#totalNum").text("0 份");
+	    } else {
+	        $("#totalNum").text(tot + " 份");
+	    }
+	}
+	
+	// <#--获取承保公司name -->
+	function findCompVal(obj) {
+	    $('input[name="insurerName"]').val($(obj).find('option:selected').text());
+	}
+	// <#-- 提交到第二个页面 -->
+	function submitAddfirst(obj) {
+	    var flag = true;
+	    if ($('#guarantList').find('.ui-guarant-tab').length == 0) {
+	        $("#altText").text('请选择保障利益');
+	        showAlert('alt');
+	        return false;
+	    } else {
+	        $.each($('.ui-guarant-tab').find('.ui-info-sinput'), function(idx, item) {
+	            if ($(item).val() == '') {
+	                $("#altText").text('请填写保障利益的内容');
+	                showAlert('alt');
+	                flag = false;
+	                return false;
+	            }
+	        });
+	        if (!flag) return;
+	    }
+	    $(".ke-edit-iframe").each(function() {
+	        if ($(this).contents().find("body").html() == '') {
+	            $("#altText").text('请填写' + $(this).parents('.ke-container').prev('label').text());
+	            showAlert('alt');
+	            flag = false;
+	            return false;
+	        }
+	    });
+	    if (!flag) return;
+	    if ($('#frm1').form('validate')) {
+	        s1 = null, el = null;
+	        $('#frm1').hide().siblings('#frm2').show();
+	    }
+	}
+	// <#--表单切换显示 -->
+	function showOrHidden() {
+	    var sty = $("#frm1")[0].style.display;
+	    if (sty == 'block') {
+	        $("#frm1").hide();
+	        $("#frm2").show();
+	    } else {
+	        $("#frm1").show();
+	        $("#frm2").hide();
+	    }
+	};
+
+	function forSubmit() {
+	   
+	    $('#infoForm').ajaxForm({
+	        target: '#produce-result',
+	        success: function() {
+	            $("#produce-add").hide();
+	            $('#produce-result').show();
+	        }
+	    })
+	    $("#infoForm").attr("action", "${base}/product/toSure");
+	    if ($("#frm2").form('validate')) {
+	        $("#infoForm").submit();
+	    }
+	}
+
+	
+	function findVal2(obj) {
+	    // <#-- 点击不限 -->
+	    var inpt = $('#dealiNum');
+	    if ($(obj).is(':checked')) {
+	        inpt.val('').attr('readOnly', 'readOnly');
+	        inpt.validatebox('remove');
+	        $("#totalNum").text("不限");
+	    } else {
+	        $(inpt).removeAttr('readOnly');
+	        inpt.validatebox('reduce');
+	        $("#totalNum").text("0 份");
+	    }
+	} 
+
+
+	function findVal3(obj){
+  		var tot3 = obj.checked;
+  		if(tot3){
+  			 $(".easyui-datebox").combotree('disable');
+  		} else {
+  			$(".easyui-datebox").combotree('enable');
+  		}
+  	}
+
+	// <#--检测自定义人数是否合理 -->
+  	function checkVal(obj){
+  		var num = obj.value;
+  		if(num != "" && num != "" && num <= 0 ){
+  			 obj.value = "1";
+  			 $("#altText").text('受益人数至少为1');
+	         showAlert('alt');
+  		}
+  	}
+  	
+  	// <#--控制是否允许退保-->
+  	function ctrlVal(obj){
+  		var str = obj.value;
+  		if(str == 1){
+  			$("#refundFlag").find("option").eq(0).prop("selected","selected");
+  			$("#refundFlag").attr("disabled","false");
+  			//$("#refundFlag").attr("onfocus","this.defaultIndex=this.defaultIndex;");
+  			//$("#refundFlag").attr("onchange","this.selectedIndex=this.defaultIndex;");
+  		} else {
+  			$("#refundFlag").removeAttr("disabled");
+  			//$("#refundFlag").attr("onfocus","");
+  			//$("#refundFlag").attr("onchange","");
+  		}
+  	}
+  	
+</script>	
+
+  		
+  	
+  	
+  
+  
+
+</body>
+</html>

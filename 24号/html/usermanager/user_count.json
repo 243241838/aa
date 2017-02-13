@@ -1,0 +1,58 @@
+﻿{   "succ":true,
+    "total": 50,
+    "pageSize": 5,
+    "pageCount": 2,
+    "currentPage": 1,
+    "titleDetail":{"alluser":400000000,"newuser":3720000,"countuser":113300},
+    "records": [
+        {
+			"agentAreaCity":"2015-04-14",
+			"agentAreaCityName":"28000",
+			"truename":"21000"	
+        },
+		{
+			"agentAreaCity":"2015-04-14",
+			"agentAreaCityName":"22000",
+			"truename":"21000"	
+        },
+        {
+			"agentAreaCity":"2015-04-14",
+			"agentAreaCityName":"39000",
+			"truename":"21000"	
+        },
+        {
+			"agentAreaCity":"2015-04-14",
+			"agentAreaCityName":"2000",
+			"truename":"21000"	
+        },
+        {
+			"agentAreaCity":"2015-04-14",
+			"agentAreaCityName":"38000",
+			"truename":"21000"	
+        },
+        {
+			"agentAreaCity":"2015-04-14",
+			"agentAreaCityName":"27000",
+			"truename":"21000"	
+        },
+        {
+			"agentAreaCity":"2015-04-14",
+			"agentAreaCityName":"20000",
+			"truename":"21000"	
+        },
+        {
+			"agentAreaCity":"2015-04-14",
+			"agentAreaCityName":"29000",
+			"truename":"21000"	
+        },
+        {
+			"agentAreaCity":"2015-04-14",
+			"agentAreaCityName":"40000",
+			"truename":"21000"	
+        },{
+			"agentAreaCity":"2015-04-14",
+			"agentAreaCityName":"50000",
+			"truename":"21000"
+        }
+    ]
+}

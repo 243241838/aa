@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>计价因子</title>
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/base.css">
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/style.css">
+  
+  <script type="text/javascript" src="../../../resource/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../../../resource/js/jquery.easyui.min.js"></script>
+  <script type="text/javascript" src="../../../resource/js/base.js"></script>	
+  <link rel="stylesheet" type="text/css" href="valuation.css">
+
+</head>
+<body>
+
+	<div class="ui-datagrid-wrap">
+		<!-- ========================搜索=============================================== -->
+		<div class="search-wrap">
+			<form  id="search-ff" class="ui-search-form" action="">
+				<ul class="search-list fn-clear">
+					<li>
+						<label class="name">因子ID</label>
+						<span class="textbox"><input class="textbox-text textbox-prompt intOnly" type="text" name="productId" maxlength=9/>
+							<input class="textbox-text textbox-prompt" type="text" name="productSource" value="1"/>
+						</span>
+					</li>
+					<li>
+						<label class="name">因子名称</label>
+						<span class="textbox"><input class="textbox-text textbox-prompt" type="text" name="productName" value=""/></span>
+					</li>
+					<li class="btn-group">
+						<a href="javascript:void(0)" class="search-btn" id='seach' onclick="submitForm()">搜索</a>
+						<a href="javascript:void(0)" class="search-btn" onclick="clearForm()">重置</a>
+					</li>
+				</ul>
+			</form>
+		</div>
+		<!-- ========================搜索end =============================-->
+
+		<div class="list-item fn-clear">
+
+			<a href="javascript:;" class="dash-add-btn" onclick='job_add()'><i class="ui-icon ui-icon-add" ></i>新增</a>
+
+			<table id="dg-list" class="easyui-datagrid ebao-datagrid"  style="margin-right:10px;"></table>
+
+      <div class="company" style="">
+        <h3>新增保险公司<span onclick='add_close()'>x</span></h3>
+        <form method="post" action="" id='form123'>
+          <div class="top">
+            <div class="left">
+             <p class="p1"><span>上级公司</span><input type="text" name="" value="" id='box'></p>
+             <p class="p2">保险公司名称<input name="" value="太平洋" class='easyui-validatebox' data-opotions='reuired:true'></p>
+             <p class="p3">客服电话<input name="" value="" class="easyui-validatebox" data-options="required:true,validType:'tele'">
+               <p class="p4">联系人<input name="" value="" class="easyui-validatebox" data-options="required:true">
+                <p class="p5"> 联系人电话<input name="" value="" class="easyui-validatebox" data-options="required:true,validType:'phone'">
+                 <p class="p6"><span>简介</span><textarea name="" id="" cols="30" rows="3"></textarea></p>
+               </div>
+               <!-- logo左边 -->
+               <div class="right" style=" width: 250px; height: 175px;background:#ccc;position:absolute;left:340px;top:35px;
+">
+                
+               </div>
+             </div>
+             <p class="p7">
+               <input class='list_save' type="button" name="" onclick='add_save()' value="保存">
+               <input type="button" onclick='add_close()' name="" value="取消">
+             </p>
+
+
+           </div>
+         </form>
+         <!-- 结束 -->
+
+       </div>
+
+
+
+
+       <!--=======================最后=================================================================-->
+     </div>
+
+     <div class="mubu"></div>
+   </body>
+
+   <script>
+     $(function(){
+       validExtend();
+        //搜索
+        $('#seach').click(function(){
+        	$('#search-ff').form({
+        		url:'',
+        	})
+        });
+
+
+//列表
+var dt = "${type}";
+$("#dg-list").datagrid({
+  width:1800,
+  url: 'datagrid_data1.json',
+        method:'get',//
+        fitColumns:true, //自适应
+        rownumbers:true, //显示行号
+        nowrap: true,//如果为true，则在同一行中显示数据。设置为true可以提高加载性能。
+        idField:'productId', //指明哪一个字段是标识字段。
+        sortName:'createTime',
+        sortOrder:'desc',//排序
+        resizable:false,//改变大小
+        checkOnSelect:false,//复选框选中取消
+        singleSelect:true,//只能选择一行
+        pagination:true,//如果为true，则在DataGrid控件底部显示分页工具栏。
+        pageSize:10,//在设置分页属性的时候初始化页面大小。
+        columns:[[
+        {field:'aa',align:'center',width:"20%",title:'快速操作',
+        formatter:function(value,rec){
+         return '<a class="list-copy" href="javascript:;" onclick="job_admit()">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="list-redact" href="javascript:;" onclick="job_remove()" >删除</a>'
+       }
+
+     },
+     {field:'agentId',align:'center',width:"25%",title:'因子ID',},
+     {field:'agentBranchName',align:'center',width:"25%",title:'因子名称'},
+     {field:'businessName',align:'center',width:"28%",title:'说明'},
+   
+     ]],
+     queryParams: eb.form2Json("search-ff"),
+     loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+          },
+          onLoadSuccess:function(data){
+            pageCls();
+          sortCell(['maxQuantity','totalQuantity','minPremium']);//排序要显示箭头的，以数组形式传
+        },
+      }),
+  //分页
+  pageAction();
+
+  
+    // console.log($('#dg-list').datagrid(getRowIndex,row))
+  });
+
+
+
+
+
+// 新增
+function job_add(){
+ $('.company').show();
+ $('#form123 input').validatebox({
+  required:true,
+});
+};
+/*=========================================编辑====================================*/
+faa=false;
+function job_admit(){
+  $('.mubu').show();
+  $('#form123 input').validatebox({
+    required:false,
+  });
+  faa=true;
+  $('#dg-list').datagrid({
+    onClickRow:function(getRowIndex,rowData){
+
+               var oData=rowData//点击获取获取
+               console.log(oData)
+               $('.company .p1 input').val(rowData.businessName);
+               $('.company .p2 input').val(rowData.businessName);
+               $('.company .p3 input').val(rowData.businessName);
+               $('.company .p4 input').val(rowData.businessName);
+               $('.company .p5 input').val(rowData.businessName);
+               $('.company .p6 textarea').val(rowData.businessName);
+             }
+           });
+
+
+  $('.company').show();
+  $('.mubu').show();
+
+};
+//下拉框
+$('#box').combotree({
+  url:'tree.json',
+  width:200,
+  hieght:10,
+  required:true,
+  editable:false,
+});
+//保存
+
+function add_save(){
+  var flag =$('#form123').form('validate')
+  if(flag||faa){
+    // alert('验证成功');
+    $('#form123').form({
+     url:'zxcxz',
+     data:'oData',
+     onSubmit:function(){
+              // return $(this).form('validate');
+              
+              $('#da-list').treegrid('load','datagrid_data1.json');
+            },
+            success:function(data){
+               // alert('陈宫');
+               
+             },
+             error:function(){
+            // alert('失败')
+          },
+        });
+    $('.company').hide();
+    $('#form123').form('reset');
+    $('.mubu').hide();
+  }else{
+    // alert('失败')
+  }
+  
+}
+//关闭
+function add_close(){
+  $('.company').hide();
+  $('#form123').form('reset');
+  $('.mubu').hide();
+}
+
+//删除
+function job_remove(){
+  $('#dg-list').datagrid({
+    onClickRow:function(getRowIndex,rowData){
+     oIndex=getRowIndex;
+               oData=rowData.agentId;//获取的iD
+               console.log(oData);
+               $.messager.confirm
+               $.messager.confirm('确认','您确认想要删除记录吗？',function(r){    
+                if (r){    
+                 $.ajax({
+                   type: "POST",
+                   url: "",
+                   data: "name=John&location=Boston",
+                   success: function(data){
+                     // alert('成功');
+                     $('#dg-list').datagrid('load');
+                   },
+                   erro:function(){
+                     alert('删除失败，请重新删除');
+                   }
+
+                 })
+               }    
+             });  
+
+             }
+           })
+}
+
+
+
+
+</script>
+</html>

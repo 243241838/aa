@@ -1,0 +1,52 @@
+﻿{
+    "RESPONSECODE": "000000",
+    "RESPONSECONTENT": "操作成功!",
+    "COUNTS": "6",
+    "TRADETAILS": [{
+        "CATEGORYID": "1006",
+        "name": "用户管理",
+        "path": "#",
+        "child": [{
+            "CATEGORYID": "100601",
+            "name": "用户统计",
+            "path": "usermanager/usercount.html"
+        }, {
+            "CATEGORYID": "100602",
+            "name": "用户详情",
+            "path": "usermanager/usermessage.html"
+        }]
+    }, {
+        "CATEGORYID": "1006",
+        "name": "产品发布管理3",
+        "path": "index.html",
+        "child": [{
+            "CATEGORYID": "100601",
+            "name": "自研产品管理3",
+            "path": "detail.html"
+        }, {
+            "CATEGORYID": "100602",
+            "name": "渠道产品管理3",
+            "path": "list.html"
+        }]
+    }, {
+        "id": "1001",
+        "name": "风控规则设置",
+        "path": "list.html"
+    }, {
+        "CATEGORYID": "1002",
+        "name": "用户风控管理",
+        "path": "detail.html"
+    }, {
+        "CATEGORYID": "1003",
+        "name": "黑名单管理",
+        "path": "list.html"
+    }, {
+        "CATEGORYID": "1004",
+        "name": "商户类别风控管理",
+        "path": "detail.html"
+    }, {
+        "CATEGORYID": "1005",
+        "name": "商户风控管理",
+        "path": "list.html"
+    }]
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>保险经纪管理平台</title>
+	<link rel="stylesheet" type="text/css" href="style/base.css">
+	<link rel="stylesheet" type="text/css" href="style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="style/index.css">
+	<script>
+     
+	</script>
+</head>
+<body>
+	<div class="ui-login-body">
+		<div class="sm-ui-header">
+			<div class="sm-ui-operation-main">
+				<span class="ui-welcome">欢迎您，请登录</span>
+			</div>
+		</div>
+		<div class="ui-login-main">
+			<div class="ui-logion-logo">
+				<img src="images/logo.png" width="60" height="58" />
+				<img src="images/logot.png" width="284" height="41" />
+			</div>
+			<div class="ui-login-form fn-clear">
+				<div class="ui-poll-wrap">
+          <h3>最新消息</h3>
+          <p class="ui-blue-hr"></p>
+          <div class="ui-poll-out">
+	          <ul class="ui-poll-list fn-clear" id="scroll-list">
+	          	<li>
+	          		<label>注册用户</label>
+	          		<span>新增 5%</span>
+	            </li>
+							<li>
+								<label>活跃用户</label>
+								<span>新增 6%</span>
+							</li>
+							<li>
+								<label>交易总量环比</label>
+								<span>新增 5%</span>
+							</li>
+							<li>
+	          		<label>注3册用户</label>
+	          		<span>新增 5%</span>
+	            </li>
+							<li>
+								<label>活3跃用户</label>
+								<span>新增 6%</span>
+							</li>
+							<li>
+								<label>交3易总量环比</label>
+								<span>新增 5%</span>
+							</li>
+	          </ul>
+	        </div>
+          <p class="ui-blue-hr"></p>
+          <div class="ui-triangle-bor"></div>
+          <div class="ui-triangle"></div>
+
+				</div>
+        <div class="ui-login-right">
+        	<form class="ui-login-right-form easyui-form" id="loginForm" action="menu.html" method="post" data-options="novalidate:true">
+            <div class="ui-login-item">
+            	<label>帐号</label>
+            	<input type="text" class="easyui-validatebox ui-login-input" 
+            	       data-options="required:true,validType:['letter']" missingMessage="请输入用户名" placeholder="请输入"/>
+            </div>
+            <div class="ui-login-item">
+            	<label>密码</label>
+            	<input type="password" class="easyui-validatebox ui-login-input"
+            	      data-options="required:true,validType:['numlettMust','length[6,16]']" missingMessage="请输入密码" placeholder="请输入"/></div>
+            <div class="ui-login-item">
+            	<label>验证码</label>
+            	<input type="text" class="ui-login-dinput" placeholder="请输入"/>
+            	<img src="../images/imgcode.jpg"/>
+            </div>
+            <div class="ui-login-item">
+            	<label> </label>
+            	<input type="checkbox" class="ui-ckbox"/><label class="ui-remb">记住用户名</label>
+            	<input type="button" value="登录" class="ui-btn-blue" onclick="doSubmit(this);">
+            </div>
+          </form>
+        </div>
+				
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="js/base.js"></script>
+	<script>
+	var pollTime=0;
+	$(function(){
+		validExtend();
+		$("#scroll-list").iScroll();
+	});
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/base.css">
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/style.css">
+	<style>
+	.window{top:50px!important;}
+	</style>
+	
+</head>
+<body>
+    <div id="dlgProfit" class="ui-dlg-list ui-dlgProfit" style="border-bottom:0;">
+		<form id="frm1" method="post" action="" >
+		    <table class="ui-dlg-tab" width="100%">
+		      <tr>
+		        <td colspan='2'>
+		          <input id="benName" class="ui-info-input" type="text" name="benefitName" value="" placeholder="关键字"/>
+		          <a href="javascript:void(0)" class="search-btn" onclick="findBenetis()">搜索</a>
+		        </td>
+		      </tr>
+		      <tr>
+		        <td colspan='2'>
+		           <strong>请选择保障利益及分类</strong>
+		        </td>
+		      </tr>
+		      <div id="benenDiv" >
+				<#list benenFitsList as item>
+					<tr class="sortCks">
+			    		<td width="50%" class="ui-dlgtab-left">
+			        		<input type="checkbox" value="${item.benefitId}" name="benefitIdMap['${item.benefitId}'].benefitId" /><label>${item.benefitName}</label>
+			        	</td>
+			        	<td width="50%">
+						</td>
+				  	</tr>
+			    </#list>
+			  </div>
+		      <tr>
+		        <td colspan='2'>
+		          <a href="javascript:;" id="defineAdd">自定义添加分类</a>
+		        </td>
+		      </tr>
+		    </table>
+		    <div class="ui-dlg-submit">
+		      <input type="button" class="ui-dlgOk-btn" value="确认"/>
+		      <input type="button" class="ui-dlgCancel-btn" onclick="" value="取消"/>
+		    </div>
+		</form>
+	</div>
+	<!--弹框-->  
+    <form id="dlgList" class="easyui-dialog ui-dlg-list" data-options="closed: true,modal:true"
+     type="post" action="" >
+	    <table class="ui-dlg-tab" width="100%">
+	    	<tr>
+	    		<td width="33%" class="ui-dlgtab-left">上级分类</td>
+	    		<td width="67%" >
+	    			<select class="ui-info-sel" onchange="findVal(this);">
+	     			  <option value=''>主分类</option>
+	     			  <#list benenFitsList as item>
+		                      <option value="${item.benefitId}">${item.benefitName}</option>
+		              </#list>
+	     		    </select>
+	     		    <input type="hidden" id="parentId" name="parentId"  class="ui-info-input" value="" />
+	     	   </td>
+	    	</tr>
+	    	<tr class="ui-dgrey">
+	    		<td class="ui-dlgtab-left">保障利益标题</td>
+	    		<td>
+	    			<input id="benefitName" name="nameMap[1].benefitName" type="text" value="" class="ui-info-input"/>
+	     	  </td>
+	    	</tr>
+	    	<tr id="benefit-desc">
+	    		<td class="ui-dlgtab-left">保障说明</td>
+	    		<td>
+	    			<textarea name="nameMap[1].benefitDesc" cols="30" rows="10" class="ui-textarea-st"></textarea>   	
+	     	  </td>
+		
+	    	</tr>
+	    </table>
+	    <div class="ui-dlg-submit">
+				<input type="button" class="ui-dlgOk-btn" onclick="subFrm()" value="保存并返回"/>
+				<input type="button" class="ui-dlgCancel-btn" value="取消"/>
+		</div>
+	</form>
+    <script type="text/javascript" src="${base}/resource/js/jquery.min.js"></script>
+	<script type="text/javascript" src="${base}/resource/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="${base}/resource/js/kindeditor/kindeditor.js"></script>
+	<script type="text/javascript" src="${base}/resource/js/base.js"></script>
+	<script type="text/javascript">
+		$(function(){
+		  sonProfit(parent.document);
+		});
+		function findBenetis(){
+			var name = $("#benName").val();
+			if(name != ""){
+				$("#frm1").attr("action","${base}/product/findBenenFitTo");
+		  		$("#frm1").submit();
+			}else{
+				reload();
+			}
+	  	}
+	  	
+	  	function reload(){
+	  		window.location.href="${base}/product/param/findInsuranceType";
+	  	}
+	  	<!--用于添加二级保障类别 -->
+	  	function findVal(obj){
+		  	/*if($(obj).val()==''){//主分类
+		  	  $('#benefit-desc').hide();
+		  	}else{
+		  	  $('#benefit-desc').show();
+		  	}*/
+	  		var str =$(obj).val();
+	  		$("#parentId").val(str);
+	  	}
+	  	
+	  	//添加
+	  	function subFrm(){
+	  		
+	  		var benName = $("#benefitName").val();
+	  		if(benName == ""){
+	  			alert("请将信息填写完整！");
+	  			return;
+	  		}else{
+		  		$.ajax( {
+					url : "${base}/product/param/addBenefit",
+					dataType : "json",
+					type : "post",
+					data: $('#dlgList').serialize(),
+					// 成功后调用
+					success : function(data) {
+					    if(data.succ){
+					    	location.reload();
+					    }else{
+					    	alert("添加失败！");
+					    	return false;
+					   }
+					}
+				});
+			}
+	  	}
+	  	
+	</script>
+</body>
+</html>

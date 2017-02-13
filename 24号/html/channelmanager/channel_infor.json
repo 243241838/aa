@@ -1,0 +1,122 @@
+﻿{   "succ":true,
+    "total": 50,
+    "pageSize": 5,
+    "pageCount": 2,
+    "currentPage": 1,
+     "titleDetail":{"alluser":400000000,"newuser":3720000,"countuser":113300},
+    "records": [
+        {
+			"agentAreaCity":"000010",
+			"agentAreaCityName":"京东商城",
+			"truename":"有效",
+			"agentAreaCounty":"2015-01-01",
+			"agentId":"2015-11-12",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },
+		{
+			"agentAreaCity":"000010",
+			"agentAreaCityName":"京东商城",
+			"truename":"有效",
+			"agentAreaCounty":"2015-01-01",
+			"agentId":"2015-11-12",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"000010",
+			"agentAreaCityName":"京东商城",
+			"truename":"有效",
+			"agentAreaCounty":"2015-01-01",
+			"agentId":"2015-11-12",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"000010",
+			"agentAreaCityName":"京东商城",
+			"truename":"有效",
+			"agentAreaCounty":"2015-01-01",
+			"agentId":"2015-11-12",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"000010",
+			"agentAreaCityName":"京东商城",
+			"truename":"有效",
+			"agentAreaCounty":"2015-01-01",
+			"agentId":"2015-11-12",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"000010",
+			"agentAreaCityName":"京东商城",
+			"truename":"有效",
+			"agentAreaCounty":"2015-01-01",
+			"agentId":"2015-11-12",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"000010",
+			"agentAreaCityName":"京东商城",
+			"truename":"有效",
+			"agentAreaCounty":"2015-01-01",
+			"agentId":"2015-11-12",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"000010",
+			"agentAreaCityName":"京东商城",
+			"truename":"有效",
+			"agentAreaCounty":"2015-01-01",
+			"agentId":"2015-11-12",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"000010",
+			"agentAreaCityName":"京东商城",
+			"truename":"有效",
+			"agentAreaCounty":"2015-01-01",
+			"agentId":"2015-11-12",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"000010",
+			"agentAreaCityName":"京东商城",
+			"truename":"有效",
+			"agentAreaCounty":"2015-01-01",
+			"agentId":"2015-11-12",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        }
+        
+    ]
+}

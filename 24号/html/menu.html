@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>保险经纪管理平台</title>
+	<link rel="stylesheet" type="text/css" href="style/base.css">
+	<link rel="stylesheet" type="text/css" href="style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="style/index.css">
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+	<script>
+      $(function(){
+
+        var param=location.search;
+		  if(param.indexOf("?")>-1){
+			  $("#mainCont").attr("src",param.split("toUrl=")[1]);
+		  }
+		  // 初始化选择一级菜单
+		  var navId=$(".sm-ui-nav-item-current").index();
+		  
+		   // 一级根据二级绑定
+		  $("#Nav").find(".sm-ui-nav-item").hover(function(){
+		  	    navId=$(".sm-ui-nav-item-current").index();
+		  	   $(this).addClass("sm-ui-nav-item-current").siblings().removeClass("sm-ui-nav-item-current")
+		  	 },function(){
+            $("#Nav").find(".sm-ui-nav-item").eq(navId).addClass("sm-ui-nav-item-current").siblings().removeClass("sm-ui-nav-item-current")
+        });
+
+
+		   // 初始化选择二级显示
+		  $("#Nav").find(".sm-ui-nav-item").click(function(event) {
+		  	   navId=$(this).index();
+           $(this).addClass("sm-ui-nav-item-current").siblings().removeClass("sm-ui-nav-item-current")
+			  	 ajaxLeftMenu( $(this).attr('data-index'),"1");
+		  });
+
+		 
+		  $("#leftMenu").delegate('.sm-ui-leftmenu-item', 'click', function(event) {
+		         $(this).addClass("sm-ui-leftmenu-item-current").siblings().removeClass("sm-ui-leftmenu-item-current");
+		         $(this).siblings('.sm-ui-leftmenu-item-multi').removeClass('sm-ui-leftmenu-item-multi-open');
+		  });
+
+		  //二级打开三级
+		  $("#leftMenu").delegate('.sm-ui-leftmenu-item-multi', 'click', function(event) {
+		  	    /*var sib=$(this).siblings().hasClass("sm-ui-leftmenu-item-current");*/
+
+		  	    if((!$(this).hasClass('sm-ui-leftmenu-item-multi-open'))){//要打开
+                if($(this).siblings('.sm-ui-leftmenu-item-current').length!=0){
+                	$(this).find('.sm-ui-leftmenu-subitem').removeClass('sm-ui-leftmenu-subitem-current');
+                }
+		  	    }
+		        $(this).toggleClass('sm-ui-leftmenu-item-multi-open');
+		        //$(this).siblings().removeClass("sm-ui-leftmenu-item-current");
+		        $(this).siblings().removeClass("sm-ui-leftmenu-item-multi-open");
+		       /* $(this).find('.sm-ui-leftmenu-subitem:eq(0)').addClass('sm-ui-leftmenu-subitem-current').siblings().removeClass('sm-ui-leftmenu-subitem-current');
+		         $(this).find('.sm-ui-leftmenu-subitem:eq(0)').trigger('click');*/
+		  });
+
+		  $("#leftMenu").delegate('.sm-ui-leftmenu-subitem', 'click', function(event) {
+             window.open($(this).children('a').attr('href'),"mainCont");
+		        $(this).addClass('sm-ui-leftmenu-subitem-current').siblings('.sm-ui-leftmenu-subitem').removeClass('sm-ui-leftmenu-subitem-current');
+		        $(this).parents('.sm-ui-leftmenu-item-multi').siblings('.sm-ui-leftmenu-item').removeClass('sm-ui-leftmenu-item-current');
+		        stopPropagation(event);
+		  });
+		  
+      function stopPropagation(e) {  
+			    e = e || window.event;  
+			    if(e.stopPropagation) { //W3C阻止冒泡方法  
+			        e.stopPropagation();  
+			    } else {  
+			        e.cancelBubble = true; //IE阻止冒泡方法  
+			    }  
+			}  
+
+		  function ajaxLeftMenu(id,level){
+		  	$.ajax({
+		  		url: 'menu2.json',
+		  		type: 'post',
+		  		dataType: 'json',
+		  		data: {id: id,level:level},
+		  		success:function(result){
+		  			$("#leftMenu").empty();
+		  			if(result.TRADETAILS){
+                sHtml='<ul>';
+                for (var i=0; i< result.TRADETAILS.length; i++) {
+	                  var className="";
+	                  if( result.TRADETAILS[i].child){
+		                	  if(i==0){
+			                      className="sm-ui-leftmenu-item-multi-open";
+			                  }
+		                	  sHtml+='<li class="sm-ui-leftmenu-item-multi '+className+'">'+
+														   '<a class="sm-ui-leftmenu-item-multi-name" target="mainCont" href="javascript:;">'+
+														    '<i class="sm-ui-icon-arrow "></i>'+
+														    result.TRADETAILS[i].name+'</a>'+
+														    '<ul class="sm-ui-leftmenu-submain">'
+												      
+		                  	for(var j=0;j<result.TRADETAILS[i].child.length;j++){
+		                      		var classSubName='';
+		                  		    if(i==0&&j==0){
+		                  		    	classSubName="sm-ui-leftmenu-subitem-current";
+		                  		    }
+					                		var child=result.TRADETAILS[i].child[j];
+					                		sHtml+='<li class="sm-ui-leftmenu-subitem '+classSubName+'">'+
+															       '<a class="sm-ui-leftmenu-subitem-name" target="mainCont" href="'+child.path+'">'+
+															        child.name+'</a></li>'										
+		                  	   }
+		                  	sHtml+='</ul></li>';
+	                  	
+	                  }else{
+
+		                  	if(i==0){
+		                      className="sm-ui-leftmenu-item-current";
+		                    }
+								        sHtml+='<li class="sm-ui-leftmenu-item  '+className+'">'+
+														   '<a class="sm-ui-leftmenu-item-name" target="mainCont" href="'+result.TRADETAILS[i].path+'">'+result.TRADETAILS[i].name+'</a>'+
+													      '</li>'
+					              
+			                  
+	                  }
+	               }
+	                sHtml+='</ul>';
+                 $("#leftMenu").append(sHtml);
+
+		  			}else{
+		  				   $('#page').layout('collapse','west');
+		  			}
+		  		}
+		  	})
+		  }
+
+      })
+	</script>
+</head>
+<body class="easyui-layout" id="page">
+	<div data-options="region:'north',border:false" class="ui-nav-wrap">
+		
+		<div class="sm-ui-header">
+			
+			<div class="sm-ui-operation-main">
+				<span>操作员</span>
+				<span>张孝全</span>
+				<span>您当前有 <a class="ui-red" href="#"><strong>2条</strong></a> 待审核消息。</span>
+				<span>上次登录时间：2013-09-09 20:14:25</span>
+				<a class="sm-ui-logout" href="/login.html"  title="安全退出">安全退出</a>
+			</div>
+		</div>
+
+		<div class="sm-ui-nav"><!--一级-->
+			<a  class="sm-ui-logo" href="#" title="后台管理">
+				<img src="images/logo.png" width="59" height="56" />
+				<img src="images/logot.png" width="168" height="22" />
+			</a>
+			<ul class="sm-ui-nav-main" id="Nav">
+				<li class="sm-ui-nav-item sm-ui-nav-item-current">
+					<a href="javascript:;" title="用户管理" target="mainCont" data-index='1' class="ui-icon-user"></a>
+				</li>
+				<li class="sm-ui-nav-item">
+					<a href="javascript:;" title="产品管理" target="mainCont" data-index='2' class="ui-icon-product"></a>
+				</li>
+				<li class="sm-ui-nav-item">
+					<a href="javascript:;" title="渠道管理" target="mainCont" data-index='2' class="ui-icon-source"></a>
+				</li>
+				<li class="sm-ui-nav-item">
+					<a href="javascript:;" title="运营管理" target="mainCont" data-index='2' class="ui-icon-operate"></a>
+				</li>
+				<li class="sm-ui-nav-item">
+					<a href="javascript:;" title="内容管理" target="mainCont" data-index='2' class="ui-icon-content"></a>
+				</li>
+				<li class="sm-ui-nav-item">
+					<a href="javascript:;" title="数据统计" target="mainCont" data-index='2' class="ui-icon-staticis"></a>
+				</li>
+				<li class="sm-ui-nav-item">
+					<a href="javascript:;" title="交易管理" target="mainCont" data-index='2' class="ui-icon-trade"></a>
+				</li>
+				<li class="sm-ui-nav-item">
+					<a href="javascript:;" title="财务管理" target="mainCont" data-index='2' class="ui-icon-finance"></a>
+				</li>
+				<li class="sm-ui-nav-item">
+					<a href="javascript:;" title="增值管理" target="mainCont" data-index='2' class="ui-icon-increment"></a>
+				</li>
+				<li class="sm-ui-nav-item">
+					<a href="javascript:;" title="系统管理" target="mainCont" data-index='2' class="ui-icon-system"></a>
+				</li>
+				<li class="sm-ui-nav-item">
+					<a href="javascript:;" title="客户端管理" target="mainCont" data-index='2' class="ui-icon-client"></a>
+				</li>
+			</ul>
+		</div>
+		
+	</div>
+	<div data-options="region:'west',split:true,border:false,split:false,title:' '" class="ui-leftmenu-wrap">
+		<div class="ui-leftmenu-sec-wrap">
+			<div class="sm-ui-leftmenu" id="leftMenu"><!--二级-->
+				<ul>
+					<li class="sm-ui-leftmenu-item sm-ui-leftmenu-item-current">
+						<a class="sm-ui-leftmenu-item-name" target="mainCont" href="detail.html">个人认证初审</a>
+					</li>
+					<li class="sm-ui-leftmenu-item">
+						<a class="sm-ui-leftmenu-item-name" href="list.html" target="mainCont">个人认证一级复审</a>
+					</li>
+					<li class="sm-ui-leftmenu-item">
+						<a class="sm-ui-leftmenu-item-name" href="detail.html" target="mainCont">个人认证二级复审</a>
+					</li>
+					<li class="sm-ui-leftmenu-item">
+						<a class="sm-ui-leftmenu-item-name" href="list.html" target="mainCont" >个人认证二级复审</a>
+					</li>
+					<li class="sm-ui-leftmenu-item-multi ">
+						<a class="sm-ui-leftmenu-item-multi-name" href="javascript:;" target="mainCont" >
+							个哥哥哥哥
+							<i class="sm-ui-icon-arrow"></i>
+						</a>
+						
+						<ul class="sm-ui-leftmenu-submain">
+							<li class="sm-ui-leftmenu-subitem ">
+								<a class="sm-ui-leftmenu-subitem-name" href="detail.html" target="mainCont">呜呜呜呜呜呜呜呜</a>
+							</li>
+							<li class="sm-ui-leftmenu-subitem">
+								<a class="sm-ui-leftmenu-subitem-name" href="list.html" target="mainCont">反反复复反反复复</a>
+							</li>
+						</ul>
+
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div data-options="region:'center',border:false">
+		<iframe scrolling="auto" frameborder="0"  id="mainCont" name="mainCont" src="detail.html" style="width:100%;height:100%;"></iframe>
+	</div>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>新增确认</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+</head>
+<body>
+	<div class="ui-info-box">
+        <div class="ui-crumbs">
+        	 <span>当前位置：</span><a href="#">运营管理</a><em>></em><span>专题管理</span>
+        </div>
+        <div class="ui-info-main">
+            <div class="ui-informate">
+             	<div class="ui-informate-base ui-channel-baseinfor">
+                    <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-base-label ui-special-label">专题名称:</label>
+                        <span class="ui-base-data">
+                           <select class="ui-combobox clause-input ui-channel-inforspan" name="" id="specialName" data-order="0">
+                                <option value="0" selected ="selected">请选择</option>
+                                <option value="1">bannel轮播图1</option>
+                                <option value="2">bannel轮播图2</option>
+                                <option value="3">bannel轮播图3</option>
+                                <option value="4">bannel轮播图4</option>
+                                <option value="5">限时抢购位</option>
+                                <option value="6">底部展示位1</option>
+                                <option value="7">底部展示位2</option>
+                            </select>   
+                        </span>
+                    </div>
+                    <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-base-label ui-special-label">专题说明:</label>
+                        <span class="ui-base-data">
+                            <select class="ui-combobox clause-input ui-channel-inforspan" name="" id="specialExplain" data-order="1">
+                                <option value="0" selected ="selected">请选择</option>
+                                <option value="1">标准产品</option>
+                                <option value="2">促销产品</option>
+                                <option value="3">专题活动</option>
+                                <option value="4">广告推广</option>
+                                <option value="5">其他</option>
+                            </select>   
+                        </span>
+                    </div>
+                     
+                    <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-base-label ui-special-label">展示内容:</label>
+                        <span class="ui-base-data">
+                           <input type="button" value="选择" class="ui-btn-blue ui-submit"  id="specialRecord"/>
+                        </span>
+                    </div>
+                    
+                    <!-- 列表 -->
+                    <div class="list-item fn-clear">
+                        <table id="dg-list" class="easyui-datagrid"  style="margin-right:10px;">    
+                        </table>
+                    </div>
+                    <!-- 列表end -->
+                   
+                   
+                     <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-base-label ui-special-label">展示位标语:</label>
+                        <span class="ui-base-data">
+                            <input class="clause-input ui-channel-inforspan easyui-validatebox  ui-cover" type="text" data-options="validType:'numLetChina'"  maxlength="10"/>
+                        </span>
+                        <span class="showMessage"></span>
+                    </div>
+                    <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-base-label ui-special-label">专题图片:</label>
+                        <span class="ui-base-data ui-relative">
+                            <div class="ui-info-item ui-client-upload-item">
+                                <div class="ui-relative ui-clinet-upload">
+                                  <input type="hidden" class="" name="url" value="">
+                                  <input type="button" class="ui-btn-blue ui-fileup ui-fileselect" value="请选择">
+                                  <input type="file" class="file-wrap file-hid" id="file-wrap" name="file1" onchange="uploadFile(this,'/upload/picture');">
+                                </div>  
+                            </div>
+                        </span>
+                    </div>
+                  
+        
+                    <div class="ui-base-colsinfor ui-base-colwidth-business ui-month-base">
+                        <label class="ui-base-label ui-special-label">开始时间:</label>
+                        <span class="ui-base-data">
+                            <input class="easyui-datetimebox" style="width:300px" id="datetimeboxStart">
+                        </span>
+                        <div class="predent-textarea ctooltip-bottom custom-month-position custom-tool-left2" id="clientTimeStart">
+                           <span class="custom-textarea-tooltip custom-txt-style">请输入成立时间</span>
+                           <div class="ctooltip-arrow-outer custom-triange-outstyle" style=""></div>
+                           <div class="ctooltip-arrow custom-triange-intstyle" style=""></div>
+                       </div>
+                    </div>
+                    <div class="ui-base-colsinfor ui-base-colwidth-business ui-month-base">
+                        <label class="ui-base-label ui-special-label">结束时间:</label>
+                        <span class="ui-base-data">
+                            <input class="easyui-datetimebox" style="width:300px" id="datetimeboxEnd">
+                        </span>
+                       <div class="predent-textarea ctooltip-bottom custom-month-position custom-tool-left2" id="clientTimeEnd">
+                           <span class="custom-textarea-tooltip custom-txt-style">请输入成立时间</span>
+                           <div class="ctooltip-arrow-outer custom-triange-outstyle" style=""></div>
+                           <div class="ctooltip-arrow custom-triange-intstyle" style=""></div>
+                       </div>
+                    </div>   
+                    <div class="ui-btn-double">
+                        <input type="button" value="下一步" class="ui-btn-blue ui-submit" id="specialNext"/>
+                        <input type="button" value="取消"  class="ui-btn-grey ui-back"/>
+                    </div>
+                </div>	
+         	</div>
+    	</div>
+         <!--确认审核start-->
+        <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+           <h3 class="ui-dlg-tit" id="selectTitle">您新增的专题已提交审核！</h3>
+           <input type="button" class="ui-dlgOk-btn" value="确定" id="selectConfirm"/>
+        </div>
+        <!--确认审核end-->
+        <!--选择弹出框start-->
+         <div id="dlgList" class="easyui-dialog ui-dlg-alert ui-select-bigbox"  data-options="iconCls:'icon-save',modal:true,closed: true">
+            <iframe src="" frameborder="0" width="100%" height='100%' id="newLoadPage"></iframe>
+        </div>
+
+
+        <!--选择弹出框end-->
+	</div>
+
+	<script>
+    $(function(){
+        validExtend();
+        //列表
+       
+        
+   });
+    function submitForm(){
+        if($('#search-ff').form('validate')){
+                //eb.backToFstPage("#datagrid");
+                $("#dg-list").datagrid({queryParams : eb.form2Json("search-ff")});
+                
+                 pageAction();
+            }
+    }
+    function clearForm(){
+        $("#search-ff").form('clear');
+    }
+   var isopen = false;
+
+    var method = {
+        init : function(){
+
+            var name = $("#specialName"),
+                explain = $("#specialExplain"),
+                datestart = $("#datetimeboxStart"),
+                dataend = $("#datetimeboxEnd"),
+                poster = $("#specialPoster"),
+                select = $("#specialRecord");
+               
+
+            name.change(function(event) {
+                var val = $(this).val();
+                 if(val == '5'){
+                    explain.find("option").eq(2).attr("selected","selected");
+                  
+                }
+            });
+
+            select.click(function(event) {
+
+                var nval = name.val(),
+                    eval = explain.val();
+               
+               if( nval== "0" || (nval== "0" && eval== '0')){
+                    selecttit.text("请选择展示位！");
+                    showAlert('dlg');
+               }else if( eval== '0'){
+                    selecttit.text("请选择展示内容类型！");
+                    showAlert('dlg');
+               }
+
+               if(eval!="0" && nval != '0'){
+                    showAlert('dlgList');
+                   
+                    $("#newLoadPage").attr("src","shownewselect.html");
+               }
+
+
+
+            });
+            
+           
+            //点击确认关闭弹框
+            $("#selectConfirm").click(function(event) {
+               $("#dlg").dialog("close");
+            });
+
+            //点击下一步进行验证
+            $("#specialNext").click(function(event) {
+                
+                var timetartval = datestart.datetimebox('getValue'),
+                    timeendval = dataend.datetimebox('getValue');
+
+               
+
+                //开始时间
+                if(timetartval == ''){
+                    $("#clientTimeStart").show();
+                }else{
+                    $("#clientTimeStart").hide()
+                }
+
+                //结束时间
+                if(timeendval == ''){
+                    $("#clientTimeEnd").show();
+                }else{
+                    $("#clientTimeEnd").hide();
+                }
+
+                
+
+
+            });
+
+
+       
+        }
+        
+    }
+   method.init();
+
+    //点击选择内容得到要填充的内容id
+    function getDataPopulate(val){
+        alert(val);
+        $("#dg-list").datagrid({
+            url:'operate_show.json',
+            method:'post',
+            fitColumns:true,
+            rownumbers:true,
+            nowrap: true,//当数据长度超出列宽时将会自动截取
+            resizable:false,
+            checkOnSelect:false,
+            columns:[[
+                {field:'agentId',align:'center',width:"12%",title:'产品ID'},
+                {field:'opt',align:'center',width:"22%",title:'保险名称'},
+                {field:'agentAreaCity',align:'center',width:"16%",title:'保险公司'},
+                {field:'agentAreaCounty',align:'center',width:"12%",title:'产品总量'},
+                {field:'truename',align:'center',width:"12%",title:'保费金额(元)'},
+                {field:'angertProduceNo',align:'center',width:"12%",title:'保险类别'},
+                {field:'angertProduceNo',align:'center',width:"12%",title:'来源'}
+            ]],
+            queryParams: eb.form2Json("search-ff"),
+               loadFilter:function(data){
+            
+                        return eb.loadFilter(data);//自定义过滤方法
+
+              },
+              onLoadSuccess:pageCls
+        });
+        //记录点击了选择按钮
+        isopen = true;
+    
+    }
+   
+    </script>
+</body>
+</html>

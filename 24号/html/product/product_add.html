@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>自研产品管理-产品信息管理-产品管理</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+</head>
+<body>
+	<div class="ui-info-box">
+    <div class="ui-crumbs">
+    	 <span>当前位置：</span>
+    	 <a href="#">产品管理</a><em>></em>
+    	 <a href="#">产品信息管理</a><em>></em>
+    	 <span>自研产品管理</span>
+    </div>
+    <form id="infoForm" method="post" action="product_add_insure.html">
+      <div class="ui-info-main">
+        <h2 class="ui-info-tit">产品信息</h2>
+          <ul class="ui-info-list">
+           	<li class="ui-info-item">
+           		<label class="ui-info-lbl">保险名称</label>
+           		<input type="text" value="" class="easyui-validatebox ui-info-linput"
+               data-options="required:true,validType:['length[1,40]']" missingMessage="请输入保险名称"/>
+           	</li>
+           	<li class="ui-info-item ui-info-item-grey">
+           		<label class="ui-info-lbl">保险类别</label>
+           		<select class="ui-info-sel" >
+           			<option>请选择</option>
+           		</select>
+           		<select class="ui-info-sel">
+           			<option>请选择</option>
+           		</select>
+           	</li>
+           	<li class="ui-info-item">
+           		<label class="ui-info-lbl">承保公司</label>
+           		<!--必填的样式<select class="easyui-combobox ui-info-sel" required="true" validtype="selectValueRequired">-->
+              <select class="ui-info-sel">
+           			<option>请选择</option>
+                <option>2222</option>
+           		</select>
+           	</li>
+           	<li class="ui-info-item ui-info-item-grey">
+           		<label class="ui-info-lbl">产品总量</label>
+           		<input type="text" value="" class="easyui-validatebox ui-info-input" data-options="required:true,validType:'plusNum'"/> 份
+           	</li>
+           	<li class="ui-info-item">
+           		<div class="ui-info-subitem">
+    	       		<label class="ui-info-lbl">承保年龄</label>
+    	       		<input type="text" value="" class="easyui-validatebox ui-info-sinput" 
+                  data-options="required:true,validType:['integer','length[1,3]']" missingMessage="请输入承保年龄"/>
+    	       		<em class="ui-info-to">至</em>
+    	       		<input type="text" value="" class="easyui-validatebox ui-info-sinput" 
+                  data-options="required:true,validType:['integer','length[1,3]']" missingMessage="请输入承保年龄"/>
+    	       		周岁
+    	       	</div>
+
+           		<label class="ui-info-lbl ui-info-lblw">保险经纪人</label>
+           		<input type="text" value="" class="easyui-validatebox ui-info-input" 
+              data-options="required:true,validType:['letchi','length[1,10]']" missingMessage="请输入保险经纪人"/>
+           	</li>
+           	<li class="ui-info-item ui-info-item-grey ui-resureLimit-wrap fn-clear">
+    	       		<label class="ui-info-lbl">保障期限</label>
+                <div class="ui-resureLimit-inner ui-resureLimit-fir">
+      	       		<input type="text" value="" class="easyui-validatebox ui-info-sinput" 
+                        data-options="required:true,validType:['integer']" missingMessage="请输入保障期限"/>
+                  <select class="ui-info-sel ui-info-ssel">
+                    <option>天</option>
+                    <option>月</option>
+                    <option>年</option>
+                  </select>
+      	       		<a href="javacript:;" class="ui-info-to get-limit">至</a>
+                  <input type="text" value="" class="ui-info-sinput fn-hide"/><em></em>
+
+               		<label class="ui-info-lbl ui-info-lblw">标准价格</label>
+               		<input type="text" value="" class="easyui-validatebox easyui-numberbox ui-info-sinput" 
+                         data-options="required:true,validType:['money'],min:0,precision:2" missingMessage="请输入标准价格"/> 元
+                  <a class="ui-guarant-addfir" href="javascript:;"></a>
+                  <!--<a class="ui-guarant-reduce" href="javascript:;"></a>-->
+              </div>
+           	</li>
+           	<li class="ui-info-item">
+           		<label class="ui-info-lbl">适用人群</label>
+           		<input type="text" value="" class="easyui-validatebox ui-info-linput"
+                     data-options="validType:['length[0,40]']"  />
+           	</li>
+           	<li class="ui-info-item ui-info-item-grey">
+           		<label class="ui-info-lbl">最高职业类别</label>
+           		<select class="ui-info-sel">
+           			<option>请选择</option>
+           		</select>
+           	</li>
+           	<li class="ui-info-item">
+           		<label class="ui-info-lbl">产品亮点</label>
+           		<input type="text" value="" class="easyui-validatebox ui-info-linput"
+                data-options="required:true" missingMessage="请输入产品亮点"/>
+           	</li>
+           	<li class="ui-info-item ui-info-item-grey ui-guarant-item" id="guarantList">
+           		<label class="ui-info-lbl">保障利益</label>
+              <input type="button" value="选择保障利益" class="ui-file-link ui-profit-chose"  />
+           		<div class="ui-guarant-wrap" style="display:none;">
+           			<ul class="ui-guarant-list">
+                  <li>
+                  	<span class="ui-gone">保障利益标题</span>
+                  	<span class="ui-gtwo">保障价格</span>
+                  	<span class="ui-gthree">保障次/天数</span>
+                  </li>
+                  <li id="noProfitItem">
+                  	
+                  </li>
+           			</ul>
+           		</div>
+           	</li>
+           	<li class="ui-info-item ui-relative">
+           		<label class="ui-info-lbl">保险条款</label>
+           		<input type="hidden" class="" name="url" value="">
+    					<input type="button" class="ui-file-link" value="选择保险条款">
+    					<input type="file" class="file-wrap" id="file-wrap" name="file1" onchange="uploadFile(this,'/upload/picture');">
+           	</li>
+           	<li class="ui-info-item ui-info-item-grey ui-rich-wrap">
+           		<label class="ui-info-lbl">投保须知</label>
+           		  <textarea class="richEditor"></textarea>
+           	</li>
+           	<li class="ui-info-item ui-rich-wrap">
+           		<label class="ui-info-lbl">理赔指南</label>
+           		  <textarea class="richEditor"></textarea>
+           	</li>
+           	<li class="ui-info-item ui-info-item-grey ui-rich-wrap">
+           		<label class="ui-info-lbl">温馨提示</label>
+           		  <textarea class="richEditor" 
+                data-options="required:true"></textarea>
+           	</li>
+          </ul>
+    	</div>
+      <div class="ui-btn-double">
+        <input type="button" value="下一步" class="ui-btn-blue ui-submit"/>
+        <input type="button" value="返回"  class="ui-btn-grey ui-back"/>
+      </div>
+    </form>
+  </div>
+<!---保障利益的弹框-->
+  <div id="dlgProfit" class="easyui-dialog ui-dlg-list ui-dlgProfit"  data-options="closed: true">
+
+    <table class="ui-dlg-tab" width="100%">
+      <tr>
+        <td colspan='2'>
+          <input class="ui-info-input" type="text" name="" value="" placeholder="关键字"/>
+          <a href="javascript:void(0)" class="search-btn" onclick="submitForm()">搜索</a>
+        </td>
+      </tr>
+      <tr>
+        <td colspan='2'>
+           <strong>请选择保障利益及分类</strong>
+        </td>
+      </tr>
+      <tr>
+        <td width="30%" class="ui-dlgtab-left">
+           <input type="checkbox" value="1" name=""/><label>一般意外</label>
+        </td>
+        <td width="70%">
+         
+        </td>
+      </tr>
+      <tr class="ui-dgrey">
+        <td class="ui-dlgtab-left">
+          <input type="checkbox" value="2" name=""/><label>一般意外</label>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td class="ui-dlgtab-left">
+          <a href="javascript:showAlert('dlgList');">自定义添加分类</a>
+        </td>
+        <td>
+        </td>
+      </tr>
+    </table>
+    <div class="ui-dlg-submit">
+      <input type="button" class="ui-dlgOk-btn" value="确认"/>
+      <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+    </div>
+  </div>
+<!--弹框-->  
+	<div id="dlgList" class="easyui-dialog ui-dlg-list"  data-options="closed: true">
+
+    <table class="ui-dlg-tab" width="100%">
+    	<tr>
+    		<td width="33%" class="ui-dlgtab-left">上级分类</td>
+    		<td width="67%">
+    			<select class="ui-info-sel" id="profitTit">
+     			  <option value=''>主分类</option>
+     			  <option value='1'>医疗保险</option>
+     		  </select>
+     	  </td>
+    	</tr>
+    	<tr class="ui-dgrey">
+    		<td class="ui-dlgtab-left">保障利益标题</td>
+    		<td>
+    			<input type="text" value="" class="ui-info-input"/>
+     	  </td>
+    	</tr>
+    </table>
+    <div class="ui-dlg-submit">
+			<input type="button" class="ui-dlgOk-btn" value="保存并返回"/>
+			<input type="button" class="ui-dlgCancel-btn" value="取消"/>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/kindeditor/kindeditor.js"></script>
+	<script type="text/javascript" src="../js/base.js"></script>
+	<script>
+   $(function(){
+    validExtend();
+   	richEdit();
+    prodProfit();
+    $('.ui-submit').click(function(){
+      var f=$(this).parents('form');
+      if(!f.form('validate')){
+        //表单信息未填全
+      }
+      f.submit();
+    });
+  
+
+    
+	});
+   
+  
+	</script>
+</body>
+</html>

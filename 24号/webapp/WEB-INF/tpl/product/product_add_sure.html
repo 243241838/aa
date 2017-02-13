@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>自研产品管理-产品信息管理-产品管理</title>
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/base.css">
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/style.css">
+  
+	<!--<script type="text/javascript" src="${base}/resource/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="${base}/resource/js/kindeditor/kindeditor.js"></script>
+	 <script type="text/javascript" src="${base}/resource/js/jquery.min.js"></script>
+   <script type="text/javascript" src="${base}/resource/js/base.js"></script>
+	<script type="text/javascript" src="${base}/resource/js/jquery.form.js"></script>-->
+</head>
+<body>
+	<div class="ui-info-box">
+    <div class="ui-crumbs" id="crumbs">
+    	 <#include "/common/include/power.ftl">
+    </div>
+    <form id="msgForm" method="post" action="">
+    <div class="ui-info-main">
+    	<h2 class="ui-info-tit">产品信息</h2>
+        <ul class="ui-info-list">
+         	<li class="ui-info-item ui-infosure-fir">
+         		<label class="ui-info-lbl">保险名称</label>
+         		${vo.productName}
+         		<input type="hidden" name="productName" value="${vo.productName}" />
+         	</li>
+         	<li class="ui-info-item ui-info-item-grey">
+         		<label class="ui-info-lbl">保险类别</label>
+         		${vo.className}&nbsp;&nbsp;<#-- ${vo.className2} -->
+         		<input type="hidden" name="classId" value="${vo.classId}" />
+         	</li>
+         	<li class="ui-info-item">
+         		<label class="ui-info-lbl">承保公司</label>
+         		${vo.insurerName}
+         		<input type="hidden" name="insurerId" value="${vo.insurerId}" />
+         		<#--
+         		<label class="ui-info-lbl ui-info-lblw">保险经纪人</label>
+         		${vo.productAgent}
+         		<input type="hidden" name="productAgent" value="${vo.productAgent}" />
+         		-->
+         	</li>
+         	<li class="ui-info-item ui-relative ui-padimg-wrap">
+           		<label class="ui-info-lbl">产品配图</label>
+           		<img src="${base}${vo.productLogo}" width="120" height="120"/>
+           		<input type="hidden" name="productLogo" value="${vo.productLogo}" />
+				
+           	</li>
+         	<li class="ui-info-item ui-info-item-grey">
+         		<label class="ui-info-lbl">产品总量</label>
+         		<#if vo.maxQuantity1 == 1>
+	         		不限
+	         	<#else>
+	         		${vo.maxQuantity} 份
+         		</#if>
+         		<input type="hidden" name="maxQuantity" value="${vo.maxQuantity}" />
+         		<input type="hidden" name="maxQuantity1" value="${vo.maxQuantity1}" />
+         	</li>
+         	<li class="ui-info-item">
+         		<div class="ui-info-subitem">
+	  	       		<label class="ui-info-lbl">承保年龄</label>
+	  	       		<input type="hidden" name="minAge" value="${vo.minAge}" />${vo.minAge} 
+	  	       		<if test="${vo.maxAge != ''}"> -- ${vo.maxAge}
+	  	       			<input type="hidden" name="maxAge" value="${vo.maxAge}" />
+	  	       		</if> 周岁
+  	       		</div>
+         	</li>
+         	<li class="ui-info-item">
+         		<div class="ui-info-subitem">
+	  	       		<label class="ui-info-lbl">产品有效期</label>
+	  	       		<#if vo.longTime == 1>
+	  	       			长期
+	  	       		<#else>
+	  	       			${vo.effTime1} 至 ${vo.expTime1}
+	  	       		</#if>
+	  	       			<input type="hidden" name="longTime" value="${vo.longTime}" />
+		  	       		<input type="hidden" name="effTime1" value="${vo.effTime1}" />
+		  	       		<input type="hidden" name="expTime1" value="${vo.expTime1}" />
+  	       		</div>
+         	</li>
+         	<li class="ui-info-item ui-info-item-grey">
+  	       		<label class="ui-info-lbl">保障期限</label>
+  	       		<#list pricesVo as item>
+	              <span>${item.minGuarantee} ${item.guaranteeType2} 
+		              <#if item.maxGuarantee!=item.minGuarantee&&item.maxGuarantee!=''>至  ${item.maxGuarantee} ${item.guaranteeType2}</#if> </span>
+		              <label class="ui-info-lbl ui-info-lblw">标准价格</label>
+		              ${item.productPremium1} 元
+		              <label class="ui-contentmargin">保险公司产品代码</label>
+		              ${item.productCode}</br>
+		              <span style="width:90px">
+	              	  </span>
+		              <input type="hidden" name="pricesMap[${item_index?if_exists+1}].minGuarantee" value="${item.minGuarantee}" />
+		              <input type="hidden" name="pricesMap[${item_index?if_exists+1}].guaranteeType2" value="${item.guaranteeType2}" />
+		              <input type="hidden" name="pricesMap[${item_index?if_exists+1}].maxGuarantee" value="${item.maxGuarantee}" />
+		              <input type="hidden" name="pricesMap[${item_index?if_exists+1}].productPremium1" value="${item.productPremium1}" />
+		              <input type="hidden" name="pricesMap[${item_index?if_exists+1}].productCode" value="${item.productCode}" />
+	            </#list>
+         	</li>
+			<li class="ui-info-item">
+			<label class="ui-info-lbl">适用人群</label>
+				<input type="hidden" name="suitablePeople" value="${vo.suitablePeople}" />${vo.suitablePeople}
+			</li>
+			<li class="ui-info-item ui-info-item-grey">
+			<label class="ui-info-lbl">最高职业类别</label>
+				<input type="hidden" name="occupationClass" value="${vo.occupationClass}" />
+				 <#if vo.occupationClass==7>特别费率<#elseif vo.occupationClass==9>不限<#else>${vo.occupationClass} 级</#if>
+			</li>
+			<li class="ui-info-item">
+			<label class="ui-info-lbl">产品亮点</label>
+				<input type="hidden" name="perferWords" value="${vo.perferWords}" />${vo.perferWords}
+			</li>
+			<li class="ui-info-item ui-info-item-grey ui-guarant-item" id="guarantList">
+			<label class="ui-info-lbl">保障利益</label>
+			<div class="ui-guarant-wrap">
+			<ul class="ui-guarant-list">
+			<li>
+				<span class="ui-gone">保障利益标题</span>
+				<span class="ui-gtwo">保障价格</span>
+				<span class="ui-gthree">保障次/天数</span>
+			</li>
+			<li>
+			<#list benefitsVo as item>
+			<div class="ui-guarant-tit">
+	            <a href="javascript:;" onclick="toggleSub(this);" class="ui-gone">
+					<strong>${item.benefitName}</strong><i class="ui-icon-arrow"></i>
+				</a>
+			</div>
+			<#assign benefitsMap=item.benefitsMap>
+			<#list benefitsMap?values as item2>
+				<table class="ui-guarant-tab" width='100%'>
+					<tr <#if benefitsMap?size==item2_index+1>class="ui-tab-last"</#if>>
+						<td width="40%" class="ui-td-fir">
+							${item2.benName}
+						</td><#-- )?string('#.00')-->
+						<td width="25%">${item2.sumAmount1}${item2.privaceType}</td>
+						<td width="30%">${item2.maxRepetition}${item2.amountUnit}</td>
+					</tr>
+				</table>
+					<input type="hidden" name="benefitsMap[${item2.benefitId}].benefitId" value="${item2.benefitId}"/>
+					<input type="hidden" name="benefitsMap[${item2.benefitId}].sumAmount1" value="${item2.sumAmount1}" />
+					<input type="hidden" name="benefitsMap[${item2.benefitId}].privaceType" value="${item2.privaceType}" />
+					<input type="hidden" name="benefitsMap[${item2.benefitId}].maxRepetition" value="${item2.maxRepetition}" />
+					<input type="hidden" name="benefitsMap[${item2.benefitId}].amountUnit" value="${item2.amountUnit}" />
+			</#list>
+	     	</#list>
+			</li>
+	 	 </ul>
+	   </div>
+     	<li class="ui-info-item ui-relative">
+     		<label class="ui-info-lbl">保险条款</label>
+     		<#list proList as item>
+	     		<a href="${base}/product/fileDownload?path=${item.insuranceTerms2}">
+	     			${item.insuranceTerms3}
+	     		</a>&nbsp;&nbsp;&nbsp;
+	     		<input type="hidden" name="insuranceTerms2" value="${item.insuranceTerms}" />
+	     	</#list>
+     	</li>
+     	<li class="ui-info-item ui-info-item-grey  ui-prod-article">
+     		<label class="ui-info-lbl">投保须知</label>
+     		<span class="ui-article-text">${vo.productStatement}</span>
+     		<input type="hidden" name="productStatement" value="${vo.productStatement}" />
+     	</li>
+     	<li class="ui-info-item  ui-prod-article">
+     		<label class="ui-info-lbl">理赔指南</label>
+     		<span class="ui-article-text">${vo.claimsGuide}</span>
+     		<input type="hidden" name="claimsGuide" value="${vo.claimsGuide}" />
+     	</li>
+     	<li class="ui-info-item ui-info-item-grey  ui-prod-article">
+     		<label class="ui-info-lbl">温馨提示</label>
+     		<span class="ui-article-text"> ${vo.productPrompt}</span>
+     		 <input type="hidden" name="productPrompt" value="${vo.productPrompt}" />
+     	</li>
+     </ul>
+    </div>
+	    <!-- 
+	        	<div class="ui-info-main ui-insure-main">
+	     -->
+    	<div class="ui-info-main ui-infosure-main">
+    	<h2 class="ui-info-tit">投保信息</h2>
+         <ul class="ui-info-list">
+           	<li class="ui-info-item">
+           		<label class="ui-info-lbl ui-info-small">是否即时生效</label>
+           		<span>
+           		<#if "${vo.thisTime == '1'}">是</#if>
+           		<#if "${vo.thisTime == '0'}">否</#if>
+           		<input type="hidden" name="thisTime" value="${vo.thisTime}" />
+              </span> 
+           	</li>
+           	<li class="ui-info-item  ui-info-item-grey">
+              <label class="ui-info-lbl ui-info-small">支持电子保单</label>
+              <span>
+              	<#if "${vo.policyType == '3'}">是</#if>
+           		<#if "${vo.policyType == '2'}">否</#if>
+           		<input type="hidden" name="policyType" value="${vo.policyType}" />
+              </span> 
+            </li>
+            <li class="ui-info-item">
+              <label class="ui-info-lbl ui-info-small">是否支持退保</label>
+              <span>
+           		<#if vo.refundFlag == 2>
+           			支持
+           		<#elseif vo.refundFlag == 1>
+           			仅支持生效前退保
+           		<#else>
+           			不支持
+           		</#if>
+           		<input type="hidden" name="refundFlag" value="${vo.refundFlag}" />
+              </span> 
+            </li>
+            <li class="ui-info-item  ui-info-item-grey">
+              <label class="ui-info-lbl ui-info-small">最多投保份数</label>
+              ${vo.buyQuota} 份
+              <input type="hidden" name="buyQuota" value="${vo.buyQuota}" />
+            </li>
+            <li class="ui-info-item">
+              <label class="ui-info-lbl ui-info-small">受益人自定义</label>
+              <span>
+           		<#if vo.beneficiaryNum lte 0>
+			                否    
+                <#else>
+               		是
+                </#if>
+           		<input type="hidden" name="beneficiaryNum" value="${vo.beneficiaryNum}" />
+              </span>
+            </li>
+            <#if vo.beneficiaryNum gte 1>
+	            <li class="ui-info-item" id="maxBenef">
+	              <label class="ui-info-lbl ui-info-small">最多受益人数</label>
+	              ${vo.beneficiaryNum1} 人
+	              <input name="beneficiaryNum1" type="hidden" value="${vo.beneficiaryNum1}" class="easyui-validatebox ui-info-sinput" />
+	            </li>
+            </#if>
+            <#--
+            <li class="ui-info-item">
+              <label class="ui-info-lbl ui-info-small">产品承保起止时间</label>
+              <span>
+              	${vo.startTime1} 至 ${vo.endTime1}
+           		<input type="hidden" name="startTime1" value="${vo.startTime1}" />
+           		<input type="hidden" name="endTime1" value="${vo.endTime1}" />
+              </span> 
+            </li>
+            -->
+            <li class="ui-info-item">
+              <label class="ui-info-lbl ui-info-small">是否需要激活</label>
+              <span>
+                <#if vo.activation == 0>
+			                否    
+                <#else>
+               		是
+                </#if>
+                <input type="hidden" name="activation" value="${vo.activation}" />
+              </span> 
+            </li>
+            <li class="ui-info-item">
+              <label class="ui-info-lbl ui-info-small">是否支持线上理赔</label>
+              <span>
+              	<#if vo.claimOnLine == 1>
+			                支持    
+                <#else>
+               		不支持
+                </#if>
+                <input type="hidden" name="claimOnLine" value="${vo.claimOnLine}" />
+              </span> 
+            </li>
+          </ul>
+  	  	</div>
+      <div class="ui-btn-double ui-detail-btnposition">
+        <input type="button" value="完成提交并审核" class="ui-btn-blue ui-detail-bntwidth" onclick="subForm()"/>  
+        <input type="button" value="返回" class="ui-btn-grey" id="back"/>
+      </div>
+      <input type="hidden" value="${vo.type}" name="type"/>
+  </form>
+  <script type="text/template" id="dlgSucc">
+  <div id="alt" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+    <h3 class="ui-dlg-tit" id="delStartTit1" >添加成功!</h3>
+  </div>
+  </script>
+  <script type="text/template" id="dlgEror">
+  <div id="error" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+    <h3 class="ui-dlg-tit" id="delStartTit2" >异常情况,操作失败!</h3>
+  </div>
+   </script>
+   <script type="text/template" id="dlgReport" >
+	 <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+	    <h3 class="ui-dlg-tit">您添加的产品请求已提交审核！</h3>
+	    <input type="button" id="toDetail" class="ui-dlgOk-btn" onclick="" value="查看审核详情"/>
+	 </div>
+   </script>
+<!-- js -->
+	
+	<script>
+	$(function(){
+    /**$("#endTime1").validatebox({
+        validType: 'mdMs["#startTime1"]'
+    })
+    $("#expTime1").validatebox({
+       validType: 'mdMs["#starteffTime1"]'
+    })**/
+	});
+	function subForm(){
+		$.ajax( {
+			url : "${base}/product/addProductMsg",
+			type : "post",
+			data:$("#msgForm").serialize(),
+			// 成功后调用
+			success : function(data) {
+			<#--
+			data = JSON.parse(data);
+			--> 
+				if(data.succ){
+					$($('#dlgReport').html()).dialog({
+			           closed: false,
+			           onClose:function(){
+					     location.href="${base}/product/since/findListView";
+				  	   }
+			        });
+				   var val = data.entity;
+				   $("#toDetail").attr("onclick","location.href='${base}/product/toProductDetailMsg?productId="+val+"'");
+				}else{
+					alert(data.entity);
+					$("#delStartTit2").text(data.entity);
+			    	return false;
+				}
+			},
+			error:function(data){
+				if(data != null && data.entity != null && data.entity != ""){
+					alert(data.entity);
+				} else {
+				    showAlert('error');
+				}
+			}
+		});
+	}
+	
+	</script>
+</body>
+</html>

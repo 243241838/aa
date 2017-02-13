@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>编辑审核不通过详情-自研产品管理-产品信息管理-产品管理</title>
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/base.css">
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/style.css">
+	<script type="text/javascript" src="../../../resource/js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../resource/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../resource/js/kindeditor/kindeditor.js"></script>
+	<script type="text/javascript" src="../../../resource/js/ajaxfileupload.js"></script>
+	<script type="text/javascript" src="../../../resource/js/base.js"></script>
+</head>
+<body>
+	<div class="ui-info-box">
+	    <div class="ui-crumbs" id="crumbs">
+	    	 <#include "/common/include/power.ftl">
+	    </div>
+    <form id="infoForm" method="post" action="">
+    <div class="ui-info-main">
+    	<h2 class="ui-info-tit">产品信息<h2>
+        <ul class="ui-info-list">
+         	<li class="ui-info-item ui-infosure-fir">
+         		<label class="ui-info-lbl">保险名称</label>
+         		${productsPo.productName}
+         		<label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+	            <span class="ui-org-text">
+         			${proVo.productName}
+         		</span>
+         		<input type="hidden" name="productId" value="${productsPo.productId}" />
+         	</li>
+         	<li class="ui-info-item ui-info-item-grey">
+         		<label class="ui-info-lbl">保险类别</label>
+         			${productsPo.className}&nbsp;&nbsp;&nbsp;${productsPo.className2}
+         		<label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+	            <span class="ui-org-text">
+	            	<#if proVo.className??>
+         				${productsPo.className}&nbsp;&nbsp;&nbsp;${productsPo.className2}
+         			<#else>
+	         			${proVo.className}&nbsp;&nbsp;&nbsp;${proVo.className2}
+         			</#if>
+         		</span>
+         	</li>
+         	<li class="ui-info-item">
+         		<label class="ui-info-lbl">承保公司</label>
+         			${productsPo.insurerName}
+         		<label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+	            <span class="ui-org-text">
+         			<#if proVo.insurerName??>
+	         			${proVo.insurerName}
+         			<#else>
+	         			${productsPo.insurerName}
+         			</#if>
+         		</span>
+         		<#--
+         		<label class="ui-info-lbl ui-info-lblw">保险经纪人</label>
+         		${productsPo.productAgent}
+         		-->
+         	</li>
+         	<li class="ui-info-item ui-relative ui-padimg-wrap">
+           		<label class="ui-info-lbl">产品配图</label>
+					<img src="${base}${productsPo.productLogo}" class="ui-mod-img" width="120" height="120">
+           		<div class="mod-item-img">
+					<em class="ui-downorg-arr"></em>
+           			<img src="${base}${proVo.productLogo}" class="ui-mod-img" width="120" height="120">
+				</div>
+				<span class="prod-edit-item">
+					<input type="button" class="ui-file-link" value="重新上传"/>
+					<input name="insuranceTerms" type="file" class="file-wrap" id="prodimg-file" onchange="uploadImg('prodimg-file','${base}/product/fileUpload','product');"  style="left:292px;width:60px;top:5px;"/>
+					<input type="hidden" name="productLogo" class="ui-inzoocoffee官网fo-input" id="productLogo" value="${proVo.productLogo}" readOnly="readOnly"/>
+				</span>
+           	</li>
+         	<li class="ui-info-item ui-info-item-grey">
+         		<label class="ui-info-lbl">当前库存</label>
+         		<span class="">
+	         		<#if productsPo.maxQuantity lte -1>
+	         			不限
+	         		<#else>
+		         		${productsPo.maxQuantity - productsPo.totalQuantity} 份
+	         		</#if>
+         		</span>
+         		<div class="ui-org-text">
+	                <label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+	                <#if proVo.maxQuantity1 == 1>
+         				不限
+	         		<#else>
+	         			<#if proVo.maxQuantity??>
+	         				${productsPo.maxQuantity + proVo.maxQuantity - productsPo.totalQuantity}
+	         			<#else>
+	         				${productsPo.totalQuantity}
+	         			</#if>份
+	         		</#if>
+	           	</div>
+                <span class="prod-edit-item"><!--prod-edit-item-bef 详情的; prod-edit-item 编辑的-->
+	         		<#if productsPo.maxQuantity lte -1>
+	         			不限
+	         		<#else>
+		         		${productsPo.maxQuantity - productsPo.totalQuantity} 份
+	         		</#if>
+		           	<label class="ui-info-lbl">分配数量</label>
+	         		<input type="text" <#if productsPo.maxQuantity gte 0>value="${productsPo.maxQuantity}"<#else>不限</#if>
+	         		 class="easyui-validatebox ui-info-input" data-options="validType:'plusNum'" onKeyup="findVal(this);"/> 份&nbsp;
+	           		<input id="boxOne" type="checkbox" name="maxQuantity1" value="1" <#if productsPo.maxQuantity lte -1>checked="true"</#if> onclick="findVal2(this);"/> 不限
+	           		<label class="ui-info-lbl">总库存</label>
+	           		<div id="totalNum" class="ui-info-subitem">
+	           			<#if productsPo.maxQuantity lte -1>
+	         				不限
+		         		<#else>
+			         		${productsPo.maxQuantity - productsPo.totalQuantity} 份
+		         		</#if>
+	           		</div>
+	         		<input type="hidden" name="maxQuantity" id="maxQuantity" value="${productsPo.maxQuantity}" />
+	           	</span>
+         	</li>
+         	<li class="ui-info-item">
+         		<div class="ui-info-subitem">
+	  	       		<label class="ui-info-lbl">产品有效期</label>
+		  	       		<#if productsPo.longTime == 1>
+		  	       			长期
+		  	       		<#else>
+		  	       			${productsPo.effTime1} 至 ${productsPo.expTime1}
+		  	       		</#if>
+	  	       		<label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+		            <span class="ui-org-text">
+		  	       		<#if proVo.longTime == 1>
+		  	       			长期
+		  	       		<#else>
+		  	       			${proVo.effTime1} 至 ${proVo.expTime1}
+		  	       		</#if>
+	         		</span>
+	  	       		<#--
+		  	       	<span class="prod-edit-item">
+	    	       		<input type="text" name="effTime1" id="effTime1" class="easyui-datebox easyui-validatebox ui-info-sinput"
+		                	 data-options="editable:false" validType="md['#effTime1']" />
+		                <em>至</em>
+		                <input type="text" name="expTime1" id="expTime1" class="easyui-datebox easyui-validatebox ui-info-sinput"
+		                	 data-options="editable:false" validType="md['#expTime1']"/> &nbsp;
+		                <input type="checkbox" name="longTime" value="1"  />
+		            </span>
+		            -->
+  	       		</div>
+     		</li>
+         	<li class="ui-info-item ui-info-item-grey">
+         		<div class="ui-info-subitem">
+  	       		<label class="ui-info-lbl">承保年龄</label>
+  	       			${productsPo.minAge} <#if productsPo.maxAge??>至 ${productsPo.maxAge}</#if> 周岁
+  	       			<label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+			            <span class="ui-org-text">
+		  	       			${proVo.minAge} <#if proVo.maxAge??>至 ${proVo.maxAge}</#if> 周岁
+		         		</span>
+  	       		</div>
+         	</li>
+         	<li class="ui-info-item ui-info-item-grey">
+  	       		<label class="ui-info-lbl">保障期限</label>
+  	       		<#assign pricesMap=pricesMap>
+				<#list pricesMap?values as item>
+				  <div class="<#if item_index==0>ui-resureLimit-fir<#else>ui-resureLimit-other</#if>">
+	              <span>${item.minGuarantee} ${item.guaranteeType2} <#if item.maxGuarantee!=item.minGuarantee>至  ${item.maxGuarantee} ${item.guaranteeType2}</#if> </span>
+	              <label class="ui-info-lbl ui-info-lblw">标准价格</label>
+	             		${(item.productPremium/100)?string('#.00')} 元
+	              <label class="ui-contentmargin">保险公司产品代码</label>
+         				${item.productCode} 
+	              </div>
+				</#list>
+				<br/>
+				<label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+       			<div class="ui-org-text">
+		            <#if pricesVoMap??>
+	  	       			<#assign pricesMap=pricesVoMap>
+							<#list pricesMap?values as item>
+							  <div class="<#if item_index==0>ui-resureLimit-fir<#else>ui-resureLimit-other</#if>">
+				              <span>${item.minGuarantee} ${item.guaranteeType2} <#if item.maxGuarantee!=item.minGuarantee>至  ${item.maxGuarantee} ${item.guaranteeType2}</#if> </span>
+				              <label class="ui-contentmargin">标准价格</label>
+				             		${(item.productPremium1)} 元 <#--  /100?string('#.00') -->
+				              <label class="ui-contentmargin">保险公司产品代码</label>
+			         				${item.productCode} 
+				              </div>
+							</#list>
+					</#if>
+				</div>
+         	</li>
+			<li class="ui-info-item">
+			    <label class="ui-info-lbl">适用人群</label>
+			    <span class="prod-edit-item-bef">
+				  ${productsPo.suitablePeople}
+				</span>
+				<div class="mod-item">
+	                <label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+	                <span class="ui-org-text">
+	                    ${proVo.suitablePeople}
+	                </span>
+	            </div>
+				<span class="prod-edit-item">
+				<input name="suitablePeople" type="text" value="${productsPo.suitablePeople}" class="easyui-validatebox ui-info-linput"
+	                     data-options="validType:['length[0,40]']"  />
+	            </span>
+			</li>
+			<li class="ui-info-item ui-info-item-grey">
+			<label class="ui-info-lbl">最高职业类别</label>
+			    <#if productsPo.occupationClass==7>特别费率<#elseif productsPo.occupationClass==9>不限<#else>${productsPo.occupationClass} 级</#if>
+			    <label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+	                <span class="ui-org-text">
+	                    <#if proVo.occupationClass==7>特别费率<#elseif proVo.occupationClass==9>不限<#else>${proVo.occupationClass} 级</#if>
+	                </span>
+			</li>
+			<li class="ui-info-item">
+			<label class="ui-info-lbl">产品亮点</label>
+			    <span class="prod-edit-item-bef">
+				   ${productsPo.perferWords}
+				</span>
+				<span class="prod-edit-item">
+	           		<input name="perferWords" type="text" value="${productsPo.perferWords}" class="easyui-validatebox ui-info-linput"
+	                <#-- data-options="required:true" --> missingMessage="请输入产品亮点"/>
+                </span>
+                <div class="ui-org-text">
+					<label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+                    ${proVo.perferWords}
+                </div>
+			</li>
+			<li class="ui-info-item ui-info-item-grey ui-guarant-item" >
+				<label class="ui-info-lbl">保障利益</label>
+				<div class="ui-guarant-wrap">
+				<ul class="ui-guarant-list">
+					<li>
+						<span class="ui-gone">保障利益标题</span>
+						<span class="ui-gtwo">保障价格</span>
+						<span class="ui-gthree">保障次/天数</span>
+					</li>
+					
+					<#if typeList?if_exists>
+					<#list typeList as item>
+						<li <#if typeList?size==item_index+1>class="ui-tab-last"</#if>>
+							<div class="ui-guarant-tit">
+					            <a href="javascript:;" onclick="toggleSub(this);" class="ui-gone">
+									<strong>${item.benefitName}</strong><i class="ui-icon-arrow"></i>
+								</a>
+							</div>
+							<table class="ui-guarant-tab" width='100%'>
+								<#if typeList?if_exists>
+								<#list item.benefitList as item2>
+									<#-- <#if benefitsMap?values?size==item2_index+1>class="ui-tab-last"</#if> -->
+									<tr <#if item.benefitList?size==item2_index+1>class="ui-tab-last"</#if>>
+										<td width="40%" class="ui-td-fir">
+											${item2.benefitName}
+										</td>
+										<td width="25%">${(item2.sumAmount/100)?string('#.00')} ${item2.privaceType}</td>
+										<td width="30%">${item2.maxRepetition} ${item2.amountUnit}</td>
+									</tr>
+								</#list>
+								</#if>
+							</table>
+						</li>
+			     	</#list>
+			     	</#if>
+		 	 	</ul>
+		        </div>
+				<#if benefitsVoMap?if_exists>
+					<#-- 修改后的数据 -->
+			        <div class="ui-org-text">
+	                    <ul class="ui-guarant-list">
+							<li>
+								<em class="ui-downorg-arr"></em>
+								<span class="ui-gone">保障利益标题</span>
+								<span class="ui-gtwo">保障价格</span>
+								<span class="ui-gthree">保障次/天数</span>
+							</li>
+							<#list benefitsVoMap?keys as item>
+							<li <#if benefitsVoMap?size==item_index+1>class="ui-tab-last"</#if>>
+								<div class="ui-guarant-tit">
+						            <a href="javascript:;" onclick="toggleSub(this);" class="ui-gone">
+										<strong>${benefitsVoMap[item].benefitName}</strong><i class="ui-icon-arrow"></i>
+									</a>
+								</div>
+								<table class="ui-guarant-tab" width='100%'>
+									<#list benefitsVoMap[item].benefitsMap?keys as item2>
+										<tr <#if benefitsVoMap[item]?size==item2_index+1>class="ui-tab-last"</#if>>
+											<td width="40%" class="ui-td-fir">
+												${benefitsVoMap[item].benefitsMap[item2].benName}
+											</td><#--  ${(item2.sumAmount/100)?string('#.00')}  -->
+											<td width="25%">${benefitsVoMap[item].benefitsMap[item2].sumAmount1} ${benefitsVoMap[item].benefitsMap[item2].privaceType}</td>
+											<td width="30%">${benefitsVoMap[item].benefitsMap[item2].maxRepetition} ${benefitsVoMap[item].benefitsMap[item2].amountUnit}</td>
+										</tr>
+									</#list>
+								</table>
+							</li>
+					     	</#list>
+				 	 	</ul>
+	                </div>
+		     	<#else>
+		     		<#-- 未修改，显示以前的数据 
+		     		<div class="ui-org-text">
+	                    <ul class="ui-guarant-list">
+							<li>
+								<em class="ui-downorg-arr"></em>
+								<span class="ui-gone">保障利益标题</span>
+								<span class="ui-gtwo">保障价格</span>
+								<span class="ui-gthree">保障次/天数</span>
+							</li>
+							<#if typeList?if_exists>
+							<#list typeList as item>
+								<li <#if typeList?size==item_index+1>class="ui-tab-last"</#if>>
+									<div class="ui-guarant-tit">
+							            <a href="javascript:;" onclick="toggleSub(this);" class="ui-gone">
+											<strong>${item.benefitName}</strong><i class="ui-icon-arrow"></i>
+										</a>
+									</div>
+									<table class="ui-guarant-tab" width='100%'>
+										<#if typeList?if_exists>
+										<#list item.benefitList as item2>
+											<tr <#if item.benefitList?size==item2_index+1>class="ui-tab-last"</#if>>
+												<td width="40%" class="ui-td-fir">
+													${item2.benefitName}
+												</td>
+												<td width="25%">${(item2.sumAmount/100)?string('#.00')} ${item2.privaceType}</td>
+												<td width="30%">${item2.maxRepetition} ${item2.amountUnit}</td>
+											</tr>
+										</#list>
+										</#if>
+									</table>
+								</li>
+					     	</#list>
+					     	</#if>
+				 	 	</ul>
+	                </div>
+	                -->
+		     	</#if>
+			</li>
+	     	<li class="ui-info-item ui-relative">
+	     		<label class="ui-info-lbl">保险条款</label>
+	     		<#assign productsMap=productsPo.productsMap>
+				<#list productsMap?values as item>
+		     		<a href="${base}/product/fileDownload?path=${base}${item.insuranceTerms3}" style="margin-left:10px;">
+		     			
+		     			${item.insuranceTerms2}
+		     		</a>
+				</#list>
+				<label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+                <span class="ui-org-text">
+                    <#if proVo.productsMap??>
+	                    <#assign productsMap=proVo.productsMap>
+						<#if item.productsMap??>
+	                		<#assign productsMap=productsPo.productsMap>
+								<#list productsMap?values as item>
+						     		<a href="${base}/product/fileDownload?path=${base}${item.insuranceTerms3?split("__")[1]}" style="margin-left:10px;">
+						     			${item.insuranceTerms2}
+						     		</a>
+								</#list>
+			     		<#else>
+			     			<#list productsMap?values as item>
+					     		<a href="${base}/product/fileDownload?path=<#if item.insuranceTerms3??>${base}${item.insuranceTerms3}<#else>${base}${item.insuranceTerms2?split("__")[1]}</#if>" style="margin-left:10px;">
+					     			${item.insuranceTerms2?split("__")[0]}
+					     		</a>
+							</#list>
+			     		</#if>
+					<#else>
+						<#-- 原数据 -->
+						<#assign productsMap=productsPo.productsMap>
+						<#list productsMap?values as item>
+				     		<a href="${base}/product/fileDownload?path=${base}${item.insuranceTerms3?split("__")[1]}" style="margin-left:10px;">
+				     			${item.insuranceTerms2}
+				     		</a>
+						</#list>
+					</#if>
+                </span>
+	     	</li>
+	     	<li class="ui-info-item ui-info-item-grey ui-prod-article">
+	     		<label class="ui-info-lbl">投保须知</label>
+	     		<span class="ui-article-text">${productsPo.productStatement}</span>
+	     		<label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+                <span class="ui-org-text">
+                	  ${proVo.productStatement}
+                </span>
+	     	</li>
+	     	<li class="ui-info-item ui-prod-article">
+	     		<label class="ui-info-lbl">理赔指南</label>
+	     		<span class="ui-article-text">${productsPo.claimsGuide}</span>
+	     		<label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+                <span class="ui-org-text">
+                	  ${proVo.claimsGuide}
+                </span>
+	     	</li>
+	     	<li class="ui-info-item ui-info-item-grey ui-prod-article">
+	     		<label class="ui-info-lbl">温馨提示</label>
+	     		<span class="ui-article-text">${productsPo.productPrompt}</span>
+	     		<label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+                <span class="ui-org-text">
+                	  ${proVo.productPrompt}
+                </span>
+	     	</li>
+	     </ul>
+     </div>
+     <div class="ui-info-main ui-infosure-main prod-edit-item-bef">
+    	<h2 class="ui-info-tit">投保信息</h2>
+         <ul class="ui-info-list">
+           	<li class="ui-info-item">
+           		<label class="ui-info-lbl ui-info-small">是否即时生效</label>
+           		<span>
+           		<#if productsPo.thisTime == 0> 否<#else> 是</#if>
+              </span> 
+              <div class="mod-item">
+                <label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+                <span class="ui-org-text">
+                    <#if proVo.thisTime == 0> 否<#else>  是</#if>
+                </span>
+              </div>
+           	</li>
+           	<li class="ui-info-item  ui-info-item-grey">
+              <label class="ui-info-lbl ui-info-small">支持电子保单</label>
+              <span>
+           		<#if productsPo.policyType == 2>  否<#else>  是</#if> 
+              </span> 
+              <div class="mod-item">
+                <label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+                <span class="ui-org-text">
+                    <#if proVo.policyType == 2> 否<#else>  是</#if>
+                </span>
+              </div>
+            </li>
+            <li class="ui-info-item">
+              <label class="ui-info-lbl ui-info-small">是否支持退保</label>
+              <span>
+              		<#if productsPo.refundFlag == 2>
+	           			支持
+	           		<#elseif productsPo.refundFlag == 1>
+	           			仅支持生效前退保
+	           		<#else>
+	           			不支持
+	           		</#if>
+              </span> 
+              <div class="mod-item">
+                <label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+                <span class="ui-org-text">
+                    <#if proVo.refundFlag == 2>
+	           			支持
+	           		<#elseif proVo.refundFlag == 1>
+	           			仅支持生效前退保
+	           		<#else>
+	           			不支持
+	           		</#if>
+                </span>
+              </div>
+            </li>
+            <li class="ui-info-item  ui-info-item-grey">
+              <label class="ui-info-lbl ui-info-small">最多投保份数</label>
+              ${productsPo.buyQuota} 份
+              <div class="mod-item">
+                <label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+                <span class="ui-org-text">
+                    ${proVo.buyQuota} 份
+                </span>
+              </div>
+            </li>
+            <li class="ui-info-item">
+              <label class="ui-info-lbl ui-info-small">受益人自定义</label>
+              <span>
+           		<#if productsPo.beneficiaryNum gt 0 > 是
+				<#else> 否</#if> 
+              </span> 
+              <div class="ui-org-text">
+	            <label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+              	<#if proVo.beneficiaryNum gt 0 >是
+                <#else> 否</#if> 
+              </div>
+            </li>
+            <#-- <#if productsPo.beneficiaryNum gte 0 >fn-hide</#if> -->
+            <li class="ui-info-item ui-info-item-grey <#if proVo.beneficiaryNum lte 0 >fn-hide</#if>">
+              <label class="ui-info-lbl ui-info-small">最多受益人数</label>
+              <span>
+				  ${productsPo.beneficiaryNum}人
+              </span> 
+              <div class="mod-item">
+                <label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+                <span class="ui-org-text">
+                    ${proVo.beneficiaryNum1}人
+                </span>
+              </div>
+            </li>
+            <#--
+            <li class="ui-info-item">
+              <label class="ui-info-lbl ui-info-small">产品承保起止时间</label>
+              <span>
+                ${productsPo.startTime2} 至 ${productsPo.endTime2}
+              </span> 
+              <div class="mod-item">
+                <label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+                <span class="ui-org-text">
+                    ${proVo.startTime1} 至 ${proVo.endTime1}
+                </span>
+              </div>
+            </li>
+            -->
+            <li class="ui-info-item">
+              <label class="ui-info-lbl ui-info-small">是否需要激活</label>
+              <span>
+                <#if productsPo.activation == '1'>
+	               	 是
+                <#else>
+               		否
+                </#if>
+              </span> 
+              <div class="mod-item">
+                <label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+                <span class="ui-org-text">
+                    <#if proVo.activation == '1'>
+		               	 是
+	                <#else>
+	               		否
+	                </#if>
+                </span>
+              </div>
+            </li>
+            <li class="ui-info-item">
+              <label class="ui-info-lbl ui-info-small">是否支持线上理赔</label>
+              <span>
+                <#if productsPo.claimOnLine == '1'>
+	               	 支持
+                <#else>
+               		不支持
+                </#if>
+              </span> 
+              <div class="mod-item">
+                <label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+                <span class="ui-org-text">
+                    <#if proVo.claimOnLine == '1'>
+		               	 支持
+	                <#else>
+	               		不支持
+	                </#if>
+                </span>
+              </div>
+            </li>
+          </ul>
+  	  	</div>
+        <div class="ui-info-main ui-infosure-main prod-edit-item">
+	        <h2 class="ui-info-tit">投保信息</h2>
+	          <ul class="ui-info-list">
+	           	<li class="ui-info-item">
+	           		<label class="ui-info-lbl ui-info-small">是否即时生效</label>
+	           		<span>
+	                <input type="radio" name="thisTime" id="oneo" value="1" onclick="ctrlVal(this)" <#if productsPo.thisTime == 1>checked</#if> /> <label class="ui-rdo-left" for="oneo">是</label>
+	                <input type="radio" name="thisTime" id="onet" value="0" onclick="ctrlVal(this)" <#if productsPo.thisTime == 0>checked</#if>/><label for="onet">否</label>
+	              </span> 
+	           	</li>
+	           	<li class="ui-info-item  ui-info-item-grey">
+	              <label class="ui-info-lbl ui-info-small">支持电子保单</label>
+	              <span>
+	                <input type="radio" name="policyType" id="tow1" value="3" <#if productsPo.policyType == 3>checked</#if> /> <label class="ui-rdo-left" for="tow1">是</label>
+	                <input type="radio" name="policyType" id="tow2" value="2" <#if productsPo.policyType == 2>checked</#if>/><label for="tow2">否</label>
+	              </span> 
+	            </li>
+	            <li class="ui-info-item">
+	              <label class="ui-info-lbl ui-info-small">是否支持退保</label>
+	              <span>
+	              	<select id="refundFlag" class="easyui-validatebox ui-info-sel validatebox-text" name="refundFlag">
+	              		<option value="0" <#if productsPo.refundFlag == 0>selected</#if>>不支持</option>
+	         			<option value="1" <#if productsPo.refundFlag == 1>selected</#if>>仅支持生效前退保</option>
+	         			<option value="2" <#if productsPo.refundFlag == 2>selected</#if>>支持</option>
+	              	</select>
+	                <input type="radio" name="refundFlag" id="three1" value="1"  /> <label class="ui-rdo-left" for="three1">是</label>
+	                <input type="radio" name="refundFlag" id="three2" value="0" <#if productsPo.refundFlag == 0>checked</#if> /><label for="three2">否</label>
+	              </span> 
+	            </li> 
+	            <li class="ui-info-item  ui-info-item-grey">
+	              <label class="ui-info-lbl ui-info-small">最多投保份数</label>
+	              <input name="buyQuota" type="text" value="${productsPo.buyQuota}" class="easyui-validatebox ui-info-sinput" 
+	                  data-options="required:true,validType:['integer']" missingMessage="请输入最多投保份数"/> 份
+	            </li>
+	            <li class="ui-info-item"<#if productsPo.beneficiaryNum gte 0 >fn-hide</#if>>
+	              <label class="ui-info-lbl ui-info-small">受益人自定义</label>
+	              <span>
+	                <input type="radio" name="beneficiaryNum" id="four1" value="1" <#if productsPo.beneficiaryNum lt 0 >checked</#if> /> <label class="ui-rdo-left" for="four1">是</label>
+	                <input type="radio" name="beneficiaryNum" id="four2" value="0" <#if productsPo.beneficiaryNum gte 0 >checked</#if>/><label for="four2">否</label>
+	              </span> 
+	            </li>
+	            
+	            <li class="ui-info-item <#if productsPo.beneficiaryNum lte 0>fn-hide</#if>" id="maxBenef">
+	              <label class="ui-info-lbl ui-info-small">最多收益人数</label>
+	               <input name="beneficiaryNum" type="text" value="${productsPo.beneficiaryNum}" class="easyui-validatebox ui-info-sinput" /> 人
+		        </li>
+		        <#--
+	            <li class="ui-info-item">
+	              <label class="ui-info-lbl ui-info-small">产品承保起止时间：</label>
+	              <span>
+	                <input type="text" name="startTime2" id="startTime1" class="easyui-datebox ui-info-sinput"
+	                	 data-options="editable:false" value="${productsPo.startTime2}"  validType="md['#endTime1']"/>
+	                 <em>至</em>
+	                <input type="text" name="endTime2" id="endTime1" class="easyui-datebox ui-info-sinput"
+	                 	 data-options="editable:false"  value="${productsPo.endTime2}" validType="md['#startTime1']"/>
+	              </span>
+	            </li>
+	            -->
+	            <li class="ui-info-item">
+	              <label class="ui-info-lbl ui-info-small">是否需要激活</label>
+	              <span>
+	                <input type="radio" name="activation" id="four1" value="1" <#if productsPo.activation == 1>checked</#if>/> <label class="ui-rdo-left" for="four1">是</label>
+	                <input type="radio" name="activation" id="four2" value="0" <#if productsPo.activation == 0>checked</#if>/><label for="four2">否</label>
+	              </span> 
+	            </li>
+	            <li class="ui-info-item">
+	              <label class="ui-info-lbl ui-info-small">是否支持线上理赔</label>
+	              <span>
+	              	<select id="" class="ui-info-sel" name="claimOnLine">
+	              		<option value="1" <#if productsPo.claimOnLine == 1>selected</#if> >支持</option>
+	         			<option value="0" <#if productsPo.claimOnLine == 0>selected</#if> >不支持</option>
+	              	</select>
+	              </span> 
+	             </li>
+	          </ul>
+	  	 </div>
+  	  	 <div class="ui-info-main ui-infosure-main">
+	     <h2 class="ui-info-tit">审核记录</h2>
+		  	<#if (logsPoList?size==0)>
+		      	<div class="ui-info-list ui-nobotbor">无</div>
+	     	<#else>
+		  	 <#list logsPoList as item>
+		      <ul class="ui-info-list">
+		        <li class="ui-info-item">
+		              <label class="ui-info-lbl">提交时间</label>
+		              <span>
+			                ${item.reqTime1}
+		              </span> 
+		        </li>
+		        <li class="ui-info-item  ui-info-item-grey">
+		              <label class="ui-info-lbl">操作员</label>
+		              <span>
+			                ${item.reqNickname}
+		              </span> 
+		        </li>
+		        <li class="ui-info-item">
+		              <label class="ui-info-lbl">审核状态</label>
+		              <span>
+		                <#if item.auditSts == 0>
+		                	待审核
+		                </#if>
+		                <#if item.auditSts == 1>
+		                	审核通过
+		                </#if>
+		                <#if item.auditSts == -1>
+		                	审核不通过
+		                </#if>
+		              </span> 
+		        </li>
+		        <#if item.auditSts == -1>
+			        <li class="ui-info-item  ui-info-item-grey">
+			              <label class="ui-info-lbl">审核不通过理由</label>
+			              <span>
+			                ${item.auditComment}
+			              </span> 
+			        </li>
+		        </#if>
+		        <#if item.auditSts == -1 || item.auditSts == 1>
+			        <li class="ui-info-item">
+			              <label class="ui-info-lbl">审核时间</label>
+			              <span>
+			                ${item.auditTime1}
+			              </span> 
+			        </li>
+			        <li class="ui-info-item  ui-info-item-grey">
+			              <label class="ui-info-lbl">审核人</label>
+			              <span>
+			                ${item.auditNickname}
+			              </span> 
+			        </li>
+			     </#if>
+		       </ul>
+		      </#list>
+		 </#if>
+  	  	</div>
+  	  	
+      <div class="ui-btn-double ui-detail-btnposition">
+      <#if productsPo.sts == -1 && type != 'detail'>
+        <input type="button" value="重新编辑" class="ui-btn-blue ui-detail-bntwidth" data-type='info' onclick="prodEdit(this);"/>
+      </#if>
+        <input type="button" value="返回" class="ui-btn-grey" onclick="forBack()"/>
+      </div>
+     </form>
+  </div>
+  
+	<!---保障利益的弹框-->
+	<iframe id="dlg-box" class="dlg-box" scrolling="auto" frameborder="0"  style="width:600px;height:500px;"></iframe>
+	
+	<!--提交成功-->  
+
+	 <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+	    <h3 class="ui-dlg-tit">您编辑产品请求已提交审核！</h3>
+	    <input type="button" id="toDetail" class="ui-dlgOk-btn" onclick="" value="查看审核详情"/>
+	 </div>
+	<div id="error" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+    <h3 class="ui-dlg-tit" id="delStartTit2" >异常情况,操作失败!</h3>
+    </div>
+	 <script>
+	 $(function(){
+	    validExtend();
+	   	richEdit();
+	    prodProfit();
+	    $('#dlg').dialog({
+		    onClose:function(){
+		     location.href="${base}/product/since/findListView";
+		    }
+		});
+	    
+	     $('input[name="beneficiaryNum"]').click(function(){//受益人自定义
+	       if($(this).val()=='1'){
+	         $('#maxBenef').show();
+	       }else{
+	         $('#maxBenef').hide();
+	       }
+	    });
+	    
+	});
+	<!-- 查询下级分类 -->
+	function getChildClass(obj){
+   		var parentId = obj.value;
+   		var childSel = document.getElementById("childSel");
+	   	if(parentId != null){
+	   		$.ajax({
+		         url: '${base}/product/findChildClass?parentId='+parentId,
+		         type: 'get',
+		         datatype: 'json',
+		         success: function(result) {
+					<!--//根据id查找对象，-->
+					var obj=document.getElementById("childSel");
+					<!--删除所有节点 -->
+					obj.options.length=0;
+					obj.add(new Option("请选择",""));
+					for(var i=0;i<result.length;i++){
+						obj.add(new Option(result[i].className,result[i].classId));
+					}
+		         }
+	       });
+		}else{
+	  		$.messager.alert('提示消息', '无下属分类！', 'warn');
+		}
+  	};
+  	function prodEdit(obj){
+  	   if($(obj).attr('data-type')=='info'){
+  	     $(obj).val('完成并提交审核');
+  	     $(obj).attr('data-type','edit');
+  	     $('.prod-edit-item').show();
+  	     $('.prod-edit-item').css('display','inline-block');
+  	     $('.prod-edit-item-bef').hide();
+  	     $('.mod-item').hide();
+  	     $('.mod-item-img').hide();
+  	   }else{
+  	      var f=$(obj).parents('form');
+	      if(f.form('validate')){
+	  	     $.ajax({
+				url : "${base}/product/updProduct",
+				type : "post",
+				dataType: "json",
+				data:$(obj).parents('form').serialize(),
+				// 成功后调用
+				success : function(data) {
+					if(data.succ){
+						showAlert('dlg');
+						var val = data.entity;
+						$("#toDetail").attr("onclick","location.href='${base}/product/toProducteditaudit?productId="+val+"'");
+					}else{
+						showAlert('error');
+					}
+				},
+				error:function(data){
+				   showAlert('error');
+				}
+			});
+		 }
+  	   }
+  	}
+  	function findDetail(obj){
+		var url = obj;
+		window.location.href = "${base}/product/since/findListView?sts=10";
+		window.location.href = url;
+	}
+	
+	function findVal(obj){
+  		obj.value = obj.value.replace(/\D/g,'0');
+  		var tot = obj.value;
+  		if(tot == null || tot == "" || tot <= 0){
+  			var str = '<#if productsPo.maxQuantity <= -1>不限<#else>${productsPo.maxQuantity - productsPo.totalQuantity } 份 </#if>';
+  			$("#totalNum").text(str);
+  		} else{
+  			var num = (Number)(tot)+(Number)(${productsPo.maxQuantity - productsPo.totalQuantity });
+	  		$("#totalNum").text(num+" 份");
+	  		$("#maxQuantity").attr("value",num);
+  		}
+  	}
+  	function findVal2(obj){
+  		var tot = obj.checked;
+  		if(tot){
+  			$(".ui-info-input").attr("readonly",true);
+  			$("#totalNum").text("不限");	
+  		} else {
+  			$(".ui-info-input").attr("readonly",false);
+  			var str = '<#if productsPo.maxQuantity <= -1>不限<#else>${productsPo.maxQuantity - productsPo.totalQuantity } 份 </#if>';
+  			$("#totalNum").text(str);
+  			$("#maxQuantity").attr("value",${productsPo.maxQuantity - productsPo.totalQuantity});
+  		}
+  	}
+  	function forBack(){
+  		window.history.back();
+  	}
+  	
+  	<#--控制是否允许退保-->
+  	function ctrlVal(obj){
+  		var str = obj.value;
+  		if(str == 1){
+  			$("#refundFlag").find("option").eq(0).prop("selected","selected");
+  			$("#refundFlag").attr("disabled","false");
+  			//$("#refundFlag").attr("onfocus","this.defaultIndex=this.defaultIndex;");
+  			//$("#refundFlag").attr("onchange","this.selectedIndex=this.defaultIndex;");
+  		} else {
+  			$("#refundFlag").removeAttr("disabled");
+  			//$("#refundFlag").attr("onfocus","");
+  			//$("#refundFlag").attr("onchange","");
+  		}
+  	}
+	</script>
+</body>
+</html>

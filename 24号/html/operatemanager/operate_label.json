@@ -1,0 +1,46 @@
+﻿{   "succ":true,
+    "total": 50,
+    "pageSize": 5,
+    "pageCount": 2,
+    "currentPage": 1,
+     "titleDetail":{"alluser":400000000,"newuser":3720000,"countuser":113300,"money":1909993330},
+    "records": [
+        {
+			"agentAreaCity":"Pla001",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"10.00-200.00",
+			"agentAreaCounty":"意外险",
+			"agentId":"E保自研",
+			"agentProduceName":"已上架",
+			"agentProduceCount":"旅游/宝贝计划/安全出行/交通意外/出国旅游"	
+        },
+		{
+			"agentAreaCity":"Pla001",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"10.00-200.00",
+			"agentAreaCounty":"意外险",
+			"agentId":"E保自研",
+			"agentProduceName":"待上架",
+			"agentProduceCount":""	
+        },
+        {
+			"agentAreaCity":"Pla001",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"10.00-200.00",
+			"agentAreaCounty":"意外险",
+			"agentId":"E保自研",
+			"agentProduceName":"已上架",
+			"agentProduceCount":"交通意外"	
+        },
+        {
+			"agentAreaCity":"Pla001",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"10.00-200.00",
+			"agentAreaCounty":"意外险",
+			"agentId":"E保自研",
+			"agentProduceName":"已下架",
+			"agentProduceCount":""	
+        }
+        
+    ]
+}

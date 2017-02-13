@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>新增确认</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+</head>
+<body>
+	<div class="ui-info-box">
+        <div class="ui-crumbs">
+        	 <span>当前位置：</span><a href="#">运营管理</a><em>></em><span>专题管理</span>
+        </div>
+        <div class="ui-info-main">
+            <div class="ui-informate">
+             	<div class="ui-informate-base ui-channel-baseinfor">
+                    <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-base-label theme-item-label">专题名称:</label>
+                        <span class="ui-base-data">
+                            <input class="clause-input ui-channel-inforspan easyui-validatebox  ui-cover" type="text" name="phone" maxlength="20" data-options="required:true,validType:'numLetChina'" missingMessage="请输入专题名称"/>
+                        </span>
+                    </div>
+                    <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-base-label theme-item-label">专题说明:</label>
+                        <span class="ui-base-data">
+                            <input class="clause-input ui-channel-inforspan easyui-validatebox  ui-cover" type="text" name="phone" data-options="required:true,validType:'numLetChina'" missingMessage="请输入专题说明" maxlength="40"/>
+                        </span>
+                    </div>
+                     <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-base-label theme-item-label">专题图片:</label>
+                        <span class="ui-base-data ui-relative">
+                            <div class="ui-info-item ui-client-upload-item">
+                                <div class="ui-relative ui-clinet-upload">
+                                  <input type="hidden" class="" name="url" value="">
+                                  <input type="button" class="ui-btn-blue ui-fileup ui-fileselect" value="上传">
+                                  <input type="file" class="file-wrap file-hid" id="file-wrap" name="file1" onchange="uploadFile(this,'/upload/picture');">
+                                </div>  
+                            </div>
+                        </span>
+                        <span class="showMessage"></span>
+                    </div>
+                    <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-base-label theme-item-label">关联产品:</label>
+                        <span class="ui-base-data">
+                           <input type="button" value="选择" class="ui-btn-blue ui-submit" id="relateProduce"/>
+                        </span>     
+                    </div>
+                   <!--关联产品数据填充-->
+                   <div id="relateBox"></div>
+
+                    <div class="ui-base-colsinfor ui-base-colwidth-business ui-month-base">
+                        <label class="ui-base-label theme-item-label">开始时间:</label>
+                        <span class="ui-base-data">
+                            <input class="easyui-datetimebox" style="width:300px" id="datetimeboxStart">
+                        </span>
+                        <div class="predent-textarea ctooltip-bottom custom-month-position custom-tool-left2" id="clientTimeTool1" v>
+                           <span class="custom-textarea-tooltip custom-txt-style">请输入开始时间</span>
+                           <div class="ctooltip-arrow-outer custom-triange-outstyle" style=""></div>
+                           <div class="ctooltip-arrow custom-triange-intstyle" style=""></div>
+                       </div>
+                    </div>
+                    <div class="ui-base-colsinfor ui-base-colwidth-business ui-month-base">
+                        <label class="ui-base-label theme-item-label">结束时间:</label>
+                        <span class="ui-base-data">
+                            <input class="easyui-datetimebox" style="width:300px" id="datetimeboxEnd">
+                        </span>
+                        <div class="predent-textarea ctooltip-bottom custom-month-position custom-tool-left2" id="clientTimeTool2" v>
+                           <span class="custom-textarea-tooltip custom-txt-style">请选择结束时间</span>
+                           <div class="ctooltip-arrow-outer custom-triange-outstyle" style=""></div>
+                           <div class="ctooltip-arrow custom-triange-intstyle" style=""></div>
+                       </div>
+                    </div>   
+                    <div class="ui-btn-double">
+                        <a href="specialnewsave.html"><input type="button" value="下一步" class="ui-btn-blue ui-submit" id="channelBaseInfor"/></a>
+                        <input type="button" value="取消"  class="ui-btn-grey ui-back"/>
+                    </div>
+                </div>	
+         	</div>
+    	</div>
+      <!--选择弹出框start-->
+         <div id="dlgList" class="easyui-dialog ui-dlg-alert ui-select-bigbox"  data-options="iconCls:'icon-save',modal:true,closed: true">
+            <iframe src="" frameborder="0" width="100%" height='100%' id="newLoadPage"></iframe>
+        </div>
+
+
+        <!--选择弹出框end-->
+	</div>
+
+	<script>
+    $(function(){
+        validExtend();
+       
+    
+        
+   });
+    function submitForm(){
+        if($('#search-ff').form('validate')){
+                //eb.backToFstPage("#datagrid");
+                $("#dg-list").datagrid({queryParams : eb.form2Json("search-ff")});
+                
+                 pageAction();
+            }
+    }
+    function clearForm(){
+        $("#search-ff").form('clear');
+    }
+    var methods = {
+            init : function(){
+
+                //全局变量
+                this.isflag = true;
+
+                //验证的元素
+
+                var timestart = $("#datetimeboxStart"),
+                    timeend = $("#datetimeboxEnd"),
+                    isflag = true;
+                 
+
+
+               $("#channelBaseInfor").click(function(event) {
+
+                    
+                   var datastart = timestart.datebox('getValue'),
+                        dataend = timeend.datebox('getValue'),
+                        producecont = $("#dg-list").html();
+                        
+            
+
+                //时间控件验证是否为空
+                if(datastart == ""){
+                     $("#clientTimeTool1").show();
+                     isflag = false;
+                }else{
+                     $("#clientTimeTool1").hide();
+                     isflag = true;
+                }
+                //时间控件验证是否为空
+                if(dataend == ""){
+                     $("#clientTimeTool2").show();
+                     isflag = false;
+                }else{
+                     $("#clientTimeTool2").hide();
+                     isflag = true;
+                }
+
+            
+               });
+
+            //点击选择显示弹框加上数据
+            $("#relateProduce").click(function(event) {
+                  showAlert("dlgList");
+                  $("#newLoadPage").attr("src",'specialnewselect.html')
+                 
+            })
+            
+
+   
+            }
+
+           
+
+        }
+
+        methods.init();
+
+      function getDataItem(str){
+          alert('选择数据的ID组：'+str);
+          var arr = str.split(",");
+          var target =$("#relateBox"),str='';
+          var data = '<div class="relate-box">'+
+                        '<table class="relate-produce-table">'+
+                      '<tr>'+
+                        '<th class="relate-item-style">产品ID</th>'+
+                        '<th class="relate-item-style">保险名称</th>'+
+                        '<th class="relate-item-style">保险公司</th>'+
+                        '<th class="relate-item-style">产品总量</th>'+
+                        '<th class="relate-item-style">保费金额(元)</th>'+
+                        '<th class="relate-item-style">保险类别</th>'+
+                        '<th class="relate-item-style">来源</th>'+
+                      '</tr>'+
+                      '<tr>'+
+                        '<td class="ui-channel-titcolor relate-item-text relate-item-textcurr">00001</td>'+
+                        '<td class="ui-channel-titcolor relate-item-text">A计划保险</td>'+
+                        '<td class="ui-channel-titcolor relate-item-text">中国人保</td>'+
+                        '<td class="ui-channel-titcolor relate-item-text">100.00</td>'+
+                        '<td class="ui-channel-titcolor relate-item-text">10.00-100.00</td>'+
+                        '<td class="ui-channel-titcolor relate-item-text">意外险</td>'+
+                        '<td class="ui-channel-titcolor relate-item-text">自研</td>'+
+                      '</tr>'+
+                    '</table>'+
+                    '<div class="ui-base-colsinfor ui-base-colwidth-business">'+
+                            '<label class="ui-base-label relate-item-label">专题产品:</label>'+
+                            '<span class="ui-base-data">'+
+                                '<input class="clause-input ui-channel-inforspan ui-optional easyui-validatebox  ui-cover" type="text" name="phone" placeholder="推荐语(必填)" data-options="validType:\'numLetChina\'" maxlength="40"/>'+
+                            '</span>'+
+                        '</div>'+
+                    '</div>';
+          for(var i=0;i<arr.length;i++){
+              str += data;
+          }
+          target.append(str);
+      }
+    </script>
+</body>
+</html>

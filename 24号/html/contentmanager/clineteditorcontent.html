@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>保险经纪管理平台</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/kindeditor/kindeditor.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+</head>
+<body>
+	<div class="ui-info-box">
+    <div class="ui-crumbs">
+    	 <span>当前位置：</span><a href="#">内容管理</a><em>></em><span>客户业务类</span>
+    </div>
+    <div class="ui-info-main">
+         <div class="ui-informate">
+         	<div class="ui-client-editorcontent">
+         	<form action="">
+         		<h4 class="ui-info-lbl">关于我们</h4>
+         		<ul>
+         			<li>
+         				<label for="" class="ui-info-lbl client-work-label">E保logo：</label>
+         				 <span class="ui-relative"> <img src="" width="200" height="100"/></span>
+         			</li>
+         			<li>
+         				<label for="" class="ui-info-lbl client-work-label">客服电话：</label>
+         				<span id="clientShowPhone">400-5066-789</span>
+         			</li>
+         			<li>
+         				<label for="" class="ui-info-lbl client-work-label clause-editor-label">E保简介：</label>
+         				<span> <textarea readonly="true" cols="100" rows="20" ></textarea></span>
+         			</li>
+         			<li>
+         				<label for="" class="ui-info-lbl client-work-label">公司名称：</label>
+         				<span id="clientShowName">思伟信息</span>
+         			</li>
+         			<li>
+         				<label for="" class="ui-info-lbl client-work-label">网址许可证：</label>
+         				<span id="clientShowAddress">思伟信息</span>
+         			</li>
+         			<li>
+         				<label for="" class="ui-info-lbl client-work-label">经营许可证：</label>
+         				<span id="clientShowPermit">思伟信息</span>
+                      
+         			</li>
+         			<li>
+         				<label for="" class="ui-info-lbl client-work-label">成立时间：</label>
+         				<span class="ui-clientmanager" id="clientShowTime">2014-04-25</span>
+         			</li>
+         			<li class="ui-btn-double">
+				      <a href="clinetSavecontent.html"><input type="button" value="编辑" class="ui-btn-blue ui-submit" id="clientShowEditor"/></a>
+				     
+				    </li>
+         		</ul>
+         	</form>
+			</div>
+        
+    	</div>
+    	
+    	
+	</div>
+
+	<script>
+	$(function(){
+
+   
+      var editor;
+      KindEditor.ready(function(K) {
+            editor = K.create('#clientAreatext',{
+                width : 670
+            })
+              
+        });
+        
+    
+    })
+	
+	</script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" content="text/html; charset=utf-8" >
+	<title>启动页面管理-客户端管理</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+</head>
+<body>
+	<div class="ui-info-box">
+    <div class="ui-crumbs">
+    	 <span>当前位置：</span>
+    	 <a href="#">客户端管理</a><em>></em>
+    	 <span>启动页面管理</span>
+    </div>
+    <form id="infoForm" method="post" action="product_info_insure.html">
+    <div class="ui-info-main">
+        <ul class="ui-info-list">
+         	<li class="ui-info-item no-topbor">
+         		<label class="ui-info-lbl">系统类型</label>
+         		<select class="ui-info-sel" >
+         			<option>请选择</option>
+         		</select>
+         		<select class="ui-info-sel">
+         			<option>请选择</option>
+         		</select>
+         	</li>
+         	<li class="ui-info-item ui-info-item-grey">
+         		<label class="ui-info-lbl">标题</label>
+         		<input type="text" value="" class="easyui-validatebox ui-info-input" data-options="required:true"/> 份
+         	</li>
+         	<li class="ui-info-item">
+         		<ul class="ui-start-img-wrap fn-clear">
+              <li>
+                <p class="ui-fw14">960*640</p>
+                <img src="../images/default.png" width="192" height="288"/>
+                <div class="ui-relative">
+                  <input type="hidden" class="" name="url" value="">
+                  <input type="button" class="ui-btn-blue ui-fileup" value="上传">
+                  <input type="file" class="file-wrap file-hid" id="file-wrap" name="file1" onchange="uploadFile(this,'/upload/picture');">
+                </div>
+              </li>
+              <li>
+                <p class="ui-fw14">1136*640</p>
+                <img src="../images/default.png" width="192" height="288"/>
+                <div class="ui-relative">
+                  <input type="hidden" class="" name="url" value="">
+                  <input type="button" class="ui-btn-blue ui-fileup" value="上传">
+                  <input type="file" class="file-wrap file-hid" id="file-wrap" name="file1" onchange="uploadFile(this,'/upload/picture');">
+                </div>
+              </li>
+              <li>
+                <p class="ui-fw14">1134*750</p>
+                <img src="../images/default.png" width="192" height="288"/>
+                <div class="ui-relative">
+                  <input type="hidden" class="" name="url" value="">
+                  <input type="button" class="ui-btn-blue ui-fileup" value="上传">
+                  <input type="file" class="file-wrap file-hid" id="file-wrap" name="file1" onchange="uploadFile(this,'/upload/picture');">
+                </div>
+              </li>
+              <li>
+                <p class="ui-fw14">1920*1080</p>
+                <img src="../images/default.png" width="192" height="288"/>
+                <div class="ui-relative">
+                  <input type="hidden" class="" name="url" value="">
+                  <input type="button" class="ui-btn-blue ui-fileup" value="上传">
+                  <input type="file" class="file-wrap file-hid" id="file-wrap" name="file1" onchange="uploadFile(this,'/upload/picture');">
+                </div>
+              </li>
+            </ul>
+         	</li>
+         	<li class="ui-info-item ui-info-item-grey">
+         		<label class="ui-info-lbl">有效期</label>
+            <input id="startTime" class="easyui-datebox" data-options="editable:false" vlaue="" validType="md['#endTime']"/>
+            <em>至</em>
+            <input id="endTime" class="easyui-datebox" data-options="editable:false" vlaue="" validType="md['#startTime']"/>
+         	</li>
+        </ul>
+  	</div>
+    <div class="ui-btn-double">
+      <input type="button" value="保存" class="ui-btn-blue" onclick="doSubmit(this);"/>
+      <input type="button" value="取消"  class="ui-btn-grey" onclick="formCancel('dlg');"/>
+    </div>
+   </form>
+<!--弹框-->  
+  <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+    <h3 class="ui-dlg-tit">您的操作尚未保存，确定要取消吗？</h3>
+    <input type="button" class="ui-dlgOk-btn" value="确定"/>
+    <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+  </div>
+
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/kindeditor/kindeditor.js"></script>
+	<script type="text/javascript" src="../js/base.js"></script>
+	<script>
+   $(function(){
+    validExtend();
+   	richEdit();
+	});
+   
+  
+	</script>
+</body>
+</html>

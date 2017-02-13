@@ -1,0 +1,559 @@
+
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>自研产品管理-产品信息管理-产品管理</title>
+	<link rel="stylesheet" type="text/css" href="../../../../resource/style/base.css">
+	<link rel="stylesheet" type="text/css" href="../../../../resource/style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../../resource/style/style.css">
+	<link rel="stylesheet" href="admit.css">
+	<script type="text/javascript" src="../../../../resource/js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../../resource/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../../resource/js/kindeditor/kindeditor.js"></script>
+	<script type="text/javascript" src="../../../../resource/js/ajaxfileupload.js"></script>
+	<script type="text/javascript" src="../../../../resource/js/base.js"></script>
+	
+	
+</head>
+
+<body style="">
+	<div class="ui-info-box">
+		<div class="ui-crumbs" id="crumbs">
+			<#include "/common/include/power.ftl">
+		</div>
+		<div class="ui-datagrid-wrap">
+			<!-- ==========================================中间 ==============================================-->
+
+
+			<!-- =========================表单=================================== -->
+			<div class="top">
+				<form id='form123' method="" action="">
+					<ul>
+						<li>
+							专题类型
+							<select name="" id="" disabled='disabled';>
+								<option value="0" <#if product.genderLimit == 0>selected</#if> >爆款</option>
+								<option value="1" <#if product.genderLimit == 1>selected</#if> >普通</option>
+							</select>
+						</li>
+						<li>
+							专题名称<input type="text" class='easyui-validatebox' data-options="required:true" name="" value="${}" readonly="readonly" >
+						</li>
+						<li>
+							专题说明<input type="text" class='easyui-validatebox' data-options="required:true"  name="" value="${}" readonly="readonly" >
+						</li>
+						<li class="ui-info-item ui-relative" style="width:250px; heigt:400px;list-style:none;padding:0;">
+							<label class="ui-info-lbl">产品配图</label>
+							<p style="position:position:relative;display:inline-block;width:400px;height:
+							70px">
+							<img src="img.png" class="addimg" width="120" height="120"
+							style="display:block;position: absolute;left:58px;top:40px;border:1px solid #ccc;"
+							data-leve='produce' id='produceImg'/>
+
+							<input type="button" class="ui-file-link" value="点击上传"
+							style="width:63px;height:28px; position: absolute;left:63px;top:10px;display:none">
+							<input disabled="disabled" type="file" name="insuranceTerms" class="file-wrap" id="prodimg-file"
+							onchange="uploadImg1('prodimg-file','${base}/upload/imgUpload','product');"
+							style="position: absolute;left:63px;top:10px;width:63px;">
+							<input type="text" id="productLogo" name="productLogo"
+							class="easyui-validatebox  ui-unvisib" value="q"
+							style="width:63px; position: absolute;left:63px;top:10px; opacity:0"/>
+						</p>
+
+					</li><br><br>
+					<li class="date">
+						<!-- <label class="name ui-change-item-label">专题时间：</label>
+						<input id="startTime" name="effTimestr" class="easyui-datebox easyui-validatebox" data-options="editable:false,required:true"  value="${domainproduct.effTime?string('yyyy-MM-dd HH:mm:ss')}" validType="md['#endTime']">
+						<em class="ui-channel-titcolor">至</em>
+						<input id="endTime" name="expTimestr" class="easyui-datebox easyui-validatebox" data-options="editable:false,required:true" value="${domainproduct.expTime?string('yyyy-MM-dd HH:mm:ss')}" validType="md['#startTime']"> -->
+						<label class="name ui-change-item-label">专题时间：</label>
+						<input readonly="readonly" class="easyui-datebox easyui-validatebox" data-options="editable:false,required:true" style="width: 180px" id="start2" value="${startTime}"> 
+						<span class="newfont06">至</span> 
+						<input readonly="readonly"  class="easyui-datebox" data-options="editable:false,required:true" style="width: 180px" id="end2" value="${endTime}" validType="md['#start2']">
+
+
+					</li>
+				</ul>
+			</form>
+		</div>
+		<!-- =========================关联产品======================= -->
+		<div class="center list-item fn-clear">
+			<p style="margin-bottom:10px">
+				关联产品
+				<!-- <a class="center_a" href="javascript:;" onclick="show()">选择</a> -->
+			</p>
+			<div style="padding-left:60px;margin-bottom:20px">
+				<table id="dg-list" class="ebao-datagrid"  style="margin-right:10px;">
+
+
+				</table>
+			</div>
+		</div>
+		<!-- ============================审核==================================== -->
+		<div class="center list-item fn-clear;position:relative">
+			<span style="position:absolute;">
+				审核信息
+			</span>
+			<div style="padding-left:60px;margin-bottom:5px">
+				<table id="dg-list2" class="ebao-datagrid"  style="margin-right:10px">
+				</table>
+			</div>
+
+
+
+			<!-- ===========================================中间结束========================================== -->
+		</div>
+		<div class="bottom" style="text-align:center">
+			<input type="text" name="" value="${}" style="display:none">
+			<input type="text" name="" value="${}"  style="display:none">
+			<a href="javascript:;" onclick="bottom_admin()">编辑</a>
+			<a href="专题列表.html">取消</a>
+		</div>
+	</div>
+	
+
+
+
+	<div id="isReset3" class="easyui-dialog ui-dlg-alert" data-options="iconCls:'icon-save',modal:true,closed: true" style=" min-width:300px; min-height: 100px; text-align:left; padding:0">
+		<h3 style="width:300px; text-align:center;font-size: 16px;color: #768399;font-weight: bold;padding-top:50px">
+			待审核不可编辑
+		</h3>
+
+	</div>
+	
+	<!-- ==============================最后==================================== -->
+
+</div>
+</body>
+<script>
+	
+
+
+
+
+	//上传图片
+	function uploadImg1(id, url, filePath, levetype) {
+		var obj = $('#' + id);
+		if ($(obj).val() != '') {
+			var name = $(obj).val(), fileSize = 0;
+			var type = name.substr(name.lastIndexOf(".") + 1).toLocaleLowerCase();
+
+			if (!obj.files) {
+				if (obj.files != undefined) {
+					var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
+					var file = fileSystem.GetFile(obj.value);
+					fileSize = file.Size;
+				}
+			} else {
+				fileSize = obj.files[0].size;
+			}
+			if (type != 'png' && type != 'jpg' && type != 'gif' && type != 'bmp' && type != 'jpeg') {
+				alert('格式不正确，请重新上传。');
+				return;
+			} else if (fileSize / 1024 > 5000) {
+				alert('不能大于5M。');
+				return;
+			}
+			var str = url + "?filePath=" + filePath;
+			$.ajaxFileUpload({
+				url: str,
+				secureuri: false,
+				fileElementId: id,
+				dataType: 'json',
+				success: function (data) {
+					if (data) {
+						var picturePath = data.entity.substr(data.entity.lastIndexOf("_") + 1);
+						alert("上传成功!");
+                        //产品新增上传图片
+                        //$("#productLogo").val(picturePath);
+                        if (levetype == 'moreimg') {
+                        	var pics = $("#producePicshow"),
+                        	len = pics.find('img').length;
+                        	pics.closest(".ui-info-item").show();
+                        	var str = '<div class="produce-piclist"><img src="' + picturePath + '" class="ui-page-fir ui-addimg" width="120" height="120"/><br/><span class="ui-base-policy ui-relative"><input type="button" class="ui-file-link" value="重新上传"><input type="file" name="insuranceTerms" class="file-wrap" id="prodimg-file-productAdvantage' + len + '"  onchange="uploadImg(this.id,\'/product/fileUpload\',\'product\',\'eachimg\');" style="left:0;top:0;width:60px;"></span><input type="button" class="ui-file-link query-result-span produce-advantdel" value="删除"></div>';
+                        	$(pics).append(str);
+                        	$("#productAdvantage").val('yes');
+                        } else if (levetype == 'eachimg') {
+                        	var oneimg = $("#" + id).closest('.produce-piclist').find('.ui-addimg');
+                        	oneimg.attr("src", picturePath);
+                        } else {
+                        	$("#produceMap").attr("src", picturePath);
+                        	var addimg = $("#" + id).parents('.ui-info-item').find('.addimg');
+                        	var leve = $(addimg).data("leve");
+                        	leve = leve ? leve : "yes";
+                        	if (leve == 'no') {
+                        		if (addimg.length != 0) {
+                        			addimg.attr("src", picturePath).show();
+
+                        		}
+                        	} else if (leve == 'produce') {
+                        		if (addimg.length != 0) {
+                        			addimg.attr("src", picturePath).show();
+                        			$("#" + id).css({'left': '10px', 'top': '40px'});
+                        		}
+                        	} else {
+                        		if (addimg.length != 0) {
+                        			addimg.attr("src", picturePath).show();
+                        			$("#" + id).css({'left': '293px', 'top': '45px'});
+                        		}
+                        	}
+
+
+                        	$("#systemLogo").val(picturePath);
+                        	$("#specialLogo3").val(picturePath);
+                        	$("#promotionLogo").val(picturePath);
+                        	$("#posLogo").val(picturePath);
+                            //启动页图片
+                            $("#" + id).next().val(picturePath);
+                            $("#" + id).parents(".file-mode").prev().attr("src", picturePath);
+                        }
+
+
+                    } else {
+                    	alert(data.error.message);
+                    }
+                },
+                error: function (data) {
+                	alert('系统出错，请重试');
+                }
+            });
+}
+}
+
+
+
+
+
+
+
+/*==========================显示表格================================*/
+$(function(){
+	
+	validExtend();
+	$("#dg-list").datagrid({
+		url:'datagrid_data1.json',
+		method:'post',
+		fitColumns:true,
+		rownumbers:true,
+	    nowrap: true,//当数据长度超出列宽时将会自动截取
+	      singleSelect: true,//只能选择一行
+	      resizable:false,
+	      checkOnSelect:false,
+	    // pagination:true,
+	    idField:'agentId',
+	    columns:[[
+	    {field:'agentId',align:'center',width:"10%",title:'产品ID',},
+	    {field:'agentBranchName',align:'center',width:"10%",title:'保险名称',
+	    formatter:function(rec,index){
+	    	var url='${base}/product/toProductDetail';
+	    	if(rec==6||rec==7){
+	    		url='${base}/product/toProductDetail';
+	    	} else if(rec.sts1==0){
+	    		url='${base}/product/productTE';
+	    	}
+	    	return '<a class="operation-link" href="javascript:;">'+rec+'</a>';
+	    }
+	},
+	{field:'businessName',align:'center',width:"10%",title:'承保公司'},
+	{field:'orderAmount',align:'center',width:"10%",title:'保险类别'},
+	{field:'agentAreaProvinceName',align:'center',width:"10%",title:'当前库存'},
+	{field:'orderStatus',align:'center',width:"10%",title:'保险金额(元)'},
+
+	{field:'orderAmount',align:'center',width:"13%",title:'一级佣金',},
+	{field:'orderAccount',align:'center',width:"13%",title:'二级佣金',}
+	]],
+	loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+        }
+
+    });
+
+
+
+/*审核的表格*/
+$("#dg-list2").datagrid({
+	url:'datagrid_data1.json',
+	method:'post',
+	fitColumns:true,
+	rownumbers:true,
+	    nowrap: true,//当数据长度超出列宽时将会自动截取
+	      singleSelect: true,//只能选择一行
+	      resizable:false,
+	      checkOnSelect:false,
+	    // pagination:true,
+	    idField:'agentId',
+	    columns:[[
+	    {field:'aa',align:'center',width:'10%',title:'审核结果',
+	    formatter:function(value,rec,index){
+	    	var rec2=rec.orderStatus;
+	    	// console.log(rec2)
+	    	if(rec2==2){
+	    		bb='待审核'
+	    	}else{
+	    		bb='审核不通过'
+	    	}
+	    	return '<a class="list-redact" style="color:#0000EE" href="javascript:;">'+bb+'</a>';
+
+	    }
+	},
+	{field:'agentId',align:'center',width:"10%",title:'产品ID',},
+	{field:'agentBranchName',align:'center',width:"10%",title:'审核不通过原因',
+	formatter:function(value,rec,index){
+		var rec2=rec.orderStatus;
+		// console.log(rec2)
+		if(rec2==2){
+			bb='/';
+			return bb;
+		}else{
+			bb=rec.agentBranchName;
+			return '<a class="list-redact" style="color:red" href="javascript:;">'+bb+'</a>';
+		}
+		
+	}
+},
+{field:'businessName',align:'center',width:"10%",title:'审核员',
+formatter:function(value,rec,index){
+	var rec2=rec.orderStatus;
+	// console.log(rec2)
+	if(rec2==2){
+		bb='/'
+	}else{
+		bb=rec.businessName
+	}
+	return bb
+}
+},
+{field:'orderAmount',align:'center',width:"10%",title:'审核时间',
+formatter:function(value,rec,index){
+	var rec2=rec.orderStatus;
+	// console.log(rec2)
+	if(rec2==2){
+		bb='/'
+	}else{
+		bb=rec.orderAmount
+	}
+	return bb
+}
+},
+{field:'agentAreaProvinceName',align:'center',width:"10%",title:'操作员'},
+{field:'orderAccount',align:'center',width:"10%",title:'提交时间'}
+]],
+loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+            
+        },
+
+    });
+$("#dg-list2").datagrid('hideColumn', 'agentId');
+/*$("#dg-list2").datagrid('hideColumn', 'agentId');
+var a1='[{"agentId": "2791000002h","agentAreaProvince": "360000", "agentAreaCity": "360100","agentAreaCounty": "360121","orderId": "20150514005133000001","agentBranchName": "马良二级网点","businessName": "交通违章查询","orderAccount": "浙A69852","orderAmount": 10,"createTime": 1431536053000,"orderStatus": 2,"orderAmountExcel": null,"orderStatusExcel": null,"agentAreaProvinceName": "江西省","agentAreaCityName": "南昌市","agentAreaCountyName": "南昌县"},{"agentId": "2791000002j","agentAreaProvince": "360000","agentAreaCity": "360100","agentAreaCounty": "360121","orderId": "20150514005133000001","agentBranchName": "马良二级网点","businessName": "交通违章查询","orderAccount": "浙A69852","orderAmount": 10,"createTime": 1431536053000,"orderStatus": 2,"orderAmountExcel": null,"orderStatusExcel": null,"agentAreaProvinceName": "江西省","agentAreaCityName": "南昌市","agentAreaCountyName": "南昌县"}]';
+// console.log(a1)
+var jsonstr1 = '{"succ":true,"total": 10,"pageSize": 10,"pageCount": 2,"currentPage": 1,"records":'+a1+'}'; 
+// console.log(jsonstr1)
+
+var data1 = $.parseJSON(jsonstr1);    
+$('#dg-list2').datagrid('loadData', data1); //将数据绑定到datagrid   
+*/
+
+	})//最后括号
+
+
+/*=========================================最后提交============================================*/
+function bottom_admin(){
+	// alert('a')
+	var a=$('.bottom input').eq(0).val();
+	var b=$('.bottom input').eq(1).val();
+	// console.log(a+b);
+	$.ajax({
+		type: "POST",
+		url: "",
+		data:{id:a,id1:b},
+		success: function(msg){
+			window.location='编辑.html';
+		},
+		error:function(){
+			$('#isReset3 h3').html('跳转失败，请重新点击')
+			showAlert('isReset3');
+			setTimeout(function () {
+				$('#isReset3').dialog({
+					closed: true
+				});
+
+			}, 1000);
+		}
+
+	})
+}	
+
+
+
+// 搜索提交
+function submitForm2(form,table){
+	if(!form){
+		form=$('#search-ff');
+	}
+	if(!table){
+		table=$("#dg-list");
+	}
+	if(form.form('validate')){
+		    // eb.backToFstPage("#datagrid");
+		    table.datagrid({queryParams : eb.form2Json(form.attr('id'))});
+		    pageAction2();
+		}
+	}
+
+	// 分页
+	function pageAction2(){
+		var page=$("#dg-list1").treegrid("getPager");
+		$(page).pagination({
+			total:10,
+			pageSize:10,
+			displayMsg:"",
+			layout:['list','sep','first','prev','links','next','last','manual', ],
+			beforePageText: '<span class="ui-page-text ui-page-fir">共20页</span>  <span class="ui-page-text">去第</span>',
+			afterPageText: '<span class="ui-page-text ui-page-last">页</span>',
+			showPageList:false
+		});  
+	}
+
+
+
+
+var varify;//用于查询验证,验证开始时间是否小于结束时间 
+function query2(pid){ 
+	if(varify){ 
+		startTime2 = $('#start2').datetimebox('getValue'); 
+		endTime2 = $('#end2').datetimebox('getValue'); 
+		window.location.href="listPagingArticle?pid="+pid+"&pageNumber=1&start="+startTime2+"&end="+endTime2; 
+	}else{ 
+		$.messager.alert('警告','结束时间要大于开始时间','warning'); 
+	} 
+
+} 
+$.fn.datebox.defaults.formatter = function(date){//对于时间格式的转换 
+
+	var y = date.getFullYear(); 
+	var m = fullnum(date.getMonth()+1); 
+	var d = fullnum(date.getDate()); 
+	return y+'-'+m+'-'+d; 
+}; 
+function fullnum(obj){//对于月小于10格式的转换,因为Timestamp转换必须是2013-01-04这种格式 
+	if(Number(obj) < 10){ 
+		return '0' + obj; 
+	}else{ 
+		return obj; 
+	} } 
+
+$.extend($.fn.validatebox.defaults.rules, {//验证开始时间小于结束时间 
+	md: { 
+		validator: function(value, param){ 
+			startTime2 = $(param[0]).datetimebox('getValue'); 
+			var d1 = $.fn.datebox.defaults.parser(startTime2); 
+			var d2 = $.fn.datebox.defaults.parser(value); 
+			varify=d2>=d1; 
+			return varify; 
+
+		}, 
+		message: '结束时间要大于开始时间！' 
+	} 
+}) 
+</script>
+<style>
+	.messager-body{
+		z-index: 1;
+	}
+
+	.messager-window{
+
+
+		background: #fff;
+		opacity: 1;
+	}
+
+/* 幕布
+
+.mubu{
+  width: 100%; height: 100%; 
+  background: #ccc;
+  position: absolute;left: 0; top:0;
+  z-index:2; 
+  opacity: 0.3;
+  display: none;
+} */
+.panel{
+	/*top:200px!important;*/
+}
+/*几个弹出框提示*/
+#isReset1 h3{
+	width: 336px;
+	text-align: center;
+	margin: 25px 0 25px 0;
+	font-size: 14px;
+	color: #768399;
+	font-weight: bold;
+}
+#isReset1 .p7{
+
+	margin:0 auto;
+	width: 336px;
+	padding-top:10px;
+}
+#isReset1 .p7 input{
+	width: 120px; height: 35px;
+	margin-right:20px;
+	border-radius: 7px;
+	background: #3498DA;
+	font-weight: bold;
+	color:#fff;
+	font-size:14px;
+}
+#isReset1 .p7 input:nth-child(1){
+	margin-left: 40px;
+}
+#isReset1 .p7 input:nth-child(2){
+	background: #D8DBDD; 
+} 
+#isReset4 h4{
+	text-align: left;
+	padding-left: 5px;
+	font-size:14px;
+	font-weight: bold;
+	color:#424242;
+	width: 100%;
+	height:24px;
+	line-height: 24 px;
+	background: #F1F1F1;
+}
+#isReset4 select{
+	width:95px;
+}
+#isReset4 form input{
+	width: 95px;
+}
+#isReset4  p {
+	padding-top: 5px;
+}
+
+#isReset4  p input:nth-child(1){
+	width: 120px;
+	height: 35px;
+	margin-right: 20px;
+	border-radius: 7px;
+	background: #3498DA;
+	font-weight: bold;
+	color: #fff;
+	font-size: 14px;
+}
+#isReset4  p input:nth-child(2){
+	width: 120px;
+	height: 35px;
+	margin-right: 20px;
+	border-radius: 7px;
+	font-weight: bold;
+	color: #fff;
+	font-size: 14px;
+}
+
+</style>
+</html>

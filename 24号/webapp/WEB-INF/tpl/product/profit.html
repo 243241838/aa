@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>保障利益-产品参数管理-产品管理</title>
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/base.css">
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/style.css">
+  <script type="text/javascript" src="../../../resource/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../../../resource/js/jquery.easyui.min.js"></script>
+  <script type="text/javascript" src="../../../resource/js/kindeditor/kindeditor.js"></script>
+  <script type="text/javascript" src="../../../resource/js/base.js"></script>
+</head>
+<body>
+  <div class="ui-info-box">
+    <div class="ui-crumbs" id="crumbs">
+       <#include "/common/include/power.ftl">
+    </div>
+    <div class="ui-info-main">
+      <div class="search-wrap">
+        <form  id="search-ff" method="post" class="ui-search-form" action="${base}/product/param/insuranceType" >
+          <ul class="search-list info-search fn-clear">
+            <li>
+              <label class="name">关键字</label>
+              <span class="textbox ui-textbox-long">
+                <input class="textbox-text textbox-prompt" type="text" name="benefitName1" value="" placeholder="保障利益标题/保障内容"/>
+              </span>
+            </li>
+            <li class="btn-group">
+              <a href="javascript:void(0)" class="search-btn" onclick="submitOtherForm(this)">搜索</a>
+              <a href="javascript:clearForm()" class="search-btn" >重置</a>
+            </li>
+          </ul>
+        </form>
+      </div>
+      <a href="javascript:showAlert('dlgList');" class="dash-add-btn dash-addOne-btn">新增一级</a>
+
+      <ul class="ui-info-list ui-insurance-info ui-profit-info" id="">
+      <#list po1 as item>
+        <li class="ui-info-item <#if item_index+1==po1?size>ui-guarant-item-inslast</#if>" >
+	      <table class="ui-guarant-tit" width='100%'>
+	        <#if item_index==0>
+            <tr class="ui-profit-toptit">
+              <td width="35%" class="ui-td-fir">
+                  <label class="ui-info-lbl">保障利益标题</label>
+              </td>
+              <td width="45%" >
+                <label class="ui-info-lbl">保障内容</label>
+              </td>
+              <td width="20%">
+                 <label class="ui-info-lbl ui-lbl-last">操作</label>
+              </td>
+            </tr>
+            </#if>
+            <tr >
+              <td class="ui-td-fir ui-gone" width="35%">
+                  <a href="javascript:;" onclick="toggleSub(this,'yes');">
+                   <strong>${item.benefitName}</strong><i class="ui-icon-arrow <#if item_index gt 0>ui-icon-arrow-up</#if>"></i>
+                 </a>
+              </td>
+              <td width="45%"></td>
+              <td class="ui-relative" width="20%">
+                  <a class="ui-guarant-addfir" href="javascript:;" onclick="showAddDlg(this,'dlgList2',${item.benefitId});">
+                    <div class="ui-guatip">新增子分类</div>
+                  </a>
+                  <input type="button" value="编辑" class="ui-btn-green" onclick="showEditDlg(this,'dlgEditOne','1','${item.benefitId}');"/>
+                  <input type="button" value="删除" class="ui-btn-org" onclick="delRow('dlg','${item.benefitId}');"/>
+              </td>
+            </tr>
+          </table>
+
+          <table class="ui-guarant-tab <#if item_index gt 0> fn-hide</#if>" width='100%' id="dg-list">
+          <#list benenFitsList as item1>
+	        <#if item1.parentId1==item.benefitId>
+	            <tr <#if item1_index==0>class="ui-pfir"</#if>>
+	              <td width="35%" class="ui-td-fir">${item1.benefitName1}</td>
+	              <td width="45%" class="ui-td-article">
+	                <p >${item1.benefitDesc1}</p>
+	                <div class="ui-hover-tip"></div>
+	              </td>
+	              <td width="20%" class="ui-profit-btns">
+	                <input type="button" value="编辑" class="ui-btn-green" onclick="showEditDlg(this,'updTwoFrm','2','${item1.benefitId1}');"/>
+	                <input type="button" value="删除" class="ui-btn-org" onclick="delRow('dlg','${item1.benefitId1}');"/>
+	              </td>
+	            </tr>
+	        </#if>
+          </#list>
+          </table>
+        </li>       
+        </#list>
+      </ul>
+    </div>
+<!--弹框一级-->  
+<form id="dlgList" method="post" class="easyui-dialog ui-dlg-list ui-dlg-fixlen" 
+ data-options="modal:true,closed: true" >
+    <ul class="ui-dlg-ins-list" >
+      <li class="ui-dlg-ins-item">
+        <label>保障利益标题</label>
+        <input type="text" class="easyui-validatebox ui-info-input" id="benName" name="nameMap[1].benefitName"
+               data-options="required:true,validType:['numLetChina','maxlen[20]']" missingMessage="请输入保障利益标题"/>
+        <a class="ui-guarant-addfir insurance-add" href="javascript:;" data-changename="0"></a>
+      </li>
+    </ul>
+    <div class="ui-dlg-submit">
+      <input type="button" class="ui-dlgOk-btn" onclick="addFit(1);" value="保存并返回"/>
+      <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+    </div>
+ </form>
+<!--弹框二级-->  
+<form id="dlgList2" method="post" class="easyui-dialog ui-dlg-list ui-dlg-fixlen" 
+ data-options="modal:true,closed: true" >
+    <ul class="ui-dlg-ins-list" id="dlgInsList">
+   	 <li class="ui-dlg-ins-item">
+        <label>保障利益标题</label>
+        <span id="ins-oneType"></span>
+        <input type="hidden" id="parentId" name="parentId"/>
+      </li>
+      <li class="ui-dlg-ins-item ui-info-item-grey ui-inforitem-li">
+         <label>保障利益分类</label>
+         <input type="text" class="easyui-validatebox ui-info-input" id="benName2" name="nameMap[1].benefitName"
+               data-options="required:true,validType:['numLetChina','maxlen[20]']" missingMessage="请输入保障利益分类"/>
+      </li>
+      <li class="ui-dlg-ins-item">
+        <label class="ui-vtop">保障说明</label>
+		<textarea id="benefitDesc" name="nameMap[1].benefitDesc" cols="30" rows="10" class="easyui-validatebox ui-textarea-st" data-options="validType:['maxlen[200]']"></textarea>   
+      </li>
+    </ul>
+    <div class="ui-dlg-submit">
+      <input type="button" class="ui-dlgOk-btn" onclick="addFit(2)" value="保存并返回"/>
+      <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+    </div>
+</from>
+<!--编辑一级-->
+<div id="dlgEditOne" class="easyui-dialog ui-dlg-list"  data-options="modal:true,closed: true">
+	<form id="dlgEditOne" method="post"  >
+   <ul class="ui-dlg-ins-list" id="dlgInsList">
+      
+      <li class="ui-dlg-ins-item ui-info-item-grey">
+        <label>保障利益标题</label>
+        <input type="text" class="easyui-validatebox ui-info-input ui-threemenu"  id="ins-oneType2" name="benefitName"
+               data-options="required:true,validType:['numLetChina','maxlen[20]']" missingMessage="请输入保障利益标题"/>
+        <input type="hidden" id="ins-oneId" name="benefitId"  />
+      </li>
+    </ul>
+    <div class="ui-dlg-submit">
+      <input type="button" class="ui-dlgOk-btn" onclick="updRow(this,1)" value="保存并返回"/>
+      <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+    </div>
+	</form>
+	</div>
+<!--编辑二级-->
+  <form id="updTwoFrm" method="post" class="easyui-dialog ui-dlg-list"  data-options="modal:true,closed: true">
+   <ul class="ui-dlg-ins-list" id="dlgInsList">
+      <li class="ui-dlg-ins-item">
+        <label>保障利益标题</label>
+        <span id="ins-oneTypeUpd"></span>
+      </li>
+      <li class="ui-dlg-ins-item ui-info-item-grey">
+        <label>保障利益分类</label>
+        <input type="text" class="easyui-validatebox ui-info-input ui-threemenu" id="ins-oneType3" name="benefitName"
+               data-options="required:true,validType:['numLetChina','maxlen[20]']" missingMessage="请输入保障利益分类"/>
+        <input type="hidden" id="ins-oneId2" name="benefitId" class="easyui-validatebox ui-info-input" value="" />
+      </li>
+      <li class="ui-dlg-ins-item">
+        <label class="ui-vtop">保障说明</label>
+		<textarea id="benefitDesc2" name="benefitDesc" cols="30" rows="10" class="ui-textarea-st guarantee-descripte" ></textarea>   
+      </li>
+    </ul>
+    <div class="ui-dlg-submit">
+      <input type="button" class="ui-dlgOk-btn" onclick="updRow(2)" value="保存并返回"/>
+      <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+    </div>
+  </form>
+<!--删除-->  
+  <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+    <h3 class="ui-dlg-tit">确定要删除该类别吗？</h3>
+    <input type="button" class="ui-dlgOk-btn" value="确定"/>
+    <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+  </div>
+  
+  <div id="delSucc" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+ 	<h3 class="ui-dlg-tit">删除成功!</h3>
+  </div>
+  
+  <div id="updSucc" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+ 	<h3 class="ui-dlg-tit" id="alt">修改成功!</h3>
+  </div>
+  <div id="error" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+    <h3 class="ui-dlg-tit" id="delStartTit2" >异常情况,操作失败!</h3>
+  </div>
+  
+  <script>
+   $(function(){
+	
+    validExtend();
+	changeInsLine();
+    $('.ui-td-article').hover(function(){
+        $(this).children('.ui-hover-tip').text($(this).find('p').text()).show();
+    },function(){
+         $(this).children('.ui-hover-tip').hide();
+    });
+  });
+   //添加
+   function addFit(type){
+   	   var name = "";
+   	   var frmName = "";
+   	   if(type == 1){
+   	   	   name = $("#benName").val();
+   	   	   frmName = $('#dlgList').serialize();
+   	   }else{
+   	   	   name = $("#benName2").val();
+   	   	   frmName = $('#dlgList2').serialize();
+   	   }
+   	   if(name == ""){
+   	   	   $("#delStartTit2").text("请将信息补充完整");
+	    	showAlert('error');
+	    	return false;
+   	   }else{
+	   	   $.ajax( {
+				url : "${base}/product/param/addBenefit",
+				dataType : "json",
+				type : "post",
+				data: frmName,
+				// 成功后调用
+				success : function(data) {
+				    if(data.succ){
+				    	window.setInterval( function () {
+					    	window.location.href = "${base}/product/param/insuranceType";
+						}, 1000 );
+				    }else{
+				    	$("#delStartTit2").text(data.entity);
+				    	showAlert('error');
+				    	return false;
+				    }
+				    //日志
+					console.log("xxxxxx");
+					console.log(data);
+				},
+				error:function(data){
+					showAlert('error');
+					return false;
+				}
+			});
+   	   }
+   }
+  	//删除
+	function delRow(id,benefitId){
+	  var dlg=$('#'+id);
+	  showAlert(id);
+	  dlg.find('.ui-dlgOk-btn').click(function(){
+	      $.ajax( {
+				url : "${base}/product/param/delBenefit?benefitId="+benefitId,
+				dataType : "json",
+				type : "post",
+				// 成功后调用
+				success : function(data) {
+				    if(data.succ){
+				    	showAlert("delSucc");
+				    	window.setInterval( function () {
+							window.location.reload();
+						}, 1000 );
+				    }else{
+				    	$("#delStartTit2").text("删除失败！");
+				    	showAlert('error');
+				    	return false;
+				    }
+				},
+				error:function(data){
+					showAlert('error');
+				}
+			});
+	  });
+	}
+	
+	//列表修改
+	function updRow(obj,type){
+	
+	var id = "";
+	var name = ""
+	var benefitDesc = "";
+	var frm = null;
+	  if(type == 1){
+	     id = $("#ins-oneId").val();
+	     name = $("#ins-oneType2").val();
+ 		frm = "benefitName="+name+"&benefitId="+id;
+	     //frm = $(obj).parents("form").serialize();
+	  }else{
+	     id = $("#ins-oneId2").val();
+	     name = $("#ins-oneType3").val();
+	     benefitDesc = $("#benefitDesc2").val();
+	     frm = $('#updTwoFrm').serialize();
+	  }
+	  if(id == '' || name == ''){
+	     alert("请将信息补充完整!");
+	     return false;
+	  }
+	  //?benefitId="+id+"&benefitName="+name+"&benefitDesc="+benefitDesc;
+	  
+      $.ajax( {
+			url : "${base}/product/param/updBenefit",
+			type : "post",
+			data: frm,
+			dataType : "json",
+			// 成功后调用
+			success : function(data) {
+			    if(data.succ){
+			    	showAlert("updSucc");
+					window.setInterval( function () {
+						window.location.reload();
+					}, 1000 );
+			    }else{
+			    	$("#delStartTit2").text(data.entity);
+			    	showAlert('error');
+			    	return false;
+			    }
+			},
+			error:function(data){
+				$("#delStartTit2").text(data.entity);
+		    	showAlert('error');
+			}
+		});
+	}
+  </script>
+</body>
+</html>

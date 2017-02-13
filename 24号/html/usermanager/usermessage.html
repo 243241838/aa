@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>保险经纪管理平台</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+</head>
+<body>
+	<div class="ui-info-box">
+    <div class="ui-crumbs">
+    	 <span>当前位置：</span><a href="#">用户管理</a><em>></em><span>用户信息管理</span>
+    </div>
+    <div class="ui-info-main">
+         <div class="ui-informate">
+         	<div class="ui-informate-base">
+         		<table class="ui-base-table">
+         			<tr class="ui-base-rowborder">
+         				<td colspan="4" class="ui-base-tit">
+         					账号信息
+         				</td>
+         			</tr>
+         			<tr class="ui-base-rowbg ui-base-rowborder">
+         				<td class="ui-base-colsinfor">
+         					<label class="ui-base-label">用户ID</label>
+     						<span class="ui-base-data">123456789</span>
+         				</td>
+         				<td class="ui-base-colsinfor">
+         					<label  class="ui-base-label">账号</label>
+     						<span  class="ui-base-data">362689564</span>
+         				</td>
+         				<td class="ui-base-colsinfor">
+         					<label class="ui-base-label">注册方式</label>
+     						<span  class="ui-base-data">手机号码</span>
+     					</td>
+         			</tr>
+         			<tr class="ui-base-rowborder">
+         				<td class="ui-base-colsinfor">
+         					<label class="ui-base-label">注册时间</label>
+     						<span  class="ui-base-data">2014-04-15 11:12:09</span>
+         				</td>
+         				<td class="ui-base-colsinfor">
+         					<label class="ui-base-label">最后登录时间</label>
+     						<span  class="ui-base-data">2014-04-15 11:12:09</span>
+         				</td>
+         			</tr>
+         			<table>
+         			<table class="ui-base-table">
+         			<tr class="ui-base-rowborder ui-base-rowbg">
+         				<td colspan="4" class="ui-base-tit">
+         					账号信息
+         				</td>
+         			</tr>
+         			<tr class="ui-base-rowborder">
+         				<td class="ui-base-colsinfor ui-base-colwidth">
+         					<label class="ui-base-label ui-base-currcol">账号余额</label>
+     						<span class="ui-base-data">100.00</span>
+         				</td>
+         				<td class="ui-base-colsinfor ui-base-colwidth">
+         					<label  class="ui-base-label">积分</label>
+     						<span  class="ui-base-data">100</span>
+         				</td>
+         				<td class="ui-base-colsinfor ui-base-colwidth">
+         					<label class="ui-base-label">优惠券</label>
+     						<span  class="ui-base-data">2张</span>
+         				</td>
+         				<td class="ui-base-colsinfor ui-base-colwidth">
+         					<label class="ui-base-label">红包</label>
+     						<span  class="ui-base-data">2个</span>
+         				</td>
+         			</tr>
+         		</table>
+     			<table class="ui-base-table">
+         			<tr class="ui-base-rowborder">
+         				<td colspan="4" class="ui-base-tit">
+         					个人信息
+         				</td>
+         			</tr>
+         			<tr class="ui-base-rowbg ui-base-rowborder">
+         				<td class="ui-base-colsinfor">
+         					<label class="ui-base-label">姓名</label>
+     						<span class="ui-base-data">阿斗</span>
+         				</td>
+         				<td class="ui-base-colsinfor">
+         					<label  class="ui-base-label">证件类型</label>
+     						<span  class="ui-base-data">身份证</span>
+         				</td>
+         				<td class="ui-base-colsinfor">
+         					<label class="ui-base-label">证件号码</label>
+     						<span  class="ui-base-data">123564879584687954</span>
+     					</td>
+         			</tr>
+         			<tr class="ui-base-rowborder">
+         				<td class="ui-base-colsinfor">
+         					<label class="ui-base-label">生日</label>
+     						<span class="ui-base-data">1987-12-12</span>
+         				</td>
+         				<td class="ui-base-colsinfor">
+         					<label  class="ui-base-label">性别</label>
+     						<span  class="ui-base-data">男</span>
+         				</td>
+         				<td class="ui-base-colsinfor">
+         					<label class="ui-base-label">电子邮件</label>
+     						<span  class="ui-base-data">1564@1546.com</span>
+     					</td>
+         			</tr>
+         			<tr class="ui-base-rowborder ui-base-rowbg">
+         				<td colspan="4" class="ui-base-colsinfor ui-base-onway">
+         					<label class="ui-base-label ui-base-onway-label">地址</label>
+     						<span  class="ui-base-data ui-base-onway-data">浙江省杭州市西湖区塘苗路18号</span>
+         				</td>
+         				
+         			</tr>
+         			<table>
+         			<!-- 列表 -->
+					<div class="list-item fn-clear">
+						<h4 class="ui-base-tit">交易信息</h4>
+						<table id="dg-list" class="easyui-datagrid"  style="margin-right:10px;">	
+						</table>
+					</div>
+					<!-- 列表end -->
+         	</div>
+
+        
+    	</div>
+    	<div class="ui-infor-box-bottom">
+    		<a href="" class="ui-a-return">返回</a>
+    	</div>
+    	
+	</div>
+
+	<script>
+	$(function(){
+		validExtend();
+		//列表
+		$("#dg-list").datagrid({
+			url:'user_manager.json',
+			method:'post',
+			fitColumns:true,
+			rownumbers:true,
+			nowrap: true,//当数据长度超出列宽时将会自动截取
+			//idField:'userid',//id字段
+			//sortName:'userid',//当数据表格初始化时以哪一列来排序
+			//sortOrder:'desc',//'asc'/'desc'（正序/倒序）
+			//remoteSort: false,//定义是否通过远程服务器对数据排序
+			resizable:false,
+			checkOnSelect:false,
+			pagination:true,
+			pageSize:10,
+			columns:[[
+				{field:'agentAreaCity',align:'center',width:"11%",title:'投保时间',sortable:true},
+				{field:'agentAreaCityName',align:'center',width:"18%",title:'订单号'},
+				{field:'truename',align:'center',width:"10%",title:'保单号'},
+				{field:'agentAreaCounty',align:'center',width:"22%",title:'产品名称'},
+				{field:'agentId',align:'center',width:"14%",title:'金额(元)'},
+				{field:'orderAccount',align:'center',width:"11%",title:'订单状态'},
+				{field:'orderId',align:'center',width:"12%",title:'支持方式'}
+			]],
+			queryParams: eb.form2Json("search-ff"),
+	    loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+      },
+      onLoadSuccess:pageCls
+		});
+		//分页
+		pageAction();
+		
+   });
+	function submitForm(){
+		if($('#search-ff').form('validate')){
+			    //eb.backToFstPage("#datagrid");
+				$("#dg-list").datagrid({queryParams : eb.form2Json("search-ff")});
+				 pageAction();
+			}
+	}
+	function clearForm(){
+		$("#search-ff").form('clear');
+	}
+	
+	</script>
+</body>
+</html>

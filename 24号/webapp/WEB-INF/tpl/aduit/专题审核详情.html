@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>标准产品修改-审核管理-系统管理</title>
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/base.css">
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/style.css">
+  <script type="text/javascript" src="../../../resource/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../../../resource/js/jquery.easyui.min.js"></script>
+  <script type="text/javascript" src="../../../resource/js/base.js"></script>
+</head>
+<style type="text/css">
+  .ui-info-item{color:black;border:0;}
+</style>
+<body>
+	<div class="ui-info-box">
+    <div class="ui-crumbs" id="crumbs">
+      <#include "/common/include/power.ftl">
+    </div>
+
+    <div class="ui-info-main ui-standardadd-info">
+      <ul class="ui-info-list ui-info-newlist" style="border:0">
+        <li>
+          <h2 class="ui-info-tit">专题基本信息</h2>
+        </li>
+        <li class="ui-info-item">
+          <label class="ui-info-lbl">专题类ID</label>
+          ${product.productName}
+        </li>
+        <li class="ui-info-item">
+          <label class="ui-info-lbl">专题名称</label>
+          ${product.productName}
+        </li>
+        <li class="ui-info-item">
+          <label class="ui-info-lbl">专题说明</label>
+          ${product.productName}
+        </li>
+
+       <!--  <li class="ui-info-item">
+         <label class="ui-info-lbl">承保公司</label>
+       
+         <#list iList as item>
+       
+         ${item.insurerName}
+       
+         </#list>
+       
+       </li> -->
+       <li class="ui-info-item ui-relative">
+         <label class="ui-info-lbl" style="position:relative;top:-45px; ">专题配图</label>
+         <img src="" width="120" height="120" data-leve='produce' id='produceImg1'/>
+       </li>
+       <li class="ui-info-item">
+        <label class="ui-info-lbl ui-info-small">产品有效期</label>
+        <span data-qb="qb">
+          <#if product.longTime == 1>
+          长期
+          <#else>
+          ${product.effTimeStr} 至 ${product.expTimeStr}
+          </#if>
+        </span>
+      </li>
+    </ul>
+  </div>
+  <div class="ui-info-main">
+    <h2 class="ui-info-tit">关联产品</h2>
+    <div class="list-item fn-clear" style="margin-left:40px;margin-bottom:20px">
+     <table id="dg-list1" class="ebao-datagrid"  style="margin-right:10px;"> 
+     </table>
+   </div>
+ </div>
+
+ <div class="ui-info-main load">
+   <h2 class="ui-info-tit">审核信息</h2>
+   <div class="list-item fn-clear" style="margin-left:40px">
+     <table id="dg-list" class="ebao-datagrid"  style="margin-right:10px;">	
+     </table>
+   </div>
+ </div>
+ <form id="infoForm" method="post" action="">
+  <div class="ui-info-main">
+    <h2 class="ui-info-tit">本次审核意见</h2>
+    <input type="hidden" name="auditId" value="${auditPo.auditId}" />
+    <div>
+      <ul class="ui-info-list">
+       <li class="ui-info-item ui-info-item-grey  ui-audit-rdo">
+         <input type="radio" name="auditSts" id='aa'  value="1" class="easyui-validatebox"  data-options="required:true,validType:{radio:['auditSts']}"/><label>审核通过</label>
+         <input type="radio" name="auditSts" value="-1"/><label>审核不通过</label>
+       </li>
+       <li class="ui-info-item ui-audit-txta fn-hide">
+         <textarea class="easyui-validatebox" placeholder="审核不通过理由"  name="auditComment"
+         data-options="required:true"  missingMessage="请输入审核不通过理由" id="reason"></textarea>
+       </li>
+     </ul>
+   </div>
+   <div class="ui-btn-double">
+
+     <input type="button" onclick="saveproduct()" value="提交" class="ui-btn-blue"/>
+
+     <input type="button" value="返回" class="ui-btn-grey" onclick="tomain()"/>
+   </div>
+ </div>
+</form>
+<div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true" style="width:360px;">
+  <h3 class="ui-dlg-tit">审核完成!</h3>
+  <input type="button" class="ui-dlgOk-btn ui-dlgOkcancel-btn" onclick="tomain()"  value="确定"/>
+</div>
+<div id="dlg1" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true" style="width:360px;">
+  <h3 class="ui-dlg-tit">提交失败</h3>
+  <input type="button" class="ui-dlgOk-btn ui-dlgOkcancel-btn" onclick="tomain1()"  value="确定"/>
+</div>
+<div id="dlgn" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true" style="width:360px;">
+  <h3 class="ui-dlg-tit">审核完成!</h3>
+  <input type="button" class="ui-dlgOk-btn ui-dlgOkcancel-btn" onclick="tomain()"  value="确定"/>
+</div>
+<script>
+ $(function(){
+  validExtend(); 
+ /* var titlen = $(".config-tit-four").length;
+  if(titlen>4){
+   var wd = (1+0.1*(titlen-4))*100;
+   $("#configBox").css('width',wd+'%');
+ }*/
+});
+
+ $('#dg-list1').datagrid({
+  url:'datagrid_data1.json',
+  method:'post',
+  fitColumns:true,
+  rownumbers:true,
+      nowrap: true,//当数据长度超出列宽时将会自动截取
+        singleSelect: true,//只能选择一行
+        resizable:false,
+        checkOnSelect:false,
+      // pagination:true,
+      idField:'agentId',
+      columns:[[
+      
+      {field:'agentId',align:'center',width:"10%",title:'产品ID',},
+      {field:'agentBranchName',align:'center',width:"10%",title:'保险名称',
+      formatter:function(rec,index){
+        var url='${base}/product/toProductDetail';
+        if(rec==6||rec==7){
+          url='${base}/product/toProductDetail';
+        } else if(rec.sts1==0){
+          url='${base}/product/productTE';
+        }
+        return '<a class="operation-link" href="'+url+'?productId='+rec.productId+'">'+rec+'</a>';
+      }
+    },
+    {field:'businessName',align:'center',width:"10%",title:'承保公司'},
+    {field:'orderAmount',align:'center',width:"10%",title:'保险类别'},
+    {field:'agentAreaProvinceName',align:'center',width:"10%",title:'当前库存'},
+    {field:'orderStatus',align:'center',width:"10%",title:'保险金额(元)'},
+
+    {field:'orderAmount',align:'center',width:"13%",title:'一级佣金',},
+    {field:'orderAccount',align:'center',width:"13%",title:'二级佣金',},
+
+    ]],
+    loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+          }
+        })
+
+//加载审核表格
+function load(){
+  /*审核的表格*/
+  $("#dg-list").datagrid({
+   url:'datagrid_data1.json',
+   method:'post',
+   fitColumns:true,
+  // rownumbers:true,
+  nowrap: true,//当数据长度超出列宽时将会自动截取
+  resizable:false,      
+  // checkOnSelect:false,
+  pagination:true,
+  pageSize:10,
+  idField:'agentId',
+  sortName:'maxPremium',
+  sortOrder:'desc',
+  columns:[[
+  {field:'aa',align:'center',width:'10%',title:'审核结果',
+  formatter:function(value,rec,index){
+    var rec2=rec.orderStatus;
+        // console.log(rec2)
+        if(rec2==2){
+          bb='待审核'
+        }else{
+          bb='审核不通过'
+        }
+        return '<a class="list-redact" style="color:#0000EE" href="javascript:;">'+bb+'</a>';
+
+      }
+    },
+    {field:'agentId',align:'center',width:"10%",title:'产品ID',},
+    {field:'agentBranchName',align:'center',width:"10%",title:'审核不通过原因',
+    formatter:function(value,rec,index){
+      var rec2=rec.orderStatus;
+    // console.log(rec2)
+    if(rec2==2){
+      bb='/';
+      return bb;
+    }else{
+      bb=rec.agentBranchName;
+      return '<a class="list-redact" style="color:red" href="javascript:;">'+bb+'</a>';
+    }
+    
+  }
+},
+{field:'businessName',align:'center',width:"10%",title:'审核员',
+formatter:function(value,rec,index){
+  var rec2=rec.orderStatus;
+  // console.log(rec2)
+  if(rec2==2){
+    bb='/'
+  }else{
+    bb=rec.businessName
+  }
+  return bb
+}
+},
+{field:'effTime',align:'center',width:"13%",title:'审核时间',sortable:true,
+formatter:function(value,rec,index){
+  var rec2=rec.orderStatus;
+  // console.log(rec2)
+  if(rec2==2){
+    bb='/'
+  }else{
+    bb=rec.orderAmount
+  }
+  return bb
+}
+},
+{field:'agentAreaProvinceName',align:'center',width:"10%",title:'操作员'},
+{field:'orderAccount',align:'center',width:"10%",title:'提交时间'}
+]],
+loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+            
+          },
+          onLoadSuccess:function(){
+            pageCls();
+            sortCell(['maxPremium','minPremium','effTime','expTime']);//排序要显示箭头的，以数组形式传
+          }
+
+        });
+pageAction2()
+$("#dg-list").datagrid('hideColumn', 'agentId');
+}
+
+//判断审核是否有信息
+$.ajax({
+ type: "GET",
+ url: "datagrid_data1.json",
+ success: function(data){
+
+  if(data){
+    load()
+ }else{
+   $('.load').hide();
+ }
+
+}
+
+})
+
+
+
+
+
+//最后提交
+function saveproduct(){
+  if($('#infoForm').form('validate')){
+    $('#infoForm').form('submit',{
+      url:'',
+      success:function(){
+        if($("#aa").prop("checked")){
+         showAlert("dlg");
+       }else{
+         showAlert("dlgn");
+       }
+     },
+     error:function(){
+      showAlert("dlg1")
+    }
+
+
+  })
+  }
+
+
+
+}
+
+function tomain1(){
+  $('dlg1').dialog({
+    closed: true
+  });
+}
+
+function tomain(){
+  window.location.href="专题审核列表.html";
+}
+</script>
+</body>
+</html>

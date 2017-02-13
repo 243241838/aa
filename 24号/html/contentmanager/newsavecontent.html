@@ -1,0 +1,86 @@
+f<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>保险经纪管理平台</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/kindeditor/kindeditor.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+</head>
+<body>
+	<div class="ui-info-box">
+    <div class="ui-crumbs">
+    	 <span>当前位置：</span><a href="#">内容管理</a><em>></em><span>服务指南类</span>
+    </div>
+    <div class="ui-info-main">
+         <div class="ui-informate">
+         	<div class="">
+         	<form action="">
+         		<h4 class="ui-info-lbl">关于我们</h4>
+         		<ul>
+         	
+         			<li>
+         				<label for="" class="ui-info-lbl client-work-label">栏目名称：</label>
+         				<span class="ui-client-content-label">承包指南</span>
+         			</li>
+                    <li>
+                        <label for="" class="ui-info-lbl client-work-label">分类名称：</label>
+                        <span class="ui-client-content-label">承包业务流程</span>
+                    </li>
+         			<li>
+         				<label for="" class="ui-info-lbl client-work-label">文章标题：</label>
+         				<span class="ui-client-content-label">中国人保</span>
+         			</li>
+         			<li class="clause-editor">
+                        <label class="ui-info-lbl client-work-label clause-editor-label">文章内容：</label>
+                       <span > <textarea class="ui-client-content-label" readonly="true" cols="100" rows="20" >速度返回来大神进来看大家死过来看电视剧</textarea></span>
+                    </li>
+                    <li class="ui-btn-double">
+                          <input type="button" value="完成" class="ui-btn-blue ui-submit" id="newEitorSave"/>
+                          <input type="button" value="返回修改"  class="ui-btn-grey ui-back"/>
+                    </li>
+         		</ul>
+         	</form>
+			</div>
+        
+    	</div>
+    	  <!--提示添加成功start-->
+            <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+                <h3 class="ui-dlg-tit">添加成功！</h3>
+            </div>
+        <!--提示添加成功end-->
+    	
+	</div>
+<script>
+    $(function(){
+
+        var editor;
+      //KindEditor.options.filterMode = true;
+      KindEditor.ready(function(K) {
+            editor = K.create('#clause-textarea',{
+                width : 670
+            })
+            
+            
+        });
+
+    $("#newEitorSave").click(function(event) {
+        showAlert("dlg");
+        setTimeout(function(){
+            location.href="serviceguide.html";  
+        },1000)
+    });
+        
+
+    
+    });
+
+    
+    </script>
+
+</body>
+</html>

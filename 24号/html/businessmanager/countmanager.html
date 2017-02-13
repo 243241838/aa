@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>交易统计</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/base.js"></script>
+</head>
+
+<body style="">
+	<div class="ui-info-box">
+    <div class="ui-crumbs">
+    	 <span>当前位置：</span><a href="#">交易管理</a><em>></em><span>交易统计</span>
+    </div>
+
+		<div class="ui-datagrid-wrap ui-datagrid-wrap-mgt">
+			<!-- 搜索 -->
+			<div class="search-wrap">
+				<form  id="search-ff" class="ui-search-form">
+					<ul class="search-list fn-clear">
+						<li class="date">
+							<label class="name">统计日期</label>
+								<input id="startTime" class="easyui-datebox" data-options="editable:false" vlaue="" validType="md['#endTime']" name="startDateTime">
+							  <em>至</em>
+							  <input id="endTime" class="easyui-datebox" data-options="editable:false" vlaue="" validType="md['#startTime']" name="endDateTime">
+						</li>
+						<li>
+							<label class="name">来源类别</label>
+							<select class="ui-combobox" name="" id="">
+								<option value="" selected ="selected">全部</option>
+								<option value="">E保自研</option>
+								<option value="">保险公司</option>
+							</select>
+						</li>
+						<li>
+							<label class="name">承保公司</label>
+							<select class="ui-combobox" name="" id="">
+								<option value="" selected ="selected">全部</option>
+								<option value="">人保</option>
+								<option value="">太平洋</option>
+							</select>
+						</li>
+					</ul>
+					<ul class="search-list fn-clear">
+						<li>
+							<label class="name">保险名称</label>
+							<span class="textbox"><input class="textbox-text textbox-prompt" type="text" maxlength="40"/></span>
+						</li>
+						
+						<li class="btn-group">
+							<a href="javascript:void(0)" class="search-btn" onclick="submitForm()">统计</a>
+				    		<a href="javascript:void(0)" class="search-btn" onclick="clearForm()">重置</a>
+						</li>
+					</ul>
+				</form>
+			</div>
+			<!-- 搜索end -->
+			<!-- 列表 -->
+			<div class="list-item fn-clear">
+				
+				<table id="dg-list" class="easyui-datagrid"  style="margin-right:10px;">	
+				</table>
+			</div>
+			<!-- 列表end -->
+		</div>
+	</div>
+	
+	<script>
+	$(function(){
+		validExtend();
+		//列表
+		$("#dg-list").datagrid({
+			url:'bussiness_count.json',
+			method:'post',
+			fitColumns:true,
+			rownumbers:true,
+			nowrap: true,//当数据长度超出列宽时将会自动截取
+			//idField:'userid',//id字段
+			//sortName:'userid',//当数据表格初始化时以哪一列来排序
+			//sortOrder:'desc',//'asc'/'desc'（正序/倒序）
+			//remoteSort: false,//定义是否通过远程服务器对数据排序
+			resizable:false,
+			checkOnSelect:false,
+			pagination:true,
+			pageSize:10,
+			title: "标题",
+			columns:[[
+				{field:'agentAreaCity',align:'center',width:"20%",title:'时间',sortable:true},
+				{field:'agentAreaCityName',align:'center',width:"20%",title:'保险名称'},
+				{field:'truename',align:'center',width:"16%",title:'来源分类'},
+				{field:'agentAreaCounty',align:'center',width:"14%",title:'承保公司'},
+				{field:'agentId',align:'center',width:"14%",title:'销售量(单)',
+						formatter:function(value,rec){
+						
+							return '<a class="detail-link" href="salesamount.html">'+value+'</a>';
+						}
+				},
+				{field:'orderAccount',align:'center',width:"14%",title:'销售金额(元)',
+						formatter:function(value,rec){
+						
+							return '<a class="detail-link" href="salesmoney.html">'+value+'</a>';
+						}
+				}
+			]],
+			queryParams: eb.form2Json("search-ff"),
+	   loadFilter:function(data){
+				var beginDate=$("input[name=startDateTime]").val(),
+				    endDate=$("input[name=endDateTime]").val();
+				var allBalance=!isNaN(Number(data.message))?(Number(data.message)/100).toFixed(2):"0.00";
+
+				var titleHtml='<div class="query-result-title"><span class="query-result-span">截止至'+endDate+'</span><span class="query-result-span">累计销售量为：<em class="query-result-num ui-base-fontweight">'+data.titleDetail.alluser+'</em>笔，累计销售金额为：<em class="query-result-num ui-base-fontweight">'+data.titleDetail.alluser+'</em>元</span>'
+				+'<span class="query-result-span">统计时间'+beginDate+'至'+endDate+'</span><span class="query-result-span">总计销售量：<em class="query-result-num ui-base-fontweight">'+data.titleDetail.newuser+'</em>单,总计销售金额：<em class="query-result-num ui-base-fontweight">'+data.titleDetail.countuser+'</em>元</span>'+
+				'</div>';
+				$(".panel-title").html(titleHtml);
+				
+	            return eb.loadFilter(data);//自定义过滤方法
+
+      },
+      onLoadSuccess:pageCls
+		});
+		//分页
+		pageAction();
+		
+   });
+	function submitForm(){
+		if($('#search-ff').form('validate')){
+			    //eb.backToFstPage("#datagrid");
+				$("#dg-list").datagrid({queryParams : eb.form2Json("search-ff")});
+				$(".panel-title").show();
+				 pageAction();
+			}
+	}
+	function clearForm(){
+		$("#search-ff").form('clear');
+	}
+	
+	</script>
+</body>
+</html>

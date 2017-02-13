@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>新增分销商</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+</head>
+<body>
+	<div class="ui-info-box">
+        <div class="ui-crumbs">
+        	 <span>当前位置：</span><a href="#">渠道管理</a><em>></em><span>新增分销商</span>
+        </div>
+        <div class="ui-info-main">
+            <div class="ui-informate">
+             	<div class="ui-informate-base ui-channel-baseinfor">
+             		<form>
+                        <h4 class="ui-info-tit">分销商基本信息</h4>
+                        <div class="ui-base-produceinfor">		
+                 			<div class="ui-base-colsinfor ui-base-colwidth-business">
+             					<label class="ui-base-label ui-channel-base-label">分销商名称:</label>
+         						<span class="ui-base-data">京东商城</span>
+                 			</div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business ui-info-item-grey">
+                                <label class="ui-base-label ui-channel-base-label">联系人:</label>
+                                <span class="ui-base-data">王道</span>
+                            </div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business">
+                                <label class="ui-base-label ui-channel-base-label">联系电话:</label>
+                               <span class="ui-base-data">
+                                   <em>0571-88288000</em>
+                                   <em>13822221111</em>
+                               </span>
+                            </div> 
+                            <div class="ui-base-colsinfor ui-base-colwidth-business ui-info-item-grey">
+                                <label class="ui-base-label ui-channel-base-label">合作时间:</label>
+                                <span class="ui-base-data">
+                                    <em>2015-01-01</em>至
+                                    <em>2015-12-31</em>
+                                </span>
+                            </div>           
+                        </div>
+                        <h4 class="ui-info-tit">分销商银行账户信息</h4>
+                        <div class="ui-base-produceinfor">      
+                            <div class="ui-base-colsinfor ui-base-colwidth-business">
+                                <label class="ui-base-label ui-channel-base-label">结算账户开户行:</label>
+                                <span class="ui-base-data">杭州银行文三执行</span>
+                            </div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business ui-info-item-grey">
+                                <label class="ui-base-label ui-channel-base-label">结账账户户名:</label>
+                                <span class="ui-base-data">京东商城</span>
+                            </div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business">
+                                <label class="ui-base-label ui-channel-base-label">结账账户账号:</label>
+                                <span class="ui-base-data">05222 85000 3022 10</span>
+                            </div> 
+                             
+                        </div>
+                        <div class="ui-btn-double">
+                            <input type="button" value="保存" class="ui-btn-blue ui-submit" id="baseSaveInfor"/>
+                            <input type="button" value="返回修改"  class="ui-btn-grey ui-back"/>
+                        </div>
+                    </form>
+                </div>	
+         	</div>
+    	</div>
+    	<!--提示添加成功start-->
+            <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+                <h3 class="ui-dlg-tit">分销商新增成功！</h3>
+            </div>
+        <!--提示添加成功end-->    
+	</div>
+
+	<script>
+	$(function(){
+
+         $("#baseSaveInfor").click(function(event) {
+            showAlert('dlg');
+            setTimeout(function(){
+                location.href="channelinformanager.html";
+            }, 1000);
+                        
+                
+        });
+ 
+
+    })
+	
+	</script>
+</body>
+</html>

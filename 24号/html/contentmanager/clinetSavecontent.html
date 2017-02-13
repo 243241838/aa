@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>保险经纪管理平台</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/kindeditor/kindeditor.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+</head>
+<body>
+	<div class="ui-info-box">
+    <div class="ui-crumbs">
+    	 <span>当前位置：</span><a href="#">内容管理</a><em>></em><span>客户业务类</span>
+    </div>
+    <div class="ui-info-main">
+         <div class="ui-informate">
+         	<div class="ui-client-editorcontent">
+         	<form action="">
+         		<h4 class="ui-info-lbl">关于我们</h4>
+         		<ul>
+         			<li>
+         				<label for="" class="ui-info-lbl client-work-label">E保logo：</label>
+         				 <span class="ui-relative">logo</span>
+         			</li>
+         			<li>
+         				<label for="" class="ui-info-lbl client-work-label">客服电话：</label>
+                        <span><input class="clause-input easyui-validatebox ui-cover" type="text" name="phone"  data-options="required:true,validType:['unlineNum']" missingMessage="请输入客服电话"  maxlength="12"/></span>
+         			</li>
+         			<li class="ui-month-base">
+         				<label for="" class="ui-info-lbl client-work-label clause-editor-label">E保简介：</label>
+                        <span> <textarea class="richEditor" id="clientAreatext" rows="20" ></textarea></span>
+                        <div class="predent-textarea ctooltip-bottom custom-tool-left" id="textareaMessage" v>
+                           <span class="custom-textarea-tooltip ">请输入投保条款内容</span>
+                           <div class="ctooltip-arrow-outer" style=""></div>
+                           <div class="ctooltip-arrow" style=""></div>
+                        </div>
+         			</li>
+         			<li>
+                        <label for="" class="ui-info-lbl client-work-label">公司名称：</label>
+                        <span id="clientShowName">思伟信息</span>
+                    </li>
+                    <li>
+                        <label for="" class="ui-info-lbl client-work-label">网址许可证：</label>
+                        <span id="clientShowAddress">思伟信息</span>
+                    </li>
+                    <li>
+                        <label for="" class="ui-info-lbl client-work-label">经营许可证：</label>
+                        <span id="clientShowPermit">思伟信息</span>
+                      
+                    </li>
+                    <li>
+                        <label for="" class="ui-info-lbl client-work-label">成立时间：</label>
+                        <span class="ui-clientmanager" id="clientShowTime">2014-04-25</span>
+                    </li>
+         			<li class="ui-btn-double">
+				      <input type="button" value="完成" class="ui-btn-blue ui-submit" id="editorSave"/>
+				      <input type="button" value="取消"  class="ui-btn-grey ui-back"/>
+				    </li>
+         		</ul>
+         	</form>
+			</div>
+        
+    	</div>
+    	
+    	
+	</div>
+
+	<script>
+	$(function(){
+
+        validExtend();
+      var editor;
+      KindEditor.ready(function(K) {
+            editor = K.create('#clientAreatext',{
+                width : 670
+            })
+            
+            
+        });
+
+        var getsummary = $("#clientAreatext"),
+           gettime = $("#clientSetTime");
+       
+
+        $("#editorSave").click(function(event) {
+           
+           var clienteditor = editor.html();
+                target = $("#textareaMessage");
+    
+           //E保简介
+            if(clienteditor == ""){
+                $("#textareaMessage").show();
+
+ 
+            }else{
+                $("#textareaMessage").hide();
+
+            }
+        });
+
+
+        
+    })
+	
+	</script>
+</body>
+</html>

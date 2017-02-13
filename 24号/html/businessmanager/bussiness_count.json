@@ -1,0 +1,102 @@
+﻿{   "succ":true,
+    "total": 50,
+    "pageSize": 5,
+    "pageCount": 2,
+    "currentPage": 1,
+     "titleDetail":{"alluser":400000000,"newuser":3720000,"countuser":113300},
+    "records": [
+        {
+			"agentAreaCity":"2015-01-18",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"E保自研",
+			"agentAreaCounty":"人保",
+			"agentId":"40.000",
+			"orderAccount":"40.000.00",
+			"opt":"待支付",
+			"agentAreaCountyName": "露露"	
+        },
+		{
+			"agentAreaCity":"2015-01-18",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"E保自研",
+			"agentAreaCounty":"人保",
+			"agentId":"40.000",
+			"orderAccount":"40.000.00",
+			"opt":"待支付",
+			"agentAreaCountyName": "露露"	
+        },{
+			"agentAreaCity":"2015-01-18",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"E保自研",
+			"agentAreaCounty":"人保",
+			"agentId":"40.000",
+			"orderAccount":"40.000.00",
+			"opt":"待支付",
+			"agentAreaCountyName": "露露"	
+        },{
+			"agentAreaCity":"2015-01-18",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"E保自研",
+			"agentAreaCounty":"人保",
+			"agentId":"40.000",
+			"orderAccount":"40.000.00",
+			"opt":"待支付",
+			"agentAreaCountyName": "露露"	
+        },{
+			"agentAreaCity":"2015-01-18",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"E保自研",
+			"agentAreaCounty":"人保",
+			"agentId":"40.000",
+			"orderAccount":"40.000.00",
+			"opt":"待支付",
+			"agentAreaCountyName": "露露"	
+        },{
+			"agentAreaCity":"2015-01-18",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"E保自研",
+			"agentAreaCounty":"人保",
+			"agentId":"40.000",
+			"orderAccount":"40.000.00",
+			"opt":"待支付",
+			"agentAreaCountyName": "露露"		
+        },{
+			"agentAreaCity":"2015-01-18",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"E保自研",
+			"agentAreaCounty":"人保",
+			"agentId":"40.000",
+			"orderAccount":"40.000.00",
+			"opt":"待支付",
+			"agentAreaCountyName": "露露"		
+        },{
+			"agentAreaCity":"2015-01-18",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"E保自研",
+			"agentAreaCounty":"人保",
+			"agentId":"40.000",
+			"orderAccount":"40.000.00",
+			"opt":"待支付",
+			"agentAreaCountyName": "露露"	
+        },{
+			"agentAreaCity":"2015-01-18",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"E保自研",
+			"agentAreaCounty":"人保",
+			"agentId":"40.000",
+			"orderAccount":"40.000.00",
+			"opt":"待支付",
+			"agentAreaCountyName": "露露"		
+        },{
+			"agentAreaCity":"2015-01-18",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"E保自研",
+			"agentAreaCounty":"人保",
+			"agentId":"40.000",
+			"orderAccount":"40.000.00",
+			"opt":"待支付",
+			"agentAreaCountyName": "露露"		
+        }
+        
+    ]
+}

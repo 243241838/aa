@@ -1,0 +1,30 @@
+﻿{   "succ":true,
+    "total": 50,
+    "pageSize": 5,
+    "pageCount": 2,
+    "currentPage": 1,
+     "titleDetail":{"alluser":400000000,"newuser":3720000,"countuser":113300},
+    "records": [
+        {
+			"agentAreaCity":"000009",
+			"agentAreaCityName":"支付宝",
+			"truename":"2015-05-01至2016-05-01",
+			"agentAreaCounty":"人保",
+			"agentId":1,
+			"orderAccount":"40.000.00",
+			"opt":"正常",
+			"agentAreaCountyName": "露露"	
+        },
+		{
+			"agentAreaCity":"000008",
+			"agentAreaCityName":"微信",
+			"truename":"2015-05-01至2016-05-01",
+			"agentAreaCounty":"人保",
+			"agentId":2,
+			"orderAccount":"40.000.00",
+			"opt":"禁用",
+			"agentAreaCountyName": "露露"
+        }
+        
+    ]
+}

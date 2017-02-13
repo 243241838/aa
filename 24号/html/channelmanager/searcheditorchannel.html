@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>分销商信息管理</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+</head>
+<body>
+	<div class="ui-info-box">
+        <div class="ui-crumbs">
+        	 <span>当前位置：</span><a href="#">渠道管理</a><em>></em><span>分销商信息管理</span>
+        </div>
+        <div class="ui-info-main">
+            <div class="ui-informate">
+             	<div class="ui-informate-base ui-channel-baseinfor">
+             		<form>
+                        <h4 class="ui-info-tit">分销商基本信息</h4>
+                        <div class="ui-base-produceinfor">		
+                 			<div class="ui-base-colsinfor ui-base-colwidth-business">
+             					<label class="ui-base-label ui-channel-base-label">分销商ID:</label>
+         						<span class="ui-base-data">京东商城</span>
+                 			</div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business ui-info-item-grey">
+                                <label class="ui-base-label ui-channel-base-label">分销商名称:</label>
+                                <span class="ui-base-data">王道</span>
+                            </div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business">
+                                <label class="ui-base-label ui-channel-base-label">联系人:</label>
+                                <span class="ui-base-data">
+                                    <input class="clause-input ui-channel-inforspan easyui-validatebox ui-cover" type="text" name="phone" value="" data-options="required:true,validType:'letchi'" missingMessage="请输入联系人" maxlength="10"/>
+                                </span>
+                            </div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business">
+                                <label class="ui-base-label ui-channel-base-label">联系电话:</label>
+                               <span class="ui-base-data ">
+                                    <input class="clause-input ui-channel-inforspan ui-channel-phonemargin easyui-validatebox ui-cover" type="text" name="phone" placeholder="固定" data-options="required:true,validType:'integer'" missingMessage="请输入联系电话" maxlength="12"/>
+                                    <input class="clause-input ui-channel-inforspan easyui-validatebox ui-cover" type="text" name="phone" placeholder="手机" data-options="required:true,validType:'integer'" missingMessage="请输入联系电话" maxlength="11"/>
+                                </span>
+                            </div> 
+                            <div class="ui-base-colsinfor ui-base-colwidth-business ui-info-item-grey">
+                                <label class="ui-base-label ui-channel-base-label">合作时间:</label>
+                                <span class="ui-base-data">
+                                    <input class="easyui-datebox ui-channel-inforspan"  vlaue="" validType="md['#channelStartDateTime']" id="channelStartDateTime">
+                                    <em>至</em>
+                                  <input class="easyui-datebox ui-channel-inforspan" vlaue="" validType="md['#channelEndDateTime']" id="channelEndDateTime">
+                                </span>
+                            </div>   
+                            <div class="ui-base-colsinfor ui-base-colwidth-business">
+                                <label class="ui-base-label ui-channel-base-label">分销商状态：</label>
+                                <span class="ui-base-data">
+                                    <select class="ui-combobox clause-input ui-channel-inforspan" name="" id="transaceAmount">
+                                        <option value="" selected ="selected">有效</option>
+                                        <option value="">无效</option>
+                                    </select>   
+                                </span>  
+                            </div>      
+                        </div>
+                        <h4 class="ui-info-tit">分销商银行账户信息</h4>
+                        <div class="ui-base-produceinfor">      
+                            <div class="ui-base-colsinfor ui-base-colwidth-business">
+                                <label class="ui-base-label ui-channel-base-label">结算账户开户行:</label>
+                                <span class="ui-base-data">
+                                    <input class="clause-input ui-channel-inforspan easyui-validatebox ui-cover" type="text" name="phone" value="" data-options="required:true,validType:'numLetChina'" missingMessage="请输入结算账户户行" maxlength="20"/>
+                                </span>
+                            </div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business ui-info-item-grey">
+                                <label class="ui-base-label ui-channel-base-label">结账账户户名:</label>
+                                <span class="ui-base-data">京东商城</span>
+                            </div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business">
+                                <label class="ui-base-label ui-channel-base-label">结账账户账号:</label>
+                                <span class="ui-base-data">
+                                    <input class="clause-input ui-channel-inforspan easyui-validatebox ui-cover" type="text" name="phone" value="" data-options="required:true,validType:'integer'" missingMessage="请输入结算账户账号" maxlength="20"/>
+                                </span>
+                            </div> 
+                             
+                        </div>
+                        <div class="ui-btn-double">
+                            <input type="button" value="完成" class="ui-btn-blue ui-submit" id="baseSaveInfor"/>
+                            <input type="button" value="取消"  class="ui-btn-grey ui-back"/>
+                        </div>
+                    </form>
+                </div>	
+         	</div>
+    	</div>
+    	<!--提示添加成功start-->
+            <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+                <h3 class="ui-dlg-tit">分销商信息编辑成功！</h3>
+            </div>
+        <!--提示添加成功end-->
+	</div>
+
+	<script>
+	$(function(){
+              validExtend();
+         $("#baseSaveInfor").click(function(event) {
+            showAlert('dlg');
+            setTimeout(function(){
+                location.href="channelinformanager.html";
+            }, 1000);
+                        
+                
+        });
+ 
+
+    })
+	
+	</script>
+</body>
+</html>

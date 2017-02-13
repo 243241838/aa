@@ -1,0 +1,122 @@
+﻿{   "succ":true,
+    "total": 50,
+    "pageSize": 5,
+    "pageCount": 2,
+    "currentPage": 1,
+     "titleDetail":{"alluser":400000000,"newuser":3720000,"countuser":113300,"money":1909993330},
+    "records": [
+        {
+			"agentAreaCity":"Pla001",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"中国人保",
+			"agentAreaCounty":"100",
+			"agentId":"50",
+			"agentProduceName":"待审核",
+			"agentProduceCount":"2015-01-01<br/> 00:25:55",
+			"agentProducePending":"2015-01-01<br/> 00:25:55",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },
+		{
+			"agentAreaCity":"Pla001",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"中国人保",
+			"agentAreaCounty":"100",
+			"agentId":"50",
+			"agentProduceName":"待审核",
+			"agentProduceCount":"2015-01-01<br/> 00:25:55",
+			"agentProducePending":"2015-01-01<br/> 00:25:55",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"Pla001",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"中国人保",
+			"agentAreaCounty":"100",
+			"agentId":"50",
+			"agentProduceName":"待审核",
+			"agentProduceCount":"2015-01-01<br/> 00:25:55",
+			"agentProducePending":"2015-01-01<br/> 00:25:55",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"Pla001",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"中国人保",
+			"agentAreaCounty":"100",
+			"agentId":"50",
+			"agentProduceName":"待审核",
+			"agentProduceCount":"2015-01-01<br/> 00:25:55",
+			"agentProducePending":"2015-01-01<br/> 00:25:55",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"		
+        },{
+			"agentAreaCity":"Pla001",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"中国人保",
+			"agentAreaCounty":"100",
+			"agentId":"50",
+			"agentProduceName":"待审核",
+			"agentProduceCount":"2015-01-01<br/> 00:25:55",
+			"agentProducePending":"2015-01-01<br/> 00:25:55",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"Pla001",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"中国人保",
+			"agentAreaCounty":"100",
+			"agentId":"50",
+			"agentProduceName":"待审核",
+			"agentProduceCount":"2015-01-01<br/> 00:25:55",
+			"agentProducePending":"2015-01-01<br/> 00:25:55",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"Pla001",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"中国人保",
+			"agentAreaCounty":"100",
+			"agentId":"50",
+			"agentProduceName":"待审核",
+			"agentProduceCount":"2015-01-01<br/> 00:25:55",
+			"agentProducePending":"2015-01-01<br/> 00:25:55",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        },{
+			"agentAreaCity":"Pla001",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"中国人保",
+			"agentAreaCounty":"100",
+			"agentId":"50",
+			"agentProduceName":"待审核",
+			"agentProduceCount":"2015-01-01<br/> 00:25:55",
+			"agentProducePending":"2015-01-01<br/> 00:25:55",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"		
+        },{
+			"agentAreaCity":"Pla001",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"中国人保",
+			"agentAreaCounty":"100",
+			"agentId":"50",
+			"agentProduceName":"待审核",
+			"agentProduceCount":"2015-01-01<br/> 00:25:55",
+			"agentProducePending":"2015-01-01<br/> 00:25:55",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"		
+        },{
+			"agentAreaCity":"Pla001",
+			"agentAreaCityName":"E保众筹交通工具综合保险A计划",
+			"truename":"中国人保",
+			"agentAreaCounty":"100",
+			"agentId":"50",
+			"agentProduceName":"待审核",
+			"agentProduceCount":"2015-01-01<br/> 00:25:55",
+			"agentProducePending":"2015-01-01<br/> 00:25:55",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        }
+        
+    ]
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>产品信息预览-产品信息管理-产品管理</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+</head>
+
+<body style="">
+	<div class="ui-info-box">
+    <div class="ui-crumbs">
+    	 <span>当前位置：</span>
+    	 <a href="#">产品管理</a><em>></em>
+    	 <a href="#">产品信息管理</a><em>></em>
+    	 <span>产品信息预览</span>
+    </div>
+		<div class="ui-top-staticis">截止2015-04-23 累计产品总数为：88个 自研产品共有：56个。</div>
+
+		<div class="ui-datagrid-wrap">
+			<!-- 搜索 -->
+			<div class="search-wrap">
+				<form  id="search-ff" class="ui-search-form">
+					<ul class="search-list fn-clear">
+						<li>
+							<label class="name">产品ID</label>
+							<span class="textbox"><input class="textbox-text textbox-prompt" type="text" name="" value=""/></span>
+						</li>
+						<li>
+							<label class="name">保险名称</label>
+							<span class="textbox"><input class="textbox-text textbox-prompt" type="text" name="" value=""/></span>
+						</li>
+						<li>
+							<label class="name">保费范围</label>
+							<select class="ui-combobox" name="" id="">
+								<option value="" selected ="selected">全部</option>
+							</select>
+						</li>
+					
+					</ul>
+					<ul class="search-list fn-clear">
+						<li>
+							<label class="name">承保公司</label>
+							<select class="ui-combobox" name="" id="">
+								<option value="" selected ="selected">全部</option>
+							</select>
+						</li>
+						<li>
+							<label class="name">保险类别</label>
+							<select class="ui-combobox" name="" id="">
+								<option value="" selected ="selected">全部</option>
+							</select>
+						</li>
+						<li>
+							<label class="name">来源渠道</label>
+							<select class="ui-combobox" name="" id="">
+								<option value="" selected ="selected">全部</option>
+							</select>
+						</li>
+						
+						<li class="btn-group">
+							<a href="javascript:void(0)" class="search-btn" onclick="submitForm()">搜索</a>
+				    		<a href="javascript:void(0)" class="search-btn" onclick="clearForm()">重置</a>
+						</li>
+					</ul>
+				</form>
+			</div>
+			<!-- 搜索end -->
+			<!-- 列表 -->
+			<div class="list-item fn-clear list-noadd">
+				<table id="dg-list" class="easyui-datagrid"  style="margin-right:10px;">	
+				</table>
+			</div>
+			<!-- 列表end -->
+		</div>
+	</div>
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/base.js"></script>
+	<script>
+	$(function(){
+		validExtend();
+		//列表
+		$("#dg-list").datagrid({
+			url:'datagrid_data1.json',
+			method:'post',
+			fitColumns:true,
+			rownumbers:true,
+			nowrap: true,//当数据长度超出列宽时将会自动截取
+			resizable:false,
+			checkOnSelect:false,
+			pagination:true,
+			pageSize:10,
+			columns:[[
+				{field:'agentAreaCity',align:'center',width:"15%",title:'产品ID'},
+				{field:'agentAreaCityName',align:'center',width:"15%",title:'保险名称',
+           formatter:function(value,rec){
+						return '<a class="operation-link" href="product_add.html">'+rec.agentAreaCityName+'</a>';
+					}
+			  },
+				{field:'truename',align:'center',width:"15%",title:'承保公司'},
+				{field:'agentAreaCounty',align:'center',width:"12%",title:'产品总量(份)',sortable:true},
+				{field:'agentAreaCounty3',align:'center',width:"11%",title:'剩余数量(份)'},
+				{field:'agentId',align:'center',width:"10%",title:'保费金额(元)',sortable:true},
+				{field:'orderAccount',align:'center',width:"10%",title:'保险类别'},
+				{field:'orderAccount3',align:'center',width:"10%",title:'来源类别'}
+			]],
+			queryParams: eb.form2Json("search-ff"),
+	    loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+      },
+      onLoadSuccess:pageCls
+		});
+		//分页
+		pageAction();
+		
+   });
+	
+	
+	</script>
+</body>
+</html>

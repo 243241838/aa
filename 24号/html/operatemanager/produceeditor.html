@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>查看</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+</head>
+<body>
+	<div class="ui-info-box">
+        <div class="ui-crumbs">
+        	 <span>当前位置：</span><a href="#">运营管理</a><em>></em><span>产品上架管理</span>
+        </div>
+        <div class="ui-info-main">
+            <div class="ui-informate">
+             	<div class="ui-informate-base ui-channel-baseinfor">
+
+                        <h4 class="ui-info-tit">产品信息</h4>
+                        <div class="ui-base-produceinfor">		
+                 			<div class="ui-base-colsinfor channel-produceinfor-item">
+             					<label class="ui-base-label">产品ID:</label>
+         						<span class="ui-base-data">123456</span>
+                 			</div>
+                            <div class="ui-base-colsinfor channel-produceinfor-item">
+                                <label class="ui-base-label">保险名称:</label>
+                                <span class="ui-base-data">
+                                    <a href="#">B计划保险</a>
+                                </span>
+                            </div>
+                           <div class="ui-base-colsinfor channel-produceinfor-item">
+                                <label class="ui-base-label">产品总量:</label>
+                                <span class="ui-base-data">10000份</span>
+                            </div>
+                            <div class="ui-base-colsinfor channel-produceinfor-item">
+                                <label class="ui-base-label">剩余数量:</label>
+                                <span class="ui-base-data">
+                                    <em class="query-result-num">80000</em>份
+                                </span>
+                            </div>
+                                     
+                        </div>
+                        <h4 class="ui-info-tit">合作信息</h4>
+                        <div class="ui-base-produceinfor">      
+                            <div class="ui-base-colsinfor ui-base-colwidth-business">
+                                <label class="ui-base-label ui-infor-width">合作数量:</label>
+                                <span class="ui-base-data">100份</span>
+                            </div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business ui-info-item-grey">
+                                <label class="ui-base-label ui-infor-width">上架时间:</label>
+                                <span class="ui-base-data">2015-01-10 10:00:20</span>
+                            </div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business">
+                                <label class="ui-base-label ui-infor-width">下架时间:</label>
+                                <span class="ui-base-data">2015-01-10 10:00:20</span>
+                            </div>   
+                        </div>
+                       
+                        <div class="ui-btn-double ui-btnbox-width">
+                            <a href="producesave.html"><input type="button" value="编辑" class="ui-btn-blue ui-submit" id="channelEditorInfor"/></a>
+                            <input type="button" value="下架" class="ui-btn-blue" onclick="showAlert('dlg')"/>
+                            <input type="button" value="返回"  class="ui-btn-grey ui-back"/>
+                        </div>
+                </div>	
+         	</div>
+    	</div>
+<!--下架确认弹框start-->
+        <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+           <h3 class="ui-dlg-tit">确认要下架该产品吗？</h3>
+           <input type="button" class="ui-dlgOk-btn" value="确定" id="contentDelete"/>
+           <input type="button" class="ui-dlgCancel-btn" value="取消" id="contentCancel"/>
+        </div>
+  <!--下架确认弹框start-->
+	</div>
+</body>
+</html>

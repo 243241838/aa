@@ -1,0 +1,12 @@
+{"total":120,"rows":[
+	{"userid":"000010","username":"Koi","truename":"汪洋","phone":"13534254321","email":"1@qq.com","date":"2014-07-08","kind":"个人用户","state":"正常"},
+	{"userid":"000009","username":"Dalmation","truename":"小明","phone":"13734254321","email":"1332@qq.com","date":"2014-01-21","kind":"个人用户","state":"正常"},
+	{"userid":"000008","username":"Rattlesnake","truename":"汪洋","phone":"18634254321","email":"1e@qq.com","date":"2014-07-08","kind":"企业用户","state":"正常"},
+	{"userid":"000007","username":"Rattlesnake","truename":"杨过","phone":"13234254321","email":"134@qq.com","date":"Rattleless","kind":"个人用户","state":"禁用"},
+	{"userid":"000006","username":"Iguana","truename":"小明","phone":"18634254321","email":"1ee@qq.com","date":"2014-07-08","kind":"企业用户","state":"正常"},
+	{"userid":"000005","username":"Manx","truename":"杨过","phone":"13234254321","email":"1231@qq.com","date":"2014-07-08","kind":"个人用户","state":"禁用"},
+	{"userid":"000004","username":"Manx","truename":"梅超风","phone":"18634254321","email":"112321@qq.com","date":"2014-01-21","kind":"企业用户","state":"正常"},
+	{"userid":"000003","username":"Persian","truename":"杨过","phone":"13734254321","email":"1123@qq.com","date":"2014-07-08","kind":"个人用户","state":"禁用"},
+	{"userid":"000002","username":"Persian","truename":"梅超风","phone":"13734254321","email":"1e@qq.com","date":"2014-06-28","kind":"个人用户","state":"正常"},
+	{"userid":"000001","username":"Amazon Parrot","truename":"小明","phone":"13234254321","email":"1213@qq.com","date":"2014-08-10","kind":"个人用户","state":"正常"}
+]}

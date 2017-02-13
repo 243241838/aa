@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>保险类别-产品参数管理-产品管理</title>
+  <link rel="stylesheet" type="text/css" href="${base}/resource/style/base.css">
+  <link rel="stylesheet" type="text/css" href="${base}/resource/style/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="${base}/resource/style/style.css">
+  <script type="text/javascript" src="${base}/resource/js/jquery.min.js"></script>
+  <script type="text/javascript" src="${base}/resource/js/jquery.easyui.min.js"></script>
+  <script type="text/javascript" src="${base}/resource/js/kindeditor/kindeditor.js"></script>
+  <script type="text/javascript" src="${base}/resource/js/base.js"></script>
+</head>
+<body>
+  <div class="ui-info-box">
+    <div class="ui-crumbs" id="crumbs">
+       <#include "/common/include/power.ftl">
+    </div>
+    <div class="ui-info-main">
+      <div class="search-wrap">
+        <form id="search-ff" method="post" class="ui-search-form" action="${base}/product/param/toInsurance" >
+          <ul class="search-list info-search fn-clear">
+            <li>
+              <label class="name">关键字</label>
+              <span class="textbox ui-textbox-long">
+                <input class="textbox-text textbox-prompt" type="text" name="className" value="" placeholder="保险类别"/>
+              </span>
+            </li>
+            <li class="btn-group">
+              <a href="javascript:void(0)" class="search-btn" onclick="submitOtherForm(this)">搜索</a>
+                <a href="javascript:void(0)" class="search-btn" onclick="clearForm()">重置</a>
+            </li>
+          </ul>
+        </form>
+      </div>
+      <a href="javascript:showAlert('dlgList');" class="dash-add-btn dash-addOne-btn">新增一级</a>
+
+      <ul class="ui-info-list ui-insurance-info" id="">
+         <li class="ui-info-item">
+          <label class="ui-info-lbl">保险类别</label>
+          <label class="ui-info-lbl">操作</label>
+        </li>
+      <#list po1 as item>
+        <li class="ui-info-item <#if item_index+1==po1?size>ui-guarant-item-inslast</#if>" >
+          <div class="ui-guarant-tit">
+          	<a href="javascript:;" onclick="toggleSub(this,'yes');" class="ui-gone">
+          		<strong>${item.className}</strong><i class="ui-icon-arrow"></i>
+          	</a>
+          	<span class="ui-gthree">
+          		<a class="ui-guarant-addfir" href="javascript:;" onclick="showAddDlg(this,'dlgList2',${item.classId});">
+              <div class="ui-guatip">新增子分类</div>
+            </a>
+          	</span>
+          </div>
+          <table class="ui-guarant-tab" width='100%'>
+          <#list classPoList as item1>
+	        <#if item1.parentId2==item.classId>
+              	 <tr>
+                    <td width="366" class="ui-td-fir">${item1.className2}</td>
+                    <td >
+                      <input type="button" value="编辑" class="ui-btn-green" onclick="showEditDlg(this,'dlgEdit','2','${item1.classId2}');"/>
+                      <input type="button" value="删除" class="ui-btn-org" onclick="delRow('dlg','${item1.classId2}');"/>
+                    </td>
+                 </tr>
+		    </#if>
+		 </#list>
+          </table>
+        </li>       
+        </#list>
+      </ul>
+    </div>
+<!--弹框一级-->  
+<form id="dlgList" method="post" class="easyui-dialog ui-dlg-list ui-dlg-fixlen" 
+ data-options="modal:true,closed: true" >
+  <ul class="ui-dlg-ins-list" >
+      <li class="ui-dlg-ins-item">
+         <label>一级保险类别</label>
+       <input type="text" class="easyui-validatebox ui-info-input" id="benName"   name="classVoMap[1].className"
+               data-options="required:true,validType:['chinese','length[1,10]']" missingMessage="请输入保险类别"/>
+        <a class="ui-guarant-addfir insurance-add" href="javascript:;" data-changename="1" ></a>
+      </li>
+    </ul>
+    <div class="ui-dlg-submit">
+      <input type="button" class="ui-dlgOk-btn" onclick="addFit(1,this);" value="保存并返回"/>
+      <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+    </div> 
+ </form>
+<!--弹框二级-->  
+<form id="dlgList2" method="post" class="easyui-dialog ui-dlg-list ui-dlg-fixlen" data-options="modal:true,closed: true">
+	 <ul class="ui-dlg-ins-list">
+   	 <li class="ui-dlg-ins-item">
+        <label>一级保险类别</label>
+        <span id="ins-oneType"></span>
+        <input type="hidden" id="parentId" name="parentId" />
+      </li>
+      <li class="ui-dlg-ins-item ui-info-item-grey ui-inforitem-li">
+        <label>二级保险类别</label>
+        <input type="text" class="easyui-validatebox ui-info-input" id="benName" name="classVoMap[1].className"
+               data-options="required:true,validType:['chinese','length[1,10]']" missingMessage="请输入保险类别"/>
+        <a class="ui-guarant-addfir insurance-add" href="javascript:;" data-changename="1"></a>
+      </li>
+    </ul>
+    <div class="ui-dlg-submit">
+      <input type="button" class="ui-dlgOk-btn" onclick="addFit(2,this)" value="保存并返回"/>
+      <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+    </div> 
+</form>
+<!--编辑一级-->
+<form id="updOneFrm" method="post" class="easyui-dialog ui-dlg-list ui-dlg-fixlen" 
+ data-options="modal:true,closed: true" >
+  <div id="dlgEditOne" class="easyui-dialog ui-dlg-list"  data-options="modal:true,closed: true">
+   <ul class="ui-dlg-ins-list" >
+      
+      <li class="ui-dlg-ins-item ui-info-item-grey">
+        <label>一级保险类别</label>
+
+        <input type="text" class="easyui-validatebox ui-info-input"  id="ins-oneType2" name="className"
+               data-options="required:true,validType:['chinese','length[1,10]']" missingMessage="请输入保险类别"/>
+        <input type="hidden" id="ins-oneId" name="classId"  />
+      </li>
+    </ul>
+    <div class="ui-dlg-submit">
+      <input type="button" class="ui-dlgOk-btn" onclick="updRow(1,this)" value="保存并返回"/>
+      <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+    </div>
+  </div>
+</form>
+<!--编辑二级-->
+  <div id="dlgEdit" class="easyui-dialog ui-dlg-list"  data-options="modal:true,closed: true">
+   <ul class="ui-dlg-ins-list" >
+      <li class="ui-dlg-ins-item">
+        <label>一级保险类别</label>
+        <span id="ins-oneTypeUpd"></span>
+      </li>
+      <li class="ui-dlg-ins-item ui-info-item-grey">
+        <label>二级保险类别</label>
+        <input type="text" class="easyui-validatebox ui-info-input ui-threemenu" id="ins-oneType3"
+               data-options="required:true,validType:['chinese','length[1,10]']" missingMessage="请输入保险类别"/>
+        <input type="hidden" id="ins-oneId2" name="classId" class="easyui-validatebox ui-info-input" value="" />
+      </li>
+    </ul>
+    <div class="ui-dlg-submit">
+      <input type="button" class="ui-dlgOk-btn" onclick="updRow(2,this)" value="保存并返回"/>
+      <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+    </div>
+  </div>
+<!--删除-->  
+  <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+    <h3 class="ui-dlg-tit">确定要删除该类别吗？</h3>
+    <input type="button" class="ui-dlgOk-btn" onclick="delRow()" value="确定"/>
+    <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+  </div>
+ <div id="delSucc" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+ 	<h3 class="ui-dlg-tit" id="msg">删除成功!</h3>
+  </div>
+<div id="error" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+ 	<h3 class="ui-dlg-tit">异常情况,删除失败!</h3>
+  </div>
+  <script>
+   $(function(){
+	    validExtend();
+	    changeInsLine();
+
+  });
+   //添加
+   function addFit(type,obj){
+   	   var name = "";
+   	   var frmName = "";
+   	   if(type == 1){
+   	   	   name = $("#benName").val();
+   	   	   frmName = $('#dlgList').serialize();
+   	   }else{
+   	   	   name = $("#benName2").val();
+   	   	   frmName = $('#dlgList2').serialize();
+   	   }
+   	   var isvalid=$(obj).parents('.easyui-dialog').find('.ui-dlg-ins-list').form('validate');
+   	   if(!isvalid||name == ""){
+   	   	   $("#msg").text("信息输入有误!");
+			showAlert('delSucc');
+	    	return false;
+   	   }else{
+	   	   $.ajax( {
+				url : "${base}/product/param/addInsurance",
+				dataType : "json",
+				type : "post",
+				data: frmName,
+				// 成功后调用
+				success : function(data) {
+				    if(data.succ){
+				    	$("#msg").text("添加成功!");
+    	 				showAlert('delSucc');
+				    	window.setInterval( function () {
+							window.location.reload();
+						}, 1000 );
+				    } else {
+				    	$("#msg").text(data.entity);
+    	 				showAlert('delSucc');
+				    	return false;
+				    }
+				}
+			});
+   	   }
+   }
+  	//删除
+	function delRow(id,classId){
+	  var dlg=$('#'+id);
+	  showAlert(id);
+	  dlg.find('.ui-dlgOk-btn').click(function(){
+	      $.ajax( {
+				url : "${base}/product/param/delInsurance",
+				dataType : "json",
+				data : {"classId": classId},
+				type : "post",
+				// 成功后调用
+				success : function(data) {
+				    if(data.succ){
+				    	showAlert("delSucc");
+				    	window.setInterval( function () {
+							window.location.reload();
+						}, 1000 );
+				    }else{
+				    	$("#msg").text(data.entity);
+				    	showAlert('delSucc');
+				    	return false;
+				    }
+				},
+				error:function(data){
+				   showAlert('error');
+				   return false;
+				}
+			});
+	  });
+	}
+	
+	//列表修改
+	function updRow(type,obj){
+	
+	var id = "";
+	var name = ""
+	var benefitDesc = "";
+	  if(type == 1){
+	     id = $("#ins-oneId").val();
+	     name = $("#ins-oneType2").val();
+	  }else{
+	     id = $("#ins-oneId2").val();
+	     name = $("#ins-oneType3").val();
+	  }
+	   var isvalid=$(obj).parents('.easyui-dialog').find('.ui-dlg-ins-list').form('validate');
+   	   if(!isvalid||id == '' || name == ''){
+		 $("#msg").text("信息输入有误!");
+    	 showAlert('delSucc');
+	     return false;
+	  }
+	  
+      $.ajax( {
+			url : "${base}/product/param/updInsurance",
+			data: {"classId": id,"className": name},
+			dataType : "json",
+			type : "post",
+			// 成功后调用
+			success : function(data) {
+			    if(data.succ){
+			    	$("#msg").text("修改成功!");
+    	 			showAlert('delSucc');
+			    	window.setInterval( function () {
+						window.location.reload();
+					}, 1000 );
+			    }else{
+			    	$("#msg").text(data.entity);
+    	 			showAlert('delSucc');
+			    	return false;
+			    }
+			}
+		});
+	}
+  </script>
+</body>
+</html>

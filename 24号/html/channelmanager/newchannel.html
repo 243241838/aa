@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>订单明细</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+</head>
+<body>
+	<div class="ui-info-box">
+        <div class="ui-crumbs">
+        	 <span>当前位置：</span><a href="#">交易管理</a><em>></em><span>订单管理</span>
+        </div>
+        <div class="ui-info-main">
+            <div class="ui-informate">
+             	<div class="ui-informate-base ui-channel-baseinfor">
+             		<form>
+                        <h4 class="ui-info-tit">分销商基本信息</h4>
+                        <div class="ui-base-produceinfor">		
+                 			<div class="ui-base-colsinfor ui-base-colwidth-business">
+             					<label class="ui-base-label ui-channel-base-label">分销商名称:</label>
+         						<span class="ui-base-data">
+                                    <input class="clause-input ui-channel-inforspan easyui-validatebox ui-cover" type="text" name="phone" data-options="required:true,validType:'numLetChina'" missingMessage="请输入分销商名称" maxlength="20"/>
+                                </span>
+                 			</div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business ui-info-item-grey">
+                                <label class="ui-base-label ui-channel-base-label">联系人:</label>
+                                <span class="ui-base-data">
+                                    <input class="clause-input ui-channel-inforspan easyui-validatebox ui-cover" type="text" name="phone" value="" data-options="required:true,validType:'letchi'" missingMessage="请输入联系人" maxlength="10"/>
+                                </span>
+                            </div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business">
+                                <label class="ui-base-label ui-channel-base-label">联系电话:</label>
+                                <span class="ui-base-data ">
+                                    <input class="clause-input ui-channel-inforspan ui-channel-phonemargin easyui-validatebox ui-cover" type="text" name="phone" placeholder="固定" data-options="required:true,validType:'integer'" missingMessage="请输入联系电话" maxlength="12"/>
+                                    <input class="clause-input ui-channel-inforspan easyui-validatebox ui-cover" type="text" name="phone" placeholder="手机" data-options="required:true,validType:'integer'" missingMessage="请输入联系电话" maxlength="11"/>
+                                </span>
+                            </div> 
+                            <div class="ui-base-colsinfor ui-base-colwidth-business ui-info-item-grey ui-month-base">
+                                <label class="ui-base-label ui-channel-base-label">合作时间:</label>
+                                <span class="ui-base-data">
+                                    <input class="easyui-datebox ui-channel-inforspan"  vlaue="" validType="md['#channelStartDateTime']" id="channelStartDateTime">
+                                    <em>至</em>
+                                  <input class="easyui-datebox ui-channel-inforspan" vlaue="" validType="md['#channelEndDateTime']" id="channelEndDateTime">
+                                </span>
+                                <div class="predent-textarea ctooltip-bottom custom-month-position custom-tool-left5" id="clientTimeTool" v>
+                                   <span class="custom-textarea-tooltip custom-txt-style">请输入合作时间</span>
+                                   <div class="ctooltip-arrow-outer custom-triange-outstyle" style=""></div>
+                                   <div class="ctooltip-arrow custom-triange-intstyle" style=""></div>
+                               </div>
+                            </div>           
+                        </div>
+                        <h4 class="ui-info-tit">分销商银行账户信息</h4>
+                        <div class="ui-base-produceinfor">      
+                            <div class="ui-base-colsinfor ui-base-colwidth-business">
+                                <label class="ui-base-label ui-channel-base-label">结算账户开户行:</label>
+                                <span class="ui-base-data">
+                                    <input class="clause-input ui-channel-inforspan easyui-validatebox ui-cover" type="text" name="phone" value="" data-options="required:true,validType:'numLetChina'" missingMessage="请输入结算账户户行" maxlength="20"/>
+                                </span>
+                            </div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business ui-info-item-grey">
+                                <label class="ui-base-label ui-channel-base-label">结账账户户名:</label>
+                                <span class="ui-base-data"><input class="clause-input ui-channel-inforspan easyui-validatebox ui-cover" type="text" name="phone" value="" data-options="required:true,validType:'numLetChina'" missingMessage="请输入结算账名" maxlength="20"/></span>
+                                  <span class="showMessage"></span>
+                            </div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business">
+                                <label class="ui-base-label ui-channel-base-label">结账账户账号:</label>
+                                <span class="ui-base-data">
+                                    <input class="clause-input ui-channel-inforspan easyui-validatebox ui-cover" type="text" name="phone" value="" data-options="required:true,validType:'integer'" missingMessage="请输入结算账户账号" maxlength="20"/>
+                                </span>
+                            </div> 
+                             
+                        </div>
+                        <div class="ui-btn-double">
+                            <input type="button" value="下一步" class="ui-btn-blue ui-submit" id="channelBaseInfor"/>
+                            <a href="channelinformanager.html"><input type="button" value="取消"  class="ui-btn-grey ui-back"/></a>
+                        </div>
+                    </form>
+                </div>	
+         	</div>
+    	</div>
+    	
+	</div>
+
+	<script>
+	$(function(){
+
+
+        
+         validExtend();
+        var methods = {
+            init : function(){
+
+                //全局变量
+                this.isflag = true;
+
+               
+
+        
+
+                //验证的元素
+
+                var name = $("#channelName"),
+                    contact = $("#channelContact"),
+                    tel = $("#channelFixedTel"),
+                    phone = $("#channelPhone"),
+                    timestart = $("#channelStartDateTime"),
+                    timeend = $("#channelEndDateTime"),
+                    accounttype = $("#accountType"),
+                    accountname = $("#accouontName"),
+                    accountnum =$("#accouontNumber"),
+                    isflag = true;
+                 
+
+
+               $("#channelBaseInfor").click(function(event) {
+
+                    
+                   var datastart = timestart.datebox('getValue'),
+                        dataend = timeend.datebox('getValue'),
+                        target = timestart.parents(".ui-base-colwidth-business").find(".showMessage");
+
+                if(datastart == '' || dataend == ''){
+                   $("#clientTimeTool").show();
+                }else{
+                    $("#clientTimeTool").hide();
+                }
+                setTimeout(function(){
+                    location.href="newsavechannel.html";
+                },2000)
+                    
+                
+
+               });
+
+            },
+            validateRules : function(obj,i,data){
+
+                var value = $(obj).val(),
+                        message = $(obj).parents(".ui-base-colwidth-business").find(".showMessage");
+                        str = '',
+                        rule1 = /^[\u4e00-\u9fa5\da-zA-Z]+$/,
+                        rule2 = /^[\d]+$/,
+                        rule3 = /^[a-zA-Z\u4e00-\u9fa5]+$/,
+                        rules = null;
+
+                    if(i == 0 || i == 4 || i == 5 || i == 6){
+                        rules = rule1;
+                    }else if( i == 2){
+                        rules = rule2;
+                    }else if( i == 1){
+                        rules = rule3;
+                    }
+                    
+           
+                    if(value == ""){
+                        str = data[i].notNull;
+                        this.isflag = false;
+                    }else if(!rules.test(value)){
+                        str = data[i].notFormate;
+                        this.isflag = false;
+                    }else{
+                        this.isflag = true;
+                    }
+                    message.text(str);
+                    
+            }
+
+
+        }
+
+        methods.init();
+
+    })
+	
+	</script>
+</body>
+</html>

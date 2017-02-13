@@ -1,0 +1,337 @@
+
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>专题列表</title>
+	<link rel="stylesheet" type="text/css" href="../../../../resource/style/base.css">
+	<link rel="stylesheet" type="text/css" href="../../../../resource/style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../../resource/style/style.css">
+	<script type="text/javascript" src="../../../../resource/js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../../resource/js/jquery.easyui.min.js"></script>
+	
+	<script type="text/javascript" src="../../../../resource/js/base.js"></script>
+	
+	
+</head>
+
+<body style="">
+	<div class="ui-info-box">
+		<div class="ui-crumbs" id="crumbs">
+			<#include "/common/include/power.ftl">
+		</div>
+		<div class="ui-datagrid-wrap">
+			<!-- 搜索 -->
+			<div class="search-wrap">
+				<form  id="search-ff" class="ui-search-form">
+					<ul class="search-list fn-clear">
+						<li>
+							<label class="name" style="width:70px;margin-left:-10px">专题策略ID</label>
+							<span class="textbox"><input class="textbox-text textbox-prompt intOnly" type="text" name="productId" maxlength=9/>
+							</span>
+						</li>
+						<li>
+							<label class="name">专题策略</label>
+							<span class="textbox"><input class="textbox-text textbox-prompt" type="text" name="productName" value="" maxlength=40/></span>
+						</li>
+						<li>
+							<label class="name">专题类型</label>
+							<select class="ui-combobox" name="domainStatus" id="domainStatus">
+								<option value="">全部</option>
+								<option value="1">爆款</option>
+								<option value="2">普通</option>
+							</select>
+						</li>
+						<li>
+							<label class="name">专题状态</label>
+							<select class="ui-combobox" name="domainStatus" id="domainStatus">
+								<option value="">全部</option>
+								<option value="1">未开始</option>
+								<option value="2" selected="selecteed">进行中</option>
+								<option value="2">已结束</option>
+							</select>
+						</li>
+						<li>
+							<label class="name">审核状态</label>
+							<select name="domainId" class="ui-combobox" id="domainId">
+								<option value="">全部</option>
+								<option value="">待审核</option>
+								<option value="">审核不通过</option>
+								<option value="">审核通过</option>
+							</select>
+						</li><br><br><br>
+						<li class="date">
+							<label class="name ui-change-item-label">专题时间：</label>
+							<input id="startTime" name="effTimestr" class="easyui-datebox" data-options="editable:false" vlaue="" validType="md['#endTime']">
+							<em class="ui-channel-titcolor">至</em>
+							<input id="endTime" name="expTimestr" class="easyui-datebox" data-options="editable:false" vlaue="" validType="md['#startTime']">
+						</li>
+						<li class="btn-group">
+							<a href="javascript:void(0)" class="search-btn" onclick="submitForm()">搜索</a>
+							<a href="javascript:void(0)" class="search-btn" onclick="clearForm()">重置</a>
+						</li>
+					</ul>
+				</form>
+			</div>
+			<!-- 搜索end -->
+			<!-- 列表 -->
+			<div class="list-item fn-clear">
+				<a href="${base}/operate/findUpProduct" class="dash-add-btn"><i class="ui-icon ui-icon-add"></i>新增</a>
+				<table id="dg-list" class="ebao-datagrid"  style="margin-right:10px;">	
+				</table>
+			</div>
+			<!-- 列表end -->
+		</div>
+	</div>
+	<!-- ==============================最后==================================== -->
+
+	<!-- ================================================删除弹出框================================================== -->
+	<div id="isReset1" class="easyui-dialog ui-dlg-alert" data-options="iconCls:'icon-save',modal:true,closed: true" style="width: 336px; height: 150px; text-align:left; padding:0">
+		<h3 class="shang" style="font-size:16px;">确认下线该专题活动</h3>
+		<p class="p7">
+			<input class='list_save' type="button" name="" onclick='add_save1()' value="确定">
+			<input type="button" onclick='add_close1()' name="" value="取消">
+		</p>
+	</div>
+
+	<!-- =================================================成功失败返回======================================= -->
+	<div id="isReset2" class="easyui-dialog ui-dlg-alert" data-options="iconCls:'icon-save',modal:true,closed: true" style=" min-width:300px; min-height: 100px; text-align:left; padding:0">
+		<h3 class="alert" style="width:300px; text-align:center;font-size: 16px;color: #768399;font-weight: bold;padding-top:50px">
+			删除成功
+		</h3>
+		<h4 class="alert1" style="width:280px; margin:0 auto; text-indent:2em; font-size: 16px;color: #768399;font-weight: bold;padding-top:30px;display:none">
+			删除成功删除成功删除成功删除成功删除成功删除成功删除成功删除成功
+		</h4>
+	</div>
+	<div id="isReset3" class="easyui-dialog ui-dlg-alert" data-options="iconCls:'icon-save',modal:true,closed: true" style=" min-width:300px; min-height: 100px; text-align:left; padding:0">
+		<h3 style="width:300px; text-align:center;font-size: 16px;color: #768399;font-weight: bold;padding-top:50px">
+			待审核不可编辑
+		</h3>
+		
+	</div>
+
+
+	<script>
+		$(function(){
+			validExtend();
+		//列表
+		$("#dg-list").datagrid({
+			url:'datagrid_data1.json',
+			method:'post',
+			fitColumns:true,
+			rownumbers:true,
+			nowrap: true,//当数据长度超出列宽时将会自动截取
+			resizable:false,
+			checkOnSelect:false,
+			pagination:true,
+			  singleSelect: true,//只能选择一行
+			  pageSize:10,
+			  idField:'agentId',
+			  sortName:'maxPremium',
+			  sortOrder:'desc',
+			  columns:[[
+			  {field:'aa',align:'center',width:'10%',title:'操作',
+			  formatter:function(value,rec,index){
+			  	var rec1=rec.agentId;
+			  	var url='${base}/product/toProductDetail';
+			  	var rec2=rec.orderStatus;
+			  	console.log(rec2)
+			  	if(rec2==2){
+			  		bb='上线'
+			  	}else if(rec2==-1){
+			  		bb='下线'
+			  	}else{
+			  		bb='审核中'
+			  	}
+			  	return '<a class="list-copy" href="'+url+'?productId='+rec1+'" onclick="">编辑</a>&nbsp;&nbsp;&nbsp;' +
+			  	'<a class="list-redact" style="color:#0000EE" href="javascript:;" onclick="job_remove($(this).parent().parent().parent())">'+bb+'</a>';
+
+			  }
+			},
+			{field:'agentId',align:'center',width:"10%",title:'专题策略ID',},
+			{field:'agentBranchName',align:'center',width:"10%",title:'专题名称',
+			formatter:function(rec,index){
+				var url='${base}/product/toProductDetail';
+				if(rec==6||rec==7){
+					url='${base}/product/toProductDetail';
+				} else if(rec.sts1==0){
+					url='${base}/product/productTE';
+				}
+				return '<a class="operation-link" href="'+url+'?productId='+rec.productId+'">'+rec+'</a>';
+			}
+		},
+		{field:'businessName',align:'center',width:"10%",title:'专题类型'},
+		{field:'orderAmount',align:'center',width:"10%",title:'关联产品数量'},
+		{field:'agentAreaProvinceName',align:'center',width:"10%",title:'专题状态'},
+		{field:'bb',align:'center',width:"10%",title:'审核状态',
+		formatter: function (value, rec) {
+
+
+			if (rec.sts == 1) {
+				str = '有效';
+			} else {
+				str = '审核不通过';
+			}
+			return str;
+		}
+	},
+
+	{field:'effTime',align:'center',width:"13%",title:'开始时间',sortable:true,
+	formatter:function(value,rec){
+		return formatTimestamp(rec.effTime);
+	}},
+	{field:'expTime',align:'center',width:"13%",title:'结束时间',sortable:true,
+	formatter:function(value,rec){
+		return formatTimestamp(rec.expTime);
+	}}
+	]],
+
+
+	queryParams: eb.form2Json("search-ff"),
+	loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+        },
+        onLoadSuccess:function(){
+        	pageCls();
+      			sortCell(['maxPremium','minPremium','effTime','expTime']);//排序要显示箭头的，以数组形式传
+      		}
+      	});
+		//分页
+		pageAction();
+		
+	});
+
+
+
+
+
+
+
+
+ //删除
+ function job_remove($this) {
+        // console.log($this)
+        var id = $this.children().eq(1).children().html();
+
+        $('#dg-list').datagrid('selectRecord', id);
+        option = $('#dg-list').datagrid('getSelected');
+        $('.shang').html('确认下线该专题活动');
+        $('.shang').html('确认上线该专题活动');
+        if(option.orderStatus==2||option.orderStatus==-1){
+        	showAlert('isReset1')
+        }
+  
+      
+        
+        ao =id;//删除的id,给下边删除确定ajax传餐
+        ai=-option.orderStatus;//状态码
+
+    }
+
+    //删除确定
+    function add_save1() {
+
+    	$.ajax({
+    		type: "POST",
+    		url: "",
+    		data: {insurerId:ao,aa:ai},
+    		success: function (msg) {
+    			$('#isReset1').dialog({
+    				closed: true
+    			});
+    			var a=true;
+    			if(a){
+    				$('.alert').show();
+    				$('.alert1').hide();
+    				console.log($('.alert1'))
+    				$('.alert').html('操作成功');
+    				showAlert('isReset2');
+    				setTimeout(function () {
+    					window.location.reload()
+    				}, 3000)
+    			}else{
+    				$('.alert').hide();
+    				$('.alert1').show();
+    				showAlert('isReset2');
+            // $('.alert1').html('');//后台返回信息处理
+        }
+
+
+    },
+    error: function () {
+    	$('.alert').html('操作失败');
+    	$('#isReset2 p').html('')
+         /* setTimeout(function () {
+            window.location.reload()
+        }, 3000)*/
+    }
+
+      })//ajax括号
+    }
+    //删除取消
+    function add_close1() {
+    	$('#isReset1').dialog({
+    		closed: true
+    	});
+    }
+
+
+</script>
+</body>
+<style>
+	.messager-body{
+		z-index: 1;
+	}
+
+	.messager-window{
+
+
+		background: #fff;
+		opacity: 1;
+	}
+
+/* 幕布
+
+.mubu{
+  width: 100%; height: 100%; 
+  background: #ccc;
+  position: absolute;left: 0; top:0;
+  z-index:2; 
+  opacity: 0.3;
+  display: none;
+} */
+.panel{
+	/*top:200px!important;*/
+}
+/*几个弹出框提示*/
+#isReset1 h3{
+	width: 336px;
+	text-align: center;
+	margin: 25px 0 25px 0;
+	font-size: 14px;
+	color: #768399;
+	font-weight: bold;
+}
+#isReset1 .p7{
+
+	margin:0 auto;
+	width: 336px;
+	padding-top:10px;
+}
+#isReset1 .p7 input{
+	width: 120px; height: 35px;
+	margin-right:20px;
+	border-radius: 7px;
+	background: #3498DA;
+	font-weight: bold;
+	color:#fff;
+	font-size:14px;
+}
+#isReset1 .p7 input:nth-child(1){
+	margin-left: 40px;
+}
+#isReset1 .p7 input:nth-child(2){
+	background: #D8DBDD; 
+} 
+</style>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>自研产品管理-产品信息管理-产品管理</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+</head>
+<body>
+	<div class="ui-info-box">
+    <div class="ui-crumbs">
+    	 <span>当前位置：</span>
+    	 <a href="#">产品管理</a><em>></em>
+    	 <a href="#">产品信息管理</a><em>></em>
+    	 <span>自研产品管理</span>
+    </div>
+    <form id="infoForm" method="post" action="product_add_sure.html">
+      <div class="ui-info-main ui-insure-main">
+        <h2 class="ui-info-tit">投保信息</h2>
+          <ul class="ui-info-list">
+           	<li class="ui-info-item">
+           		<label class="ui-info-lbl">是否及时生效</label>
+           		<span>
+                <input type="radio" name="one" id="oneo" checked/> <label class="ui-rdo-left" for="oneo">是</label>
+                <input type="radio" name="one" id="onet"/><label for="onet">否</label>
+              </span> 
+           	</li>
+           	<li class="ui-info-item  ui-info-item-grey">
+              <label class="ui-info-lbl">支持电子保单</label>
+              <span>
+                <input type="radio" name="two" checked/> <label class="ui-rdo-left" for="">是</label>
+                <input type="radio" name="two" /><label for="">否</label>
+              </span> 
+            </li>
+            <li class="ui-info-item">
+              <label class="ui-info-lbl">支持保单生效后退保</label>
+              <span>
+                <input type="radio" name="three" id="" checked/> <label class="ui-rdo-left" for="">是</label>
+                <input type="radio" name="three" id=""/><label for="">否</label>
+              </span> 
+            </li>
+            <li class="ui-info-item  ui-info-item-grey">
+              <label class="ui-info-lbl">最多投保份数</label>
+              <input type="text" value="" class="easyui-validatebox ui-info-sinput" 
+                  data-options="required:true,validType:['integer']" missingMessage="请输入最多投保份数"/> 份
+            </li>
+            <li class="ui-info-item">
+              <label class="ui-info-lbl">受益人自定义</label>
+              <span>
+                <input type="radio" name="four" id="" checked/> <label class="ui-rdo-left" for="">是</label>
+                <input type="radio" name="four" id=""/><label for="">否</label>
+              </span> 
+            </li>
+          </ul>
+  	  </div>
+      <div class="ui-btn-double">
+        <input type="button" value="下一步" class="ui-btn-blue ui-submit"/>
+        <input type="button" value="上一步" class="ui-btn-grey ui-back"/>
+      </div>
+    </form>
+
+
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/kindeditor/kindeditor.js"></script>
+	<script type="text/javascript" src="../js/base.js"></script>
+	<script>
+   $(function(){
+    validExtend();
+   	richEdit();
+    $('.ui-submit').click(function(){
+      var f=$(this).parents('form');
+      if(!f.form('validate')){
+        //表单信息未填全
+      }
+      f.submit();
+    });
+  
+
+    
+	});
+   
+  
+	</script>
+</body>
+</html>

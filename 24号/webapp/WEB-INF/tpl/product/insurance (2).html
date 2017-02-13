@@ -1,0 +1,527 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>保险公司副本二</title>
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/base.css">
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/style.css">
+  
+  <script type="text/javascript" src="../../../resource/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../../../resource/js/jquery.easyui.min.js"></script>
+  <script type="text/javascript" src="../../../resource/js/kindeditor/kindeditor.js"></script>
+  <script type="text/javascript" src="../../../resource/js/ajaxfileupload.js"></script>
+  <script type="text/javascript" src="../../../resource/js/base.js"></script>	
+  <link rel="stylesheet" type="text/css" href="company.css">
+
+</head>
+<body>
+
+	<div class="ui-datagrid-wrap">
+		<!-- ========================搜索=============================================== -->
+		<div class="search-wrap">
+			<form  id="search-ff" class="ui-search-form" action="${base}/product/param/findInsuranceSort">
+        <ul class="search-list fn-clear">
+          <li style='width:230px;'>
+            <label class="name" style='width:70px;' >保险公司ID</label>
+            <span class="textbox">
+              <input class="textbox-text textbox-prompt intOnly" type="text" name="insurerId" value=""/>
+            </span>
+          </li>
+          <li style='width:250px;'>
+            <label class="name" style='width:100px;'>保险公司名称</label>
+            <span class="textbox"><input class="textbox-text textbox-prompt" type="text" name="insurerName" value=""/></span>
+          </li>
+          <li>
+            <label class="name">审核状态</label>
+            <select class="ui-combobox" name="sts" id="sts">
+              <option value="" >全部</option>
+              <option value="-1">审核不通过</option>
+              <option value="1" selected ="selected">审核通过</option>
+            </select>
+          </li>
+          <li class="btn-group">
+           <a href="javascript:void(0)" class="search-btn" onclick="submitForm1()">搜索</a>
+           <a href="javascript:void(0)" class="search-btn" onclick="clearForm()">重置</a>
+         </li>
+       </ul>
+     </form>
+
+   </div>
+   <!-- ========================搜索end =============================-->
+
+   <div class="list-item fn-clear">
+
+     <a href="javascript:;" class="dash-add-btn" onclick='job_add()'><i class="ui-icon ui-icon-add" ></i>新增</a>
+
+     <table id="dg-list" class="easyui-datagrid ebao-datagrid"  style="margin-right:10px;"></table>
+
+
+
+
+
+     <!--=======================最后=================================================================-->
+   </div>
+
+   <div id="isReset" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true" style="width: 593px; min-height: 440px; text-align:left; padding:0">
+     <h3 class="xa">新增保险公司</h3>
+     <form method="post" action="" id='form123'>
+      <div class="top">
+        <div class="left">
+          <p class="p0" style='margin-left:38px;display:none'><span>保险公司ID</span><input id='bid' type="text" name="insurerId" class='easyui-validatebox' data-options="validType:'customMoney'" missingMessage="请输ID"></p>
+          <p class="p1"><span>上级公司</span><input type="text" name="parentId"  id='box'><br><input id='parentId' type="text" name="" value="" style="display:none"></p>
+          <p class="p2">保险公司名称<input name="insurerName" value="" class='easyui-validatebox' data-options="required:true" missingMessage="请输入保险名称" ></p>
+          <p class="p8">审核状态：
+            <input type="radio" id='yes'  style='width:10px' name="sts" value="" class='easyui-validatebox'><label for="yes" style="font-size:14px;">有效</label>
+            <input type="radio" id='no'  style='width:10px' name="sts" value="" class='easyui-validatebox'><label for="no" style="font-size:14px;">无效</label><br>
+            <input id='audit' type="text" name="" value="" style="display:none"></p>
+            <p class="p3">客服电话<input name="insurerTels" value="" class="easyui-validatebox" data-options="required:true,validType:'tele'">
+             <p class="p4">联系人<input name="contacts" value="" class="easyui-validatebox" data-options="required:true" missingMessage="请输入联系人名称" >
+              <p class="p5"> 联系人电话<input name="mobile" value="" class="easyui-validatebox" data-options="required:true,validType:'phone'" >
+               <p class="p6"><span>简介</span><textarea name="insurerIntro" id="" cols="30" rows="3"></textarea></p>
+             </div>
+             <!-- logo左边 -->
+             <div class="right" id='img_right' style=" width: 250px; height: 175px;background:;position:absolute;left:320px;top:40px; padding-top:20px;
+             ">
+             <li class="ui-info-item ui-relative" style="width:250px;list-style:none;padding:0;">
+              <label class="ui-info-lbl" >产品配图</label>
+              <p style="position:position:relative;display:inline-block">
+                <img src="img.png" class="addimg" width="70" height="70" style="display:block;position: absolute;left:20px;top:70px;border:1px solid #ccc;" data-leve='produce' id='produceImg' />
+
+                <input type="button" class="ui-file-link" value="点击上传" style="width:63px; position: absolute;left:10px;top:40px">
+                <input type="file"  name="insuranceTerms" class="file-wrap" id="prodimg-file"  onchange="uploadImga('prodimg-file','${base}/product/fileUpload','product');" onclick="a()" style="position: absolute;left:10px;top:40px">
+                <input type="text" id="productLogo" name="insurerLogo" class="easyui-validatebox  ui-unvisib" required="true" value="${product.productLogo}"/>
+              </p>
+
+            </li>
+
+          </div>
+        </div>
+        <p class="p7">
+         <input class='list_save' type="button" name="" onclick='add_save()' value="保存">
+         <input type="button" onclick='add_close()' name="" value="取消">
+       </p>
+
+     </form>
+   </div>
+
+
+
+   <div id="isReset1" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true" style="width: 336px; height: 140px; text-align:left; padding:0">
+     <h3 style="">确认失效吗？</h3>
+     <p class="p7">
+       <input class='list_save' type="button" name="" onclick='add_save1()' value="确定">
+       <input type="button" onclick='add_close1()' name="" value="取消">
+     </p>
+   </div>
+
+
+
+
+
+ </body>
+
+ <script>
+   $(function(){
+     validExtend();
+
+
+//列表
+
+$("#dg-list").treegrid({
+  // width:1880,
+  url: 'treegrid123.json',
+       method:'get',//
+        fitColumns:true, //自适应
+        rownumbers:true, //显示行号
+        nowrap: true,//如果为true，则在同一行中显示数据。设置为true可以提高加载性能。
+        // idField:'productId', //指明哪一个字段是标识字段。
+        resizable:false,//改变大小
+        // checkOnSelect:false,//复选框选中取消
+        singleSelect:true,//只能选择一行
+        pagination:true,//如果为true，则在DataGrid控件底部显示分页工具栏。
+        pageSize:10,//在设置分页属性的时候初始化页面大小。
+        idField: 'insurerId',
+        treeField:'insurerName',//哪个显示树形结构
+
+        columns:[[
+        {field:'aa',align:'center',width:"8%",title:'快速操作',
+        formatter:function(value,rec,rowIndex){
+          if(rec.sts==1){
+            return '<a class="list-copy" href="javascript:;" onclick="job_admit($(this).parent().parent().parent())">编辑</a>&nbsp;&nbsp;&nbsp;'+
+            '<a class="list-redact" style="color:#0000EE" href="#" onclick="job_remove($(this).parent().parent().parent())">失效</a>';
+          }else{
+            return '<a class="list-copy" href="javascript:;" onclick="job_admit($(this).parent().parent().parent())">编辑</a>&nbsp;&nbsp;&nbsp;'+
+            '<a class="list-redact" style="color:#0000EE" href="#" onclick="job_remove($(this).parent().parent().parent())">生效</a>';
+          }
+        }
+
+      },
+      {field:'insurerId',align:'center',width:"8%",title:'保险公司ID',},
+      {field:'insurerLogo',align:'center',width:"15%",title:'保险公司logo'},
+      {field:'insurerName',align:'left',width:"10%",title:'保险公司/机构名称'},
+      {field:'insurerTels',align:'center',width:"10%",title:'客服电话'},
+      {field:'contacts',align:'center',width:"10%",title:'联系人'},
+
+      {field:'mobile',align:'center',width:"10%",title:'联系电话'},
+      {field:'insurerIntro',align:'center',width:"14%",title:'简介'},
+      {field:'sts',align:'center',width:"5%",title:'审核状态',
+      formatter:function(value,rec){
+      
+
+        if(rec.sts == 1){
+          str = '<a class="operation-link" href="javascript:;">有效</a>';
+        }else{
+          str = '<a class="operation-link" href="javascript:;">无效</a>';
+        }
+        return str;
+      }
+    }
+    ]],
+    queryParams: eb.form2Json("search-ff"),
+    loadFilter:function(data){
+            return eb.loadTreeFilter(data);    //自定义过滤方法
+          },
+          onLoadSuccess:function(data){
+            pageCls1();
+
+          },
+        }),
+  //分页
+  pageAction1();
+
+
+
+});
+
+function a(){
+  alert('a')
+}
+
+
+var fla;
+
+// 新增
+function job_add(){
+  showAlert('isReset');
+  $('#form123').val('');
+  $('.xa').html('新增保险公司');
+   // $('#no').hide();
+   $('#form123').form('reset')
+   $('#isReset .p8 input').val('有效');
+   $('#isReset .p8 input').validatebox({
+    editable:false,
+  })
+   fla=false;
+   $('.p0').show();
+   $('#bid').validatebox({
+    required:true
+  });
+   $("#yes").attr("checked",true);
+   $('#audit').val('1');
+   $('#no').hide();
+   $('#no').next().hide();
+ };
+ /*=========================================编辑====================================*/
+//获取选中行
+function job_admit(index){
+ $('#no').show();
+ $('.p0').hide();
+ $('.xa').html('编辑保险公司');
+ fla=true;
+ var id=index.children().eq(1).children().html();
+ $('#dg-list').treegrid('select',id);
+ option=$('#dg-list').treegrid('getSelected');
+ // $('#isReset .p1 input').val(option.insurerName);
+ $('#isReset .p2 input').val(option.insurerName);
+ $('#isReset .p3 input').val(option.mobile);
+ $('#isReset .p4 input').val(option.insurerNickname);
+ $('#isReset .p5 input').val(option.insurerIntro);
+ $('#isReset .p6 textarea').val(option.contacts);
+ if(option.sts==1){
+  $("#yes").attr("checked",true);
+  $('#audit').val('1');
+}else{
+  $("#no").attr("checked",true);
+  $('#audit').val('-1');
+}
+
+
+$('#form123').form('enableValidation').form('validate');
+
+var b=option.parentId;
+if(option.parentId==0){
+  c='顶级公司';
+  z=option.parentId;
+}else if(option.parentId!=0){
+  b=option.parentId;
+  $('#dg-list').treegrid('select',b);
+  a=$('#dg-list').treegrid('getSelected');
+  c=a.insurerName;
+  z=a.insurerId;
+}
+
+
+
+$('#parentId').val(z);
+$('#box').combotree('setValue',c);
+
+
+showAlert('isReset');
+};
+//判断选中
+$('#yes').click(function(){
+ $('#audit').val('1');
+})
+$('#no').click(function(){
+  $('#audit').val('-1');
+
+})
+
+
+
+
+//下拉框
+$('#box').combotree({
+  url:'chil.json',//后台
+  method:'get',
+  width:200,
+  hieght:10,
+  required:true,
+  textField:'insurerName',
+  editable:true,
+  loadFilter:function(data){
+    return data.records;  
+  },
+  formatter:function(row){
+    return row.insurerName
+  },
+  onClick:function(node){
+    // console.log(node)
+    if(node.parentId==0){
+      c='顶级公司';
+  // console.log(node.parentId)
+  $('#parentId').val('0');
+}else{
+  $('#dg-list').treegrid('select',node.parentId);
+  a=$('#dg-list').treegrid('getSelected');
+  c=a.insurerName;
+  console.log(a.insurerId)
+  $('#parentId').val(a.insurerId);
+}
+
+$('#box').combotree('setValue',c);
+
+
+
+
+}
+
+
+})
+
+//保存
+
+function add_save(){
+ $('#form123').form('validate');
+ var flg=$('#form123').form('validate');
+ $('.p0').hide();
+ alert(flg)
+ var aurl='';
+ if(fla){
+  aurl='${base}/product/param/updateInsurer';//编辑的
+}else{
+  aurl='${base}/product/param/addInsurer';//新增的
+}
+if(flg){
+  $('#form').form('submit',{
+    url:'',
+    success:function(data){    
+      $('#isReset').dialog({
+        closed:true
+      }); 
+      $('#dg-list').treegrid('reload')
+    },
+    error:function(){
+      alert('没有提交成功，请重新提交');
+    }
+
+
+  });
+  
+}
+
+}
+//关闭
+function add_close(){
+  $('#isReset').dialog({
+    closed:true
+  });
+  $('.p0').hide();
+  $('#bid').validatebox({
+    required:false
+  });
+  $('#form123').val('');
+}
+
+//删除
+function job_remove($this){
+  console.log($this)
+  var id=$this.children().eq(1).children().html();
+  $('#dg-list').treegrid('select',id);
+  option=$('#dg-list').treegrid('getSelected');
+  if(option.parentId!=0){
+    showAlert('isReset1'); 
+    ao=option.insurerId;
+
+  }
+
+}
+
+ //删除确定
+ function add_save1(){
+  $.messager.show({
+    title:'我的消息',
+    msg:'消息在5秒后消失',
+    timeout:5000000,
+    showType:'show',
+    style:{
+      top:0,
+    },
+
+  })
+
+  $.ajax({
+   type: "POST",
+   url: "",
+   data:{insurerId:option.insurerId},
+   success: function(msg){
+    $("#dg-list").treegrid('reload');  
+    $('#isReset1').dialog({
+     closed:true
+   });  $.ma
+  }
+
+})
+}
+//删除取消
+function add_close1(){
+ $('#isReset1').dialog({
+   closed:true
+ });  
+}
+
+$(function(){
+
+})
+
+//上传图片
+function uploadImg1(id,url,filePath,levetype){
+  var obj=$('#'+id);
+  if($(obj).val()!=''){  
+    var name=$(obj).val(),fileSize = 0;
+    var type=name.substr(name.lastIndexOf(".")+1).toLocaleLowerCase();
+
+    if(!obj.files) {  
+      if(obj.files!=undefined){
+        var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
+        var file = fileSystem.GetFile (obj.value);      
+        fileSize = file.Size;     
+      }
+    }else { 
+      fileSize = obj.files[0].size;      
+    }    
+    if(type!='png' && type!='jpg' && type!= 'gif'&& type!= 'bmp'&& type!= 'jpeg' ){
+      alert('格式不正确，请重新上传。');
+      return;
+    }else if(fileSize / 1024>5000){   
+      alert('不能大于5M。');
+      return;
+    }
+    var str = url+"?filePath="+filePath;
+    $.ajaxFileUpload({
+      url : str,
+      secureuri : false,
+      fileElementId : id, 
+      dataType : 'json',
+      success : function(data) {
+        if(data){
+          var picturePath = data.entity.substr(data.entity.lastIndexOf("_")+1);
+          alert("上传成功!");
+            //产品新增上传图片
+            //$("#productLogo").val(picturePath);
+            if(levetype == 'moreimg'){
+              var pics = $("#producePicshow"),
+              len = pics.find('img').length;
+              pics.closest(".ui-info-item").show();
+              var str ='<div class="produce-piclist"><img src="'+picturePath+'" class="ui-page-fir ui-addimg" width="120" height="120"/><br/><span class="ui-base-policy ui-relative"><input type="button" class="ui-file-link" value="重新上传"><input type="file" name="insuranceTerms" class="file-wrap" id="prodimg-file-productAdvantage'+len+'"  onchange="uploadImg(this.id,\'/product/fileUpload\',\'product\',\'eachimg\');" style="left:0;top:0;width:60px;"></span><input type="button" class="ui-file-link query-result-span produce-advantdel" value="删除"></div>';
+              $(pics).append(str);
+              $("#productAdvantage").val('yes');
+            }else if(levetype == 'eachimg'){
+              var oneimg = $("#"+id).closest('.produce-piclist').find('.ui-addimg');
+              oneimg.attr("src",picturePath);
+            }else{
+              $("#produceMap").attr("src",picturePath);
+              var addimg=$("#"+id).parents('.ui-info-item').find('.addimg');
+              var leve = $(addimg).data("leve");
+              leve = leve ? leve : "yes";
+              if(leve == 'no'){
+                if(addimg.length!=0){
+                  addimg.attr("src",picturePath).show();
+                  
+                }
+              }else if(leve == 'produce'){
+                if(addimg.length!=0){
+                  addimg.attr("src",picturePath).show();
+                  $("#"+id).css({'left':'366px','top':'46px'});
+                }
+              }else{
+                if(addimg.length!=0){
+                  addimg.attr("src",picturePath).show();
+                  $("#"+id).css({'left':'293px','top':'45px'});
+                }
+              }
+              
+              
+              $("#systemLogo").val(picturePath);
+              $("#specialLogo3").val(picturePath);
+              $("#promotionLogo").val(picturePath);
+              $("#posLogo").val(picturePath);
+              //启动页图片
+              $("#"+id).next().val(picturePath);
+              $("#"+id).parents(".file-mode").prev().attr("src",picturePath);
+            }
+            
+            
+          }else{
+           alert(data.error.message);
+         }
+       },
+       error : function(data) {
+         alert('系统出错，请重试');  
+       }
+     });
+}
+}
+
+</script>
+<style>
+  .datagrid-header-row .datagrid-cell-c2-insurerName{
+    text-align: center!important;
+  }
+  tbody .datagrid-cell-c2-insurerName{
+   padding-left: 20px;
+ }
+ .tree-node{text-align: left!important;}
+/*  .l-btn-small:nth-child(1){
+ background: red;
+} */
+input{
+  outline: none;
+}
+.windo-body{
+  opacity: 1!important;
+  background: red;
+}
+</style>
+</html>

@@ -1,0 +1,907 @@
+
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>自研产品管理-产品信息管理-产品管理</title>
+	<link rel="stylesheet" type="text/css" href="../../../../resource/style/base.css">
+	<link rel="stylesheet" type="text/css" href="../../../../resource/style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../../resource/style/style.css">
+	<link rel="stylesheet" href="admit.css">
+	<script type="text/javascript" src="../../../../resource/js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../../resource/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../../resource/js/kindeditor/kindeditor.js"></script>
+	<script type="text/javascript" src="../../../../resource/js/ajaxfileupload.js"></script>
+	<script type="text/javascript" src="../../../../resource/js/base.js"></script>
+	
+	
+</head>
+
+<body style="">
+	<div class="ui-info-box">
+		<div class="ui-crumbs" id="crumbs">
+			<#include "/common/include/power.ftl">
+		</div>
+		<div class="ui-datagrid-wrap">
+			<!-- ==========================================中间 ==============================================-->
+
+
+			<!-- =========================表单=================================== -->
+			<div class="top">
+				<form id='form123' method="" action="">
+					<ul>
+						<li style="margin-left: -17px">
+							专题策略ID<input type="text" class='easyui-validatebox' data-options="required:true" name="" value="${}" readonly="readonly" >
+						</li>
+						<li>
+							专题类型
+							<select name="" id="">
+								<option value="0" <#if product.genderLimit == 0>selected</#if> >爆款</option>
+								<option value="1" <#if product.genderLimit == 1>selected</#if> >普通</option>
+							</select>
+						</li>
+						<li>
+							专题名称<input type="text" class='easyui-validatebox' data-options="required:true" name="" value="${}">
+							<input type="text" id='tab' name="" style="display:none;" value="">
+						</li>
+						<li style="margin-left:25px">
+							排序<input type="text" class='easyui-validatebox' data-options="required:true" name="" value="${}">
+						</li>
+						<li>
+							专题说明<input type="text" class='easyui-validatebox' data-options="required:true"  name="" value="${}">
+						</li>
+						<li class="ui-info-item ui-relative" style="width:250px; heigt:400px;list-style:none;padding:0;">
+							<label class="ui-info-lbl">产品配图</label>
+							<p style="position:position:relative;display:inline-block;width:400px;height:
+							70px">
+							<img src="img.png" class="addimg" width="120" height="120"
+							style="display:block;position: absolute;left:58px;top:40px;border:1px solid #ccc;"
+							data-leve='produce' id='produceImg'/>
+
+							<input type="button" class="ui-file-link" value="点击上传"
+							style="width:63px;height:28px; position: absolute;left:63px;top:10px">
+							<input type="file" name="insuranceTerms" class="file-wrap" id="prodimg-file"
+							onchange="uploadImg1('prodimg-file','${base}/upload/imgUpload','product');"
+							style="position: absolute;left:63px;top:10px;width:63px">
+							<input type="text" id="productLogo" name="productLogo"
+							class="easyui-validatebox  ui-unvisib" value="q"
+							style="width:63px; position: absolute;left:63px;top:10px; opacity:0"/>
+						</p>
+
+					</li><br><br>
+					<li class="date">
+						<!-- <label class="name ui-change-item-label">专题时间：</label>
+						<input id="startTime" name="effTimestr" class="easyui-datebox easyui-validatebox" data-options="editable:false,required:true"  value="${domainproduct.effTime?string('yyyy-MM-dd HH:mm:ss')}" validType="md['#endTime']">
+						<em class="ui-channel-titcolor">至</em>
+						<input id="endTime" name="expTimestr" class="easyui-datebox easyui-validatebox" data-options="editable:false,required:true" value="${domainproduct.expTime?string('yyyy-MM-dd HH:mm:ss')}" validType="md['#startTime']"> -->
+						<label class="name ui-change-item-label">专题时间：</label>
+						<input class="easyui-datebox easyui-validatebox" data-options="editable:false,required:true" style="width: 180px" id="start2" value="${startTime}"> 
+						<span class="newfont06">至</span> 
+						<input class="easyui-datebox" data-options="editable:false,required:true" style="width: 180px" id="end2" value="${endTime}" validType="md['#start2']">
+
+
+					</li>
+				</ul>
+			</form>
+		</div>
+		<!-- =========================关联产品======================= -->
+		<div class="center list-item fn-clear">
+			<p style="margin-bottom:10px">
+				关联产品
+				<a class="center_a" href="javascript:;" onclick="show()">选择</a>
+			</p>
+			<div style="padding-left:60px;margin-bottom:20px">
+				<table id="dg-list" class="ebao-datagrid"  style="margin-right:10px;">
+
+
+				</table>
+			</div>
+		</div>
+		<!-- ============================审核==================================== -->
+		<div class="center list-item fn-clear;position:relative">
+			<span style="position:absolute;">
+				审核信息
+			</span>
+			<div style="padding-left:60px;margin-bottom:5px">
+				<table id="dg-list2" class="ebao-datagrid"  style="margin-right:10px">
+				</table>
+			</div>
+
+
+
+			<!-- ===========================================中间结束========================================== -->
+		</div>
+		<div class="bottom" style="text-align:center">
+			<a href="javascript:;" onclick="subm()">提交审核</a>
+			<a href="专题列表.html">取消</a>
+		</div>
+	</div>
+	<!-- ==============================最后==================================== -->
+
+	<!-- ================================================删除弹出框================================================== -->
+	<div id="isReset1" class="easyui-dialog ui-dlg-alert" data-options="iconCls:'icon-save',modal:true,closed: true" style="width: 336px; height: 150px; text-align:left; padding:0">
+		<h3 style="font-size:16px;">确认删除吗？</h3>
+		<p class="p7">
+			<input class='list_save' type="button" name="" onclick='add_save1()' value="确定">
+			<input type="button" onclick='add_close1()' name="" value="取消">
+		</p>
+	</div>
+
+	<!-- =================================================成功失败返回======================================= -->
+	<div id="isReset2" class="easyui-dialog ui-dlg-alert" data-options="iconCls:'icon-save',modal:true,closed: true" style=" min-width:300px; min-height: 100px; text-align:left; padding:0">
+		<h3 class="alert" style="width:300px; text-align:center;font-size: 16px;color: #768399;font-weight: bold;padding-top:50px">
+			删除成功
+		</h3>
+		<h4 class="alert1" style="width:280px; margin:0 auto; text-indent:2em; font-size: 16px;color: #768399;font-weight: bold;padding-top:30px;display:none">
+			删除成功删除成功删除成功删除成功删除成功删除成功删除成功删除成功
+		</h4>
+	</div>
+	<div id="isReset3" class="easyui-dialog ui-dlg-alert" data-options="iconCls:'icon-save',modal:true,closed: true" style=" min-width:300px; min-height: 100px; text-align:left; padding:0">
+		<h3 style="width:300px; text-align:center;font-size: 16px;color: #768399;font-weight: bold;padding-top:50px">
+			待审核不可编辑
+		</h3>
+
+	</div>
+	<!-- 弹出表格 -->
+	<div id="isReset4" class="easyui-dialog ui-dlg-alert" data-options="iconCls:'icon-save',modal:true,closed: true" style="width:1200px; height: 750px;padding:0">
+		<h4>关联产品</h3>
+			<!-- 搜索 -->
+			<div class="search-wrap">
+				<form  id="search-ff1" class="ui-search-form">
+					<ul class="search-list fn-clear">
+						<li>
+							<label class="name" style="width:70px;margin-left:-30px">产品ID</label>
+							<input class="textbox-text textbox-prompt intOnly" type="text" name="productId" maxlength=9 />
+
+						</li>
+						<li>
+							<label class="name">保险名称</label>
+							<input class="textbox-text textbox-prompt" type="text" name="productName" value="" maxlength=40/></span>
+						</li>
+						<li>
+							<label class="name" style="margin:0">承保公司</label>
+							<select class="ui-combobox" name="domainStatus" id="domainStatus">
+								<option value="">全部</option>
+								<option value="1">人保</option>
+								<option value="2" selected="selecteed">太平洋</option>
+							</select>
+						</li>
+						<li>
+							<label class="name" style="margin:0">保险类别</label>
+							<select name="domainId" class="ui-combobox" id="domainId">
+								<option value="">全部</option>
+								<option value="">意外险</option>
+								<option value="">家财险</option>
+								<option value="">人身险</option>
+								<option value="">健康险</option>
+							</select>
+						</li>
+						<li>
+							<label class="name" style="margin:0">审核状态</label>
+							<select name="domainId" class="ui-combobox" id="domainId">
+								<option value="">待审核</option>
+								<option value="">审核通过</option>
+								<option value="">审核不通过</option>
+							</select>
+						</li>
+						<li>
+							<label class="name" style="margin-right:0">产品状态</label>
+							<select name="domainId" class="ui-combobox" id="domainId" s>
+								<option value="">全部</option>
+								<option value="">编辑中</option>
+								<option value="">有效</option>
+								<option value="">无效</option>
+							</select>
+						</li>
+						<li>
+							<label class="name">保费范围</label>
+							<select class="ui-combobox" name="bettemoney" id="transaceAmount">
+								<option value="" >全部</option>
+								<option value="1">0-1元</option>
+								<option value="2">1-10元</option>
+								<option value="3">10-50元</option>
+								<option value="4">50-100元</option>
+								<option value="5">100元及以上</option>
+								<option value="6">自定义</option>
+							</select>
+							<span class="ui-hidden fn-hide" id="customToggle">
+								<input name="minProducePrice" type="text" class="textbox-text moneyrange easyui-validatebox ui-cover decimal-pointtwo decimal-ptblur" maxlength="10"  data-options="validType:['customMoney']" id="moneyStart">
+								<em class="ui-channel-titcolor">至</em>
+								<input name="maxProducePrice" type="text" class="textbox-text moneyrange easyui-validatebox ui-cover decimal-pointtwo decimal-ptblur" maxlength="10" data-options="validType:['customMoney','moneycompare[\'#moneyStart\']']">
+								<em class="ui-channel-titcolor">元</em>
+							</span>
+						</li>
+
+						<li class="btn-group" style='float:right;margin-right:30px;'>
+							<a href="javascript:void(0)" class="search-btn" onclick="submitForm2($('#search-ff1'),$('#dg-list1'))">搜索</a>
+							<a href="javascript:void(0)" class="search-btn" onclick="clearForm($('#search-ff1'),$('#dg-list1'))">重置</a>
+						</li>
+					</ul>
+				</form>
+			</div>
+			<!-- 搜索end -->
+			<!-- 列表 -->
+			<div class="list-item fn-clear">
+				<table id="dg-list1" class="ebao-datagrid"  style="margin-right:10px;">	
+				</table>
+			</div>
+			<!-- 列表end -->
+			<p>
+				<input type="button" name="" onclick='confirm()' value="确定">
+				<input type="button" onclick='add_close1()' name="" value="取消">
+			</p>
+		</div>
+	</div>
+	<!-- ==============================最后==================================== -->
+
+</div>
+</body>
+<script>
+	
+
+
+
+
+	//上传图片
+	function uploadImg1(id, url, filePath, levetype) {
+		var obj = $('#' + id);
+		if ($(obj).val() != '') {
+			var name = $(obj).val(), fileSize = 0;
+			var type = name.substr(name.lastIndexOf(".") + 1).toLocaleLowerCase();
+
+			if (!obj.files) {
+				if (obj.files != undefined) {
+					var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
+					var file = fileSystem.GetFile(obj.value);
+					fileSize = file.Size;
+				}
+			} else {
+				fileSize = obj.files[0].size;
+			}
+			if (type != 'png' && type != 'jpg' && type != 'gif' && type != 'bmp' && type != 'jpeg') {
+				alert('格式不正确，请重新上传。');
+				return;
+			} else if (fileSize / 1024 > 5000) {
+				alert('不能大于5M。');
+				return;
+			}
+			var str = url + "?filePath=" + filePath;
+			$.ajaxFileUpload({
+				url: str,
+				secureuri: false,
+				fileElementId: id,
+				dataType: 'json',
+				success: function (data) {
+					if (data) {
+						var picturePath = data.entity.substr(data.entity.lastIndexOf("_") + 1);
+						alert("上传成功!");
+                        //产品新增上传图片
+                        //$("#productLogo").val(picturePath);
+                        if (levetype == 'moreimg') {
+                        	var pics = $("#producePicshow"),
+                        	len = pics.find('img').length;
+                        	pics.closest(".ui-info-item").show();
+                        	var str = '<div class="produce-piclist"><img src="' + picturePath + '" class="ui-page-fir ui-addimg" width="120" height="120"/><br/><span class="ui-base-policy ui-relative"><input type="button" class="ui-file-link" value="重新上传"><input type="file" name="insuranceTerms" class="file-wrap" id="prodimg-file-productAdvantage' + len + '"  onchange="uploadImg(this.id,\'/product/fileUpload\',\'product\',\'eachimg\');" style="left:0;top:0;width:60px;"></span><input type="button" class="ui-file-link query-result-span produce-advantdel" value="删除"></div>';
+                        	$(pics).append(str);
+                        	$("#productAdvantage").val('yes');
+                        } else if (levetype == 'eachimg') {
+                        	var oneimg = $("#" + id).closest('.produce-piclist').find('.ui-addimg');
+                        	oneimg.attr("src", picturePath);
+                        } else {
+                        	$("#produceMap").attr("src", picturePath);
+                        	var addimg = $("#" + id).parents('.ui-info-item').find('.addimg');
+                        	var leve = $(addimg).data("leve");
+                        	leve = leve ? leve : "yes";
+                        	if (leve == 'no') {
+                        		if (addimg.length != 0) {
+                        			addimg.attr("src", picturePath).show();
+
+                        		}
+                        	} else if (leve == 'produce') {
+                        		if (addimg.length != 0) {
+                        			addimg.attr("src", picturePath).show();
+                        			$("#" + id).css({'left': '10px', 'top': '40px'});
+                        		}
+                        	} else {
+                        		if (addimg.length != 0) {
+                        			addimg.attr("src", picturePath).show();
+                        			$("#" + id).css({'left': '293px', 'top': '45px'});
+                        		}
+                        	}
+
+
+                        	$("#systemLogo").val(picturePath);
+                        	$("#specialLogo3").val(picturePath);
+                        	$("#promotionLogo").val(picturePath);
+                        	$("#posLogo").val(picturePath);
+                            //启动页图片
+                            $("#" + id).next().val(picturePath);
+                            $("#" + id).parents(".file-mode").prev().attr("src", picturePath);
+                        }
+
+
+                    } else {
+                    	alert(data.error.message);
+                    }
+                },
+                error: function (data) {
+                	alert('系统出错，请重试');
+                }
+            });
+}
+}
+
+
+
+
+
+
+
+/*==========================显示表格================================*/
+$(function(){
+	
+	validExtend();
+	$("#dg-list").datagrid({
+		url:'datagrid_data1.json',
+		method:'post',
+		fitColumns:true,
+		rownumbers:true,
+	    nowrap: true,//当数据长度超出列宽时将会自动截取
+	      singleSelect: true,//只能选择一行
+	      resizable:false,
+	      checkOnSelect:false,
+	    // pagination:true,
+	    idField:'agentId',
+	    columns:[[
+	    {field:'aa',align:'center',width:'10%',title:'操作',
+	    formatter:function(value,rec,index){
+	    	return '<a  style="color:#0000EE" href="javascript:;" onclick="job_remove($(this).parent().parent().parent())">删除</a>';
+	    }
+	},
+	{field:'agentId',align:'center',width:"10%",title:'产品ID',},
+	{field:'agentBranchName',align:'center',width:"10%",title:'保险名称',
+	formatter:function(rec,index){
+		var url='${base}/product/toProductDetail';
+		if(rec==6||rec==7){
+			url='${base}/product/toProductDetail';
+		} else if(rec.sts1==0){
+			url='${base}/product/productTE';
+		}
+		return '<a class="operation-link" href="'+url+'?productId='+rec.productId+'">'+rec+'</a>';
+	}
+},
+{field:'businessName',align:'center',width:"10%",title:'承保公司'},
+{field:'orderAmount',align:'center',width:"10%",title:'保险类别'},
+{field:'agentAreaProvinceName',align:'center',width:"10%",title:'当前库存'},
+{field:'orderStatus',align:'center',width:"10%",title:'保险金额(元)'},
+
+{field:'orderAmount',align:'center',width:"13%",title:'一级佣金',},
+{field:'orderAccount',align:'center',width:"13%",title:'二级佣金',}
+]],
+loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+        }
+
+    });
+/*var a='[{"agentId": "2791000002h","agentAreaProvince": "360000", "agentAreaCity": "360100","agentAreaCounty": "360121","orderId": "20150514005133000001","agentBranchName": "马良二级网点","businessName": "交通违章查询","orderAccount": "浙A69852","orderAmount": 10,"createTime": 1431536053000,"orderStatus": 2,"orderAmountExcel": null,"orderStatusExcel": null,"agentAreaProvinceName": "江西省","agentAreaCityName": "南昌市","agentAreaCountyName": "南昌县"},{"agentId": "2791000002j","agentAreaProvince": "360000","agentAreaCity": "360100","agentAreaCounty": "360121","orderId": "20150514005133000001","agentBranchName": "马良二级网点","businessName": "交通违章查询","orderAccount": "浙A69852","orderAmount": 10,"createTime": 1431536053000,"orderStatus": 2,"orderAmountExcel": null,"orderStatusExcel": null,"agentAreaProvinceName": "江西省","agentAreaCityName": "南昌市","agentAreaCountyName": "南昌县"}]'
+var jsonstr = '{"succ":true,"total": 10,"pageSize": 10,"pageCount": 2,"currentPage": 1,"records":'+a+'}';  
+var data = $.parseJSON(jsonstr);    
+$('#dg-list').datagrid('loadData', data); //将数据绑定到datagrid   
+*/
+
+
+
+
+
+
+// 弹出的表格
+//列表
+$("#dg-list1").datagrid({
+	url:'datagrid_data1.json',
+	method:'post',
+	fitColumns:true,
+	// rownumbers:true,
+	nowrap: true,//当数据长度超出列宽时将会自动截取
+	resizable:false,      
+	// checkOnSelect:false,
+	pagination:true,
+	pageSize:10,
+	idField:'agentId',
+	sortName:'maxPremium',
+	sortOrder:'desc',
+	columns:[[
+	{field : 'ck',checkbox : true},
+	{field : 'xu',align:'center',width:"4%",title:'序号',
+	formatter:function(rec,value,index){
+		var options = $("#dg-list1").datagrid('getPager').data("pagination").options; 
+		var currentPage = options.pageNumber;
+		var pageSize = options.pageSize;
+		return (pageSize * (currentPage -1))+(index+1);
+	}
+	
+},
+{field:'agentId',align:'center',width:"9%",title:'产品ID',
+formatter:function(value,rec,index){
+	return rec.agentId;
+}
+},
+{field:'agentBranchName',align:'center',width:"10%",title:'保险名称',
+formatter:function(rec,index){
+	return rec
+}
+},
+{field:'businessName',align:'center',width:"10%",title:'承保公司'},
+{field:'orderAmount',align:'center',width:"6%",title:'保险类别'},
+{field:'orderStatus',align:'center',width:"4%",title:'总库存'},
+{field:'agentAreaProvinceName',align:'center',width:"5%",title:'当前库存'},
+{field:'agentAreaCountyName',align:'center',width:"7%",title:'保险金额(元)'},
+
+{field:'orderAmount',align:'center',width:"11%",title:'一级佣金',},
+{field:'orderAccount',align:'center',width:"7%",title:'二级佣金',},
+{field:'bb',align:'center',width:"10%",title:'审核状态',
+formatter: function (value, rec) {
+
+
+	if (rec.sts == 1) {
+		str = '有效';
+	}else if(rec.sts==2){
+		str='待审核'
+	} else {
+		str = '审核不通过';
+	}
+	return str;
+}
+},
+{field:'aa',align:'center',width:"10%",title:'产品状态',
+formatter: function (value, rec) {
+	if (rec.sts == 1) {
+		str = '编辑中';
+	}else if(rec.sts==2){
+		str = '有效';
+	} else {
+		str = '新增审核驳回';
+	}
+	return str;
+}
+}
+]],
+
+
+queryParams: eb.form2Json("search-ff"),
+loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+        },
+        onLoadSuccess:function(data){
+        	pageCls();
+        }
+    });
+
+//分页
+pageAction2();
+
+
+
+/*审核的表格*/
+$("#dg-list2").datagrid({
+	url:'datagrid_data1.json',
+	method:'post',
+	fitColumns:true,
+	rownumbers:true,
+	    nowrap: true,//当数据长度超出列宽时将会自动截取
+	      singleSelect: true,//只能选择一行
+	      resizable:false,
+	      checkOnSelect:false,
+	    // pagination:true,
+	    idField:'agentId',
+	    columns:[[
+	    {field:'aa',align:'center',width:'10%',title:'审核结果',
+	    formatter:function(value,rec,index){
+	    	var rec2=rec.orderStatus;
+	    	// console.log(rec2)
+	    	if(rec2==2){
+	    		bb='待审核'
+	    	}else{
+	    		bb='审核不通过'
+	    	}
+	    	return '<a class="list-redact" style="color:#0000EE" href="javascript:;">'+bb+'</a>';
+
+	    }
+	},
+	{field:'agentId',align:'center',width:"10%",title:'产品ID',},
+	{field:'agentBranchName',align:'center',width:"10%",title:'审核不通过原因',
+	formatter:function(value,rec,index){
+		var rec2=rec.orderStatus;
+		// console.log(rec2)
+		if(rec2==2){
+			bb='/';
+			return bb;
+		}else{
+			bb=rec.agentBranchName;
+			return '<a class="list-redact" style="color:red" href="javascript:;">'+bb+'</a>';
+		}
+		
+	}
+},
+{field:'businessName',align:'center',width:"10%",title:'审核员',
+formatter:function(value,rec,index){
+	var rec2=rec.orderStatus;
+	// console.log(rec2)
+	if(rec2==2){
+		bb='/'
+	}else{
+		bb=rec.businessName
+	}
+	return bb
+}
+},
+{field:'orderAmount',align:'center',width:"10%",title:'审核时间',
+formatter:function(value,rec,index){
+	var rec2=rec.orderStatus;
+	// console.log(rec2)
+	if(rec2==2){
+		bb='/'
+	}else{
+		bb=rec.orderAmount
+	}
+	return bb
+}
+},
+{field:'agentAreaProvinceName',align:'center',width:"10%",title:'操作员'},
+{field:'orderAccount',align:'center',width:"10%",title:'提交时间'}
+]],
+loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+            
+        },
+
+    });
+$("#dg-list2").datagrid('hideColumn', 'agentId');
+/*$("#dg-list2").datagrid('hideColumn', 'agentId');
+var a1='[{"agentId": "2791000002h","agentAreaProvince": "360000", "agentAreaCity": "360100","agentAreaCounty": "360121","orderId": "20150514005133000001","agentBranchName": "马良二级网点","businessName": "交通违章查询","orderAccount": "浙A69852","orderAmount": 10,"createTime": 1431536053000,"orderStatus": 2,"orderAmountExcel": null,"orderStatusExcel": null,"agentAreaProvinceName": "江西省","agentAreaCityName": "南昌市","agentAreaCountyName": "南昌县"},{"agentId": "2791000002j","agentAreaProvince": "360000","agentAreaCity": "360100","agentAreaCounty": "360121","orderId": "20150514005133000001","agentBranchName": "马良二级网点","businessName": "交通违章查询","orderAccount": "浙A69852","orderAmount": 10,"createTime": 1431536053000,"orderStatus": 2,"orderAmountExcel": null,"orderStatusExcel": null,"agentAreaProvinceName": "江西省","agentAreaCityName": "南昌市","agentAreaCountyName": "南昌县"}]';
+// console.log(a1)
+var jsonstr1 = '{"succ":true,"total": 10,"pageSize": 10,"pageCount": 2,"currentPage": 1,"records":'+a1+'}'; 
+// console.log(jsonstr1)
+
+var data1 = $.parseJSON(jsonstr1);    
+$('#dg-list2').datagrid('loadData', data1); //将数据绑定到datagrid   
+*/
+
+	})//最后括号
+// 点击显示表格
+function show(){
+	showAlert2('isReset4');
+	$('#dg-list1').datagrid('uncheckAll')
+	var rows = $("#dg-list").datagrid("getRows");
+	$.each(rows,function(i){
+		$('#dg-list1').datagrid('selectRecord',rows[i].agentId);
+	});
+}
+
+
+
+
+
+
+/*删除*/
+ //删除
+ function job_remove($this) {
+
+ 	var id = $this.children().eq(1).children().html();
+ 	$('#dg-list').datagrid('selectRecord', id);
+ 	option = $('#dg-list').datagrid('getSelected');
+ 	showAlert('isReset1');
+ 	
+
+ 	
+ }
+
+    //删除确定
+    function add_save1() {
+    	$('#isReset1').dialog({
+    		closed: true
+    	});
+    	var rowIndex = $('#dg-list').datagrid('getRowIndex', option);
+    	$('.alert').html('操作成功');
+    	showAlert('isReset2');
+    	setTimeout(function () {
+    		$('#isReset2').dialog({
+    			closed: true
+    		});
+    		$('#dg-list').datagrid('deleteRow', rowIndex);  
+    	}, 200)
+    }
+    //删除取消
+    function add_close1() {
+    	$('#isReset1').dialog({
+    		closed: true
+    	});
+    	$('#isReset4').dialog({
+    		closed: true
+    	});
+    }
+
+//弹出表格确定
+function confirm(){
+	var rows = $('#dg-list1').datagrid('getSelections');
+	var ids='';
+	$.each(rows,function(i){
+		ids+=rows[i].agentId+',';
+	});
+	ids=ids.substring(0,ids.length-1);
+	// console.log(ids);
+	
+	if(ids.length>0){
+		var rows=JSON.stringify(rows)
+		// console.log(rows)
+		var jsonstr1 = '{"succ":true,"total": 10,"pageSize": 10,"pageCount": 2,"currentPage": 1,"records":'+rows+'}';  
+		// console.log(jsonstr1)
+
+		var data1 = $.parseJSON(jsonstr1);  
+		$('#isReset4').dialog({
+			closed: true
+		});
+			$('#dg-list').datagrid('loadData', data1); //将数据绑定到datagrid   
+
+		}else{
+			$('#isReset3 h3').html('必须选择一个');
+			showAlert('isReset3');
+			setTimeout(function () {
+				$('#isReset3').dialog({
+					closed: true
+				});
+
+			}, 1000);
+		}
+
+	}
+
+	/*=========================================最后提交============================================*/
+	function subm(){
+		$('#productLogo').validatebox({
+			required: false,
+		})
+		var fla=$('#form123').form('validate');
+	// console.log(fla);
+	var rows = $("#dg-list").datagrid("getRows");
+	var ids='';
+	$.each(rows,function(i){
+		ids+=rows[i].agentId+',';
+	});
+	ids=ids.substring(0,ids.length-1);
+	var len=$('#tab').val(ids);
+	if(ids.length>0){
+		if(fla){
+
+		// console.log(ids);
+		$('#form123').form('submit', {
+                url:'',//表单验证
+                success: function (data) {
+                	$('.alert').html('提交成功');
+                	showAlert('isReset2');
+                	setTimeout(function () {
+                		// window.location='专题列表.html';
+                	}, 3000)
+
+                },
+                error: function () {
+
+                	$('#isReset3 h3').html('表单提交失败，请重新提交')
+                	showAlert('isReset3');
+                	setTimeout(function () {
+                		$('#isReset3').dialog({
+                			closed: true
+                		});
+
+                	}, 1000);
+                }
+            });
+
+
+	}
+}else{
+	$('#isReset3 h3').html('关联产品不能为空，请选择！');
+	showAlert('isReset3');
+	setTimeout(function () {
+		$('#isReset3').dialog({
+			closed: true
+		});
+
+	}, 1000);
+}
+
+
+}
+
+
+
+
+
+// 搜索提交
+function submitForm2(form,table){
+	if(!form){
+		form=$('#search-ff');
+	}
+	if(!table){
+		table=$("#dg-list");
+	}
+	if(form.form('validate')){
+		    // eb.backToFstPage("#datagrid");
+		    table.datagrid({queryParams : eb.form2Json(form.attr('id'))});
+		    pageAction2();
+		}
+	}
+
+	// 分页
+	function pageAction2(){
+		var page=$("#dg-list1").treegrid("getPager");
+		$(page).pagination({
+			total:10,
+			pageSize:10,
+			displayMsg:"",
+			layout:['list','sep','first','prev','links','next','last','manual', ],
+			beforePageText: '<span class="ui-page-text ui-page-fir">共20页</span>  <span class="ui-page-text">去第</span>',
+			afterPageText: '<span class="ui-page-text ui-page-last">页</span>',
+			showPageList:false
+		});  
+	}
+
+// 弹出表格设置
+function showAlert2(dlgid,text,type){
+	var dlg=$('#'+dlgid),
+	top=document.body.scrollTop||document.documentElement.scrollTop||window.pageYOffset,
+	h=parseInt(dlg[0].offsetHeight);
+	if(text){
+		dlg.find('.ui-dlg-tit').text(text);
+	}
+	if(type=="min"){
+
+		dlg.dialog({top:30});
+	}else if(type=="middle"){
+
+		dlg.dialog({top:400});
+	}else{
+		dlg.dialog({top:parseInt(window.screen.availHeight-h)/2+top-400});
+	}
+	dlg.dialog('open');
+}
+
+
+
+
+var varify;//用于查询验证,验证开始时间是否小于结束时间 
+function query2(pid){ 
+	if(varify){ 
+		startTime2 = $('#start2').datetimebox('getValue'); 
+		endTime2 = $('#end2').datetimebox('getValue'); 
+		window.location.href="listPagingArticle?pid="+pid+"&pageNumber=1&start="+startTime2+"&end="+endTime2; 
+	}else{ 
+		$.messager.alert('警告','结束时间要大于开始时间','warning'); 
+	} 
+
+} 
+$.fn.datebox.defaults.formatter = function(date){//对于时间格式的转换 
+
+	var y = date.getFullYear(); 
+	var m = fullnum(date.getMonth()+1); 
+	var d = fullnum(date.getDate()); 
+	return y+'-'+m+'-'+d; 
+}; 
+function fullnum(obj){//对于月小于10格式的转换,因为Timestamp转换必须是2013-01-04这种格式 
+	if(Number(obj) < 10){ 
+		return '0' + obj; 
+	}else{ 
+		return obj; 
+	} } 
+
+$.extend($.fn.validatebox.defaults.rules, {//验证开始时间小于结束时间 
+	md: { 
+		validator: function(value, param){ 
+			startTime2 = $(param[0]).datetimebox('getValue'); 
+			var d1 = $.fn.datebox.defaults.parser(startTime2); 
+			var d2 = $.fn.datebox.defaults.parser(value); 
+			varify=d2>=d1; 
+			return varify; 
+
+		}, 
+		message: '结束时间要大于开始时间！' 
+	} 
+}) 
+</script>
+<style>
+	.messager-body{
+		z-index: 1;
+	}
+
+	.messager-window{
+
+
+		background: #fff;
+		opacity: 1;
+	}
+
+/* 幕布
+
+.mubu{
+  width: 100%; height: 100%; 
+  background: #ccc;
+  position: absolute;left: 0; top:0;
+  z-index:2; 
+  opacity: 0.3;
+  display: none;
+} */
+.panel{
+	/*top:200px!important;*/
+}
+/*几个弹出框提示*/
+#isReset1 h3{
+	width: 336px;
+	text-align: center;
+	margin: 25px 0 25px 0;
+	font-size: 14px;
+	color: #768399;
+	font-weight: bold;
+}
+#isReset1 .p7{
+
+	margin:0 auto;
+	width: 336px;
+	padding-top:10px;
+}
+#isReset1 .p7 input{
+	width: 120px; height: 35px;
+	margin-right:20px;
+	border-radius: 7px;
+	background: #3498DA;
+	font-weight: bold;
+	color:#fff;
+	font-size:14px;
+}
+#isReset1 .p7 input:nth-child(1){
+	margin-left: 40px;
+}
+#isReset1 .p7 input:nth-child(2){
+	background: #D8DBDD; 
+} 
+#isReset4 h4{
+	text-align: left;
+	padding-left: 5px;
+	font-size:14px;
+	font-weight: bold;
+	color:#424242;
+	width: 100%;
+	height:24px;
+	line-height: 24 px;
+	background: #F1F1F1;
+}
+#isReset4 select{
+	width:95px;
+}
+#isReset4 form input{
+	width: 95px;
+}
+#isReset4  p {
+	padding-top: 5px;
+}
+
+#isReset4  p input:nth-child(1){
+	width: 120px;
+	height: 35px;
+	margin-right: 20px;
+	border-radius: 7px;
+	background: #3498DA;
+	font-weight: bold;
+	color: #fff;
+	font-size: 14px;
+}
+#isReset4  p input:nth-child(2){
+	width: 120px;
+	height: 35px;
+	margin-right: 20px;
+	border-radius: 7px;
+	font-weight: bold;
+	color: #fff;
+	font-size: 14px;
+}
+
+</style>
+</html>

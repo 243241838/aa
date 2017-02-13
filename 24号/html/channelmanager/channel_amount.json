@@ -1,0 +1,23 @@
+﻿{   "succ":true,
+    "total": 50,
+    "pageSize": 5,
+    "pageCount": 2,
+    "currentPage": 1,
+     "titleDetail":{"alluser":400000000,"newuser":3720000,"countuser":113300},
+    "records": [
+        {
+			"agentAreaCity":"5",
+			"agentAreaCityName":"3.33%",
+			"truename":"95",
+			"agentAreaCounty":"63.33%",
+			"agentId":"150",
+			"agentProduceName":"10",
+			"agentProduceCount":"8",
+			"agentProducePending":"1",
+			"angertProduceNo":"1",
+			"opt": "新增合作产品"	
+        }
+		
+        
+    ]
+}

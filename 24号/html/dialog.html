@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>对话框</title>
+	<link rel="stylesheet" type="text/css" href="style/base.css">
+	<link rel="stylesheet" type="text/css" href="style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="style/style.css">
+</head>
+<body >
+	<!--详细内容-->
+  <div style="margin:20px 0;">
+		<a href="javascript:;" id="btn-finish" onclick='showAlert("dlg");'>OpenYes</a>
+		<a href="javascript:;" id="btn2-confirm" onclick='showAlert("dlgConfirm");'>OpenNo</a>
+	</div>
+	
+	<div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+		<h3 class="ui-dlg-tit">请勾选需要返奖的记录</h3>
+		<input type="button" class="ui-dlgOk-btn" value="确定"/>
+	</div>
+
+	<div id="dlgConfirm" class="easyui-dialog ui-dlg-confirm"  data-options="iconCls:'icon-save',modal:true,closed: true">
+		<h3 class="ui-dlg-tit">确定要返奖该记录</h3>
+		<ul class="ui-dlg-dtl">
+			<li class="ui-dlg-item"><label>交易流水号：</label><span>123456789</span></li>
+		  <li class="ui-dlg-item"><label>交易金额：</label><span>1,000.00元</span></li>
+		  <li class="ui-dlg-item"><label>中奖金额：</label><span>2.00元</span></li>
+	  </ul>
+	  <input type="button" class="ui-dlgOk-btn" value="确定"/>
+		<input type="button" class="ui-dlgCancel-btn" value="取消"/>
+	</div>
+
+  
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="js/base.js"></script>
+	<script>
+	$(function(){
+		   
+			
+	});
+
+	</script>
+</body>
+</html>

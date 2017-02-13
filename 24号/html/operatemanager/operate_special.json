@@ -1,0 +1,18 @@
+﻿{   "succ":true,
+    "total": 50,
+    "pageSize": 5,
+    "pageCount": 2,
+    "currentPage": 1,
+    "records": [
+        {
+			"agentAreaCity":"0001",
+			"agentAreaCityName":"A计划保险",
+			"truename":"中人保",
+			"agentAreaCounty":"10.003",
+			"agentId":"10.00-25.00",
+			"agentProduceName":"意外险",
+			"agentProduceCount":"自研"
+        }
+        
+    ]
+}

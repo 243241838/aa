@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>产品管理新增3</title>
+    <link rel="stylesheet" type="text/css" href="${base}/resource/style/base.css">
+    <link rel="stylesheet" type="text/css" href="${base}/resource/style/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${base}/resource/style/style.css">
+    <script type="text/javascript" src="${base}/resource/js/jquery.min.js"></script>
+    <script type="text/javascript" src="${base}/resource/js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${base}/resource/js/kindeditor/kindeditor.js"></script>
+    <script type="text/javascript" src="${base}/resource/js/ajaxfileupload.js"></script>
+    <script type="text/javascript" src="${base}/resource/js/base.js"></script>
+    <script type="text/javascript" src="${base}/resource/js/jquery.form.js"></script>
+</head>
+<body>
+<div class="ui-info-box">
+    <div class="ui-crumbs" id="crumbs">
+        <#include "/common/include/power.ftl">
+    </div>
+    <form id="infoForm" method="post" action="">
+        <div class="ui-info-main prodece-newconfig-three" id="prudeceSeleList">
+            <h2 class="ui-info-tit">产品投保信息</h2>
+            <input type="hidden" name="productId" value="${productId}" />
+            <input type="hidden" name="flagType" value="" />
+            
+            <!--产品投保信息0start-->
+            <#if paramsPo?if_exists>
+            <#list paramsPo as item>
+            <ul class="ui-info-list">
+                <li class="ui-info-item ui-info-item-grey ui-guarant-item fn-clear">
+                    <div class="ui-guarant-wrap newconfig3-wd80">
+                        <ul class="ui-guarant-list newconfig3-wd100" >
+                            <li class="produce-newseleitem ui-borbottom">
+                                <span class="newconfig3-tit-wd13 newconfig3-titpdl">${item.paramClass}信息</span>
+                                <span class="newconfig3-tit-wd13">是否显示</span>
+                                <span class="newconfig3-tit-wd22 newconfig3-titpdl">若显示，请选择是否为必填项</span>
+                                
+                                <#if item.paramClass == "被保险人">
+	                                <span class="ui-gthree newconfig3-tit-wd30">
+	                                	<input type="checkbox" name="" value="" id="insuredSame">与投保人相同
+	                                </span>
+	                            </#if>
+	                            <#if item.paramClass == "标的">
+	                                <span class="ui-gthree newconfig3-tit-wd30">请在支持用户投保的参数前打√</span>
+	                            </#if>
+                            </li>
+                            <li class="produce-newseleitem ">
+                            	<div class="ui-guarant-tit"  style="height:auto;border:0;"
+                            	 <#if item.paramClass == "投保人"> id="insureInfor" <#elseif item.paramClass == "标的"> id="guarantList" </#if> >
+                            	 	<#if item.paramClass == "被保险人"> 
+										<div id="otherinsureInfor"></div>
+									</#if>
+                            	 	
+                                    <table class="ui-guarant-tab produce-newteble" width="100%">
+	                            	<#if item.paramList?if_exists>
+	                        		<#list item.paramList as itemVal>
+                        				<tr class="ui-tab-last ui-borbottom">
+                                            <td width="10%" class="ui-td-fir">
+                                               	${itemVal.paramName}
+                                               	<input type="hidden" name="paramMap[${itemVal.paramVar}].classId" value="${itemVal.classId}" >
+                                               	<input type="hidden" name="paramMap[${itemVal.paramVar}].paramVar" value="${itemVal.paramVar}" >
+                                               	<input type="hidden" name="paramMap[${itemVal.paramVar}].productId" value="${productId}" >
+                                               	<input type="hidden" name="paramMap[${itemVal.paramVar}].sortCode" value="${itemVal.sortCode}" >
+                                            </td>
+                                            <td width="10%">
+                                                <select class="ui-info-sel produce-selebox" name="paramMap[${itemVal.paramVar}].isShow">
+                                                    <option value="1" <#if flag == 1>selected</#if> >是</option>
+                                                    <option value="0" <#if flag == 0>selected</#if> >否</option>
+                                                </select>
+                                            </td>
+                                            
+                                            <td width="14%">
+                                            	<#-- 设置是否必填 -->
+                                            	<#list paramsList as item>
+									            	<#if item.paramVar == itemVal.paramVar && item.isRequired == 1>
+									            		<#assign type = 1 >
+									            		<#break>
+									            	<#else>
+									            		<#assign type = 0 >
+									            	</#if>
+									            </#list>
+									            
+                                                <select class="ui-info-sel produce-selebox" name="paramMap[${itemVal.paramVar}].isRequired" style="display: <#if flag == 0>none<#else>inline-block;</#if>">
+                                                    <option value="1" <#if type == 1>selected</#if> >必填</option>
+                                                    <option value="0" <#if type == 0>selected</#if> >选填</option>
+                                                </select>
+                                            </td>
+                                            <#if item.paramClass == "标的">
+	                                            <td width="30%">
+	                                            	<div class="produce-chks" style="display: <#if flag == 0>none<#else>inline-block;</#if>">
+		                                            <span>
+														<#-- 判断是否是全选
+														<#if itemVal.paramValue != null>
+															<#assign jsonVal=itemVal.paramValue?eval />
+														</#if>
+														<#list paramsList as item>
+															<#if item.paramValue != null && itemVal.paramValue != null &&  item.paramVar == itemVal.paramVar>
+																<#assign itemJsonVal=item.paramValue?eval />
+																<#if jsonVal?size==itemJsonVal?size >
+																	<#assign allChooseFlag = 1 />	
+																</#if>
+															</#if>		
+														</#list>     <#if allChooseFlag == 1>checked="checked"</#if>     -->                                    
+		                                                <#if itemVal.paramValue?if_exists>
+			                                                <input type="checkbox" class="onerow-checked" name="paramMap[${itemVal.paramVar}].isChooseAll" value="1" >全选
+			                                                <input type="hidden" name="paramMap[${itemVal.paramVar}].classId" value="${itemVal.classId}" >
+			                                            	</span>
+					                        				<#assign json=itemVal.paramValue?eval />
+															<#list json as jsonVal>
+																${item.paramValue}
+																<#list paramsList as item>
+																	<#if item.paramValue != null>
+						                        						<#assign itemJsonVal=item.paramValue?eval />
+						                        					</#if>
+																	<#list itemJsonVal as itemVal >
+																		<#if itemVal.name == jsonVal.name >
+																			<#assign jsonFlag = itemVal.name>
+																		</#if>
+																	</#list>
+																</#list>
+			                                                    <span class="proinsure-item">
+			                                                        <input type="checkbox" <#if jsonFlag== jsonVal.name>checked="checked"</#if> class="proinsure-item-chb" name="paramMap[${itemVal.paramVar}].paramValue" value="${jsonVal.value}">
+			                                                        <em>${jsonVal.name}</em>
+			                                                    </span>
+			                                                    ${jsonVal_index?number&2 == 1}
+			                                                    <#if jsonVal_index?number&2==1></br></#if>
+			                                                </#list>
+														</#if>
+		                                            </span>
+		                                            </div>
+		                                        </td>
+	                                        <#else>
+	                                        	<td width="30%"></td>
+	                                        </#if>
+                                        </tr>
+                                    </#list>
+                    				</#if>
+                                    </table>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                </#list>
+                </#if>
+                <!--产品投保信息0end-->
+                <!--产品投保信息3end-->
+                <div class="ui-btn-double" style="width:250px;">
+                    <input type="button" value="完成并提交" class="ui-btn-blue" id="prodeucSave" style="width:120px;" />
+                    <input type="button" value="取消" class="ui-btn-grey reset" id="contentCancel" />
+                </div>
+                </div>
+         </form> 
+</div>
+<!-- 弹框提示 -->
+<div id="alt" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+  <h3 class="ui-dlg-tit" id="altText">请将信息填写完整!</h3>
+  <input type="button" class="ui-dlgOk-btn ui-dlgOkcancel-btn" value="确定"/>
+</div>
+
+<!--保存并提交弹框-->
+<div id="dlgOneSubmit" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true" style="width:430px;">
+  <h3 class="ui-dlg-tit">您新增产品的请求已新增成功！</h3>
+  <input type="button" class="ui-dlgOk-btn" value="查看产品详情" id="produceConfirm"/>
+  <input type="button" class="ui-dlgCancel-btn back" value="取消"/>
+</div>
+
+<div id="isReset" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true" style="width:430px;height:200px;">
+  <h3 class="ui-dlg-tit">您填写的信息尚未保存，确定返回吗？</h3>
+  <input type="button" class="ui-dlgOk-btn ui-back" value="确认" />
+  <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+</div>
+
+<script>
+$(function() {
+    validExtend();
+    <#--点击弹窗 取消按钮 -->
+	  $(".back").on('click',function(){
+	      location.href="${base}/product/since/findListView";
+	  })
+	  $(".reset").on('click',function(){
+	      showAlert('isReset');
+	  })
+
+
+    var $proinsurechk = $("#proinsureBox").find('.proinsure-item-chb'),
+    	$insure = $("#insureInfor"),
+    	$other=  $("#otherinsureInfor");
+	    selfProduce.insureInfor('init');
+
+    //是否与投保人相同
+    $("#insuredSame").click(function(){
+    	var flag = $(this).is(":checked"),
+    		selearrs;
+    	if(flag){
+    		$other.html($insure.html());
+    		selearrs = $other.find('select');
+			$.each(selearrs,function(i,v){
+				var name = v.name,
+					namesub = name.indexOf("["),
+					namesup = name.indexOf(']'),
+					newname = '';
+				newname = name.substring(0,namesub)+name.substring(namesub,namesup)+"1"+name.substring(namesup,name.length-1);
+				v.name = newname;
+			})
+    		$other.next().hide();
+    	}else{
+    		$other.html("");
+    		$other.next().show();
+    	}
+    
+    })
+    
+    //提交表单
+        $("#prodeucSave").click(function(){
+	    <#--
+	    var form = $(this).parents('form');
+	    if(form.form('validate')){
+	    -->
+	        $.ajax({
+	            url: '${base}/product/addProductParam',
+	            type: 'post',
+	            data: $('#infoForm').serialize(),
+	            datatype: 'json',
+	            success: function(data) {
+	                if(data.succ){
+					    showAlert('dlgOneSubmit');
+	                	$("#produceConfirm").on('click',function(){
+                			location.href="${base}/product/toProductDetail?productId=${productId}";
+						})
+	                } else {
+	                	showAlert('alt',data.entity);
+	                }
+	            }
+	        });
+		   <#--
+		    } else {
+		        $.messager.alert('提示消息', '无下属分类！', 'warn');
+		    }
+		}
+	    -->
+  		})
+    
+})
+</script>
+</body>
+</html>

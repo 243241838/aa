@@ -1,0 +1,34 @@
+﻿{
+	"RESPONSECODE": "000000",
+	"RESPONSECONTENT": "操作成功!",
+	"COUNTS": "6",
+	"TRADETAILS": [{
+        "CATEGORYID": "1006",
+		"name": "订单交易",
+		"path": "businessmanager/ordermanager.html"
+    },{
+        "CATEGORYID": "1007",
+		"name": "保单管理"
+    },{
+        "CATEGORYID": "1007",
+		"name": "交易统计",
+		"path": "businessmanager/countmanager.html"
+    },{
+        "CATEGORYID": "1007",
+		"name": "交易渠道管理",
+		"path": "#",
+		"child":[{
+              "CATEGORYID": "100601",
+		          "name": "交易渠道信息管理",
+		          "path": "businessmanager/chanelinformanager.html"
+               },{
+              "CATEGORYID": "100602",
+		          "name": "交易渠道开关",
+		          "path": "businessmanager/chaneltogglemanager.html"
+                 },{
+              "CATEGORYID": "100602",
+		          "name": "交易渠道使用记录",
+		          "path": "businessmanager/chanelusermanager.html"
+                 }]
+    }]
+}

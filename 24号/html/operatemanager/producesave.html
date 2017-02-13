@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>编辑</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+</head>
+<body>
+	<div class="ui-info-box">
+        <div class="ui-crumbs">
+        	 <span>当前位置：</span><a href="#">运营管理</a><em>></em><span>产品上架管理</span>
+        </div>
+        <div class="ui-info-main">
+            <div class="ui-informate">
+             	<div class="ui-informate-base ui-channel-baseinfor">
+
+                        <h4 class="ui-info-tit">产品信息</h4>
+                        <div class="ui-base-produceinfor">		
+                 			<div class="ui-base-colsinfor channel-produceinfor-item">
+             					<label class="ui-base-label">产品ID:</label>
+         						<span class="ui-base-data">123456</span>
+                 			</div>
+                            <div class="ui-base-colsinfor channel-produceinfor-item">
+                                <label class="ui-base-label">保险名称:</label>
+                                <span class="ui-base-data">
+                                    <a href="#">B计划保险</a>
+                                </span>
+                            </div>
+                           <div class="ui-base-colsinfor channel-produceinfor-item">
+                                <label class="ui-base-label">产品总量:</label>
+                                <span class="ui-base-data">10000份</span>
+                            </div>
+                            <div class="ui-base-colsinfor channel-produceinfor-item">
+                                <label class="ui-base-label">剩余数量:</label>
+                                <span class="ui-base-data">
+                                    <em class="query-result-num" id="laveNum">80000</em>份
+                                </span>
+                            </div>
+                                     
+                        </div>
+                        <h4 class="ui-info-tit">合作信息</h4>
+                        <div class="ui-base-produceinfor">      
+                            <div class="ui-base-colsinfor ui-base-colwidth-business">
+                                <label class="ui-base-label ui-infor-width">合作数量:</label>
+                                <span class="ui-base-data">
+                                    <input class="clause-input ui-channel-inforspan easyui-validatebox ui-cover" type="text" name="phone"  data-options="required:true,validType:['plusIntOther','numCompare[\'#laveNum\']']" missingMessage="请输入合作数量" />份
+                                </span>
+                                
+                            </div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business ui-info-item-grey ui-month-base">
+                                <label class="ui-base-label ui-infor-width">上架时间:</label>
+                                <span class="ui-base-data">
+                                     <input class="easyui-datetimebox" style="width:300px" id="datetimeStart">
+                                </span>
+                               <div class="predent-textarea ctooltip-bottom custom-month-position custom-tool-left4" id="clientTimeStart" v>
+                                   <span class="custom-textarea-tooltip custom-txt-style">请输入上架时间</span>
+                                   <div class="ctooltip-arrow-outer custom-triange-outstyle" style=""></div>
+                                   <div class="ctooltip-arrow custom-triange-intstyle" style=""></div>
+                               </div>
+                            </div>
+                            <div class="ui-base-colsinfor ui-base-colwidth-business ui-month-base">
+                                <label class="ui-base-label ui-infor-width">下架时间:</label>
+                                <span class="ui-base-data">
+                                     <input class="easyui-datetimebox" style="width:300px" id="datetimeEnd">
+                                </span>
+                                <div class="predent-textarea ctooltip-bottom custom-month-position custom-tool-left4" id="clientTimeEnd" v>
+                                   <span class="custom-textarea-tooltip custom-txt-style">请输入下架时间</span>
+                                   <div class="ctooltip-arrow-outer custom-triange-outstyle" style=""></div>
+                                   <div class="ctooltip-arrow custom-triange-intstyle" style=""></div>
+                               </div>
+                            </div>   
+                        </div>
+                       
+                        <div class="ui-btn-double ui-btnbox-width">
+                            <input type="button" value="完成" class="ui-btn-blue ui-submit" id="produceSave" onclick=""/>
+                            <input type="button" value="取消"  class="ui-btn-grey ui-back"/>
+                        </div>
+                </div>	
+         	</div>
+    	</div>
+<!--下架确认弹框start-->
+        <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+           <h3 class="ui-dlg-tit">编辑成功！</h3>
+        </div>
+  <!--下架确认弹框start-->
+	</div>
+    <script>
+
+
+    $(function(){
+        validExtend();
+
+        var isflag = false;
+        $("#produceSave").click(function(event) {
+
+            var datastart = $("#datetimeStart"),
+                dataend = $("#datetimeEnd"),
+                valstart = datastart.datetimebox('getValue'),
+                valend = dataend.datetimebox('getValue'),
+                message1 = datastart.parents(".ui-base-colwidth-business").find(".showMessage"),
+                message2 = dataend.parents(".ui-base-colwidth-business").find(".showMessage"),
+                isnull = true;
+
+            if(valstart == ""){
+                 $("#clientTimeStart").show();
+                isnull = false;
+            }else{
+                   $("#clientTimeStart").hide();
+                 isnull = true;
+            }   
+            if(valend == ""){
+                $("#clientTimeEnd").show();
+                isnull = false;
+
+            }else{
+                 $("#clientTimeEnd").hide();
+                isnull = true;
+            }    
+           if(isflag && isnull){
+                showAlert('dlg');
+                setTimeout(function(){
+                    location.href="produceadd.html";
+                },1000)
+           }
+            
+
+
+        });
+
+        $("#produceCopie").blur(function(event) {
+           
+           var val = $(this).val(),
+                valint = parseInt(val),
+                lavanum = parseInt($("#laveNum").text()),
+                lavanumint =parseInt(lavanum),
+                target = $(this).parents(".ui-base-colwidth-business").find(".showMessage"),
+                str = '',
+                rule = /^[0-9]*[1-9][0-9]*$/;
+
+            if(val == ""){
+                str ="请输入合作数量";
+                isflag = false;
+            }else if(!rule.test(val)){
+                str="请输入正整数";
+                isflag = false;
+            }else if(valint > lavanumint){
+                str="销售数量不能大于产品剩余数量";
+                 isflag = false;
+
+            }else{
+                isflag = true;
+            }
+
+            target.text(str);
+        });
+
+
+
+    })
+    </script>
+	
+</body>
+</html>

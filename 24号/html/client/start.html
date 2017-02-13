@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>启动页面管理-客户端管理</title>
+	<link rel="stylesheet" type="text/css" href="../../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../style/style.css">
+</head>
+
+<body style="">
+	<div class="ui-info-box">
+    <div class="ui-crumbs">
+    	 <span>当前位置：</span>
+    	 <a href="#">客户端管理</a><em>></em>
+    	 <span>启动页面管理</span>
+    </div>
+
+		<div class="ui-datagrid-wrap">
+			<!-- 搜索 -->
+			<div class="search-wrap">
+				<form  id="search-ff" class="ui-search-form">
+					<ul class="search-list search-oneline fn-clear">
+						<li>
+							<label class="name">标题</label>
+							<span class="textbox"><input class="textbox-text textbox-prompt" type="text" name="" value=""/></span>
+						</li>
+						<li>
+							<label class="name">系统类型</label>
+							<select class="ui-combobox" name="" id="">
+								<option value="" selected ="selected">全部</option>
+							</select>
+						</li>
+            <li class="date">
+							<label class="name">有效期</label>
+								<input id="startTime" class="easyui-datebox" data-options="editable:false" vlaue="" validType="md['#endTime']"/>
+							  <em>至</em>
+							  <input id="endTime" class="easyui-datebox" data-options="editable:false" vlaue="" validType="md['#startTime']"/>
+						</li>
+					  <li class="btn-group">
+							  <a href="javascript:void(0)" class="search-btn" onclick="submitForm()">搜索</a>
+				    		<a href="javascript:void(0)" class="search-btn" onclick="clearForm()">重置</a>
+				    		<a href="javascript:void(0)" class="excel-btn" onclick="eb.doExcel()">导出EXCEL</a>
+						</li>
+					</ul>
+				</form>
+				<input type="hidden" id="excel-data"/>
+			</div>
+			<!-- 搜索end -->
+			<!-- 列表 -->
+			<div class="list-item fn-clear">
+				<a href="start_edit.html" class="dash-add-btn"><i class="ui-icon ui-icon-add"></i>新增</a>
+				<table id="dg-list" class="easyui-datagrid"  style="margin-right:10px;">	
+				</table>
+			</div>
+			<!-- 列表end -->
+		</div>
+	</div>
+
+	<!--弹框-->  
+  <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+    <h3 class="ui-dlg-tit">确定要删除IOS首次启动页面吗？</h3>
+    <input type="button" class="ui-dlgOk-btn" value="确定"/>
+    <input type="button" class="ui-dlgCancel-btn" value="取消"/>
+  </div>
+
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../js/base.js"></script>
+	<script>
+	$(function(){
+		validExtend();
+		//列表
+		$("#dg-list").datagrid({
+			url:'datagrid_data1.json',
+			method:'post',
+			fitColumns:true,
+			rownumbers:true,
+			nowrap: true,//当数据长度超出列宽时将会自动截取
+			resizable:false,
+			checkOnSelect:false,
+			pagination:true,
+			pageSize:10,
+			columns:[[
+				{field:'agentAreaCity',align:'center',width:"15%",title:'启动ID',
+						formatter:function(value,rec){
+									return '<a class="operation-link" href="start_edit.html">'+rec.agentAreaCityName+'</a>';
+								}
+				},
+				{field:'agentAreaCityName',align:'center',width:"15%",title:'图片预览',
+           formatter:function(value,rec){
+						return rec.agentAreaCityName;
+					}
+			  },
+				{field:'truename',align:'center',width:"15%",title:'标题'},
+				{field:'agentAreaCounty',align:'center',width:"20%",title:'系统类型',sortable:true},
+				{field:'agentId',align:'center',width:"18%",title:'有效期',sortable:true},
+				{field:'opt',align:'center',width:"15%",title:'操作',
+           formatter:function(value,rec){
+						return '<a class="operation-link" href="javascript:delRecord(\'dlg\');">[删除]</a>';
+					}
+			  }
+			]],
+			queryParams: eb.form2Json("search-ff"),
+	    loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+      },
+      onLoadSuccess:pageCls
+		});
+		//分页
+		pageAction();
+		
+   });
+	
+	
+	</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>保险经纪管理平台</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/kindeditor/kindeditor.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+</head>
+<body>
+	<div class="ui-info-box">
+    <div class="ui-crumbs">
+    	 <span>当前位置：</span><a href="#">内容管理</a><em>></em><span>客户业务类</span>
+    </div>
+    <div class="ui-info-main">
+         <div class="ui-informate">
+         	<div class="">
+         	<form action="">
+         		<h4 class="ui-info-lbl">关于我们</h4>
+         		<ul>
+         	
+         			<li>
+         				<label for="" class="ui-info-lbl client-work-label">栏目名称：</label>
+         				<span class="ui-client-content-label">承包指南</span>
+         			</li>
+                    <li>
+                        <label for="" class="ui-info-lbl client-work-label">分类名称：</label>
+                        <span class="ui-client-content-label">承包业务流程</span>
+                    </li>
+         			<li>
+         				<label for="" class="ui-info-lbl client-work-label clause-editor-label">文章标题：</label>
+         				<span>
+                            <input class="clause-input ui-client-content-label easyui-validatebox ui-cover" type="text" name="phone" value="" data-options="required:true,validType:'numLetChina'" missingMessage="请输入文章标题" maxlength="20" id="newContentName"/>
+                        </span>
+         			</li>
+         			<li class="clause-editor ui-month-base">
+                        <label class="ui-info-lbl client-work-label clause-editor-label">文章内容：</label>
+                        <textarea class="richEditor" id="clause-textarea" rows="20" ></textarea>
+                        <div class="predent-textarea ctooltip-bottom  custom-tool-left" id="textareaMessage" v>
+                           <span class="custom-textarea-tooltip">请输入文章内容</span>
+                           <div class="ctooltip-arrow-outer" style=""></div>
+                           <div class="ctooltip-arrow" style=""></div>
+                       </div>
+                    </li>
+                    <li class="ui-btn-double">
+                          <input type="button" value="保存" class="ui-btn-blue ui-submit" id="clauseText"/>
+                          <input type="button" value="取消"  class="ui-btn-grey ui-back"/>
+                    </li>
+         		</ul>
+         	</form>
+			</div>
+        
+    	</div>
+        <!--文章标题同名 start-->
+    	 <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+           <h3 class="ui-dlg-tit" id="deleteTit">该文章名称已存在</h3>
+         </div>
+    	 <!--文章标题同名end-->
+	</div>
+
+	<script>
+    $(function(){
+         validExtend();
+        var editor;
+      //KindEditor.options.filterMode = true;
+      KindEditor.ready(function(K) {
+            editor = K.create('#clause-textarea',{
+                width : 670
+            })
+            
+            
+        });
+      //点击保存得到数据
+       $("#clauseText").click(function(event) {
+            
+             var clauseeditor = editor.html(),
+                target = $("#textareaMessage"),
+                isflag = true,
+                name = $("#newContentName").val();
+               
+           //投保内容验证
+            if(clauseeditor == ""){
+                 $("#textareaMessage").show();
+                 isflag = false;
+            }else{
+                 $("#textareaMessage").hide();
+                 isflag = true;
+            }
+  
+            
+            if(isflag){
+                showAlert('dlg');
+                setTimeout(function(){
+                    location.href="newsavecontent.html"; 
+                },1000)
+                 
+            }
+         
+       });   
+
+    
+    });
+
+    
+    </script>
+</body>
+</html>

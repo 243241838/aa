@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>标准产品修改-审核管理-系统管理</title>
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/base.css">
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../../../resource/style/style.css">
+  <script type="text/javascript" src="../../../resource/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../../../resource/js/jquery.easyui.min.js"></script>
+  <script type="text/javascript" src="../../../resource/js/base.js"></script>
+</head>
+<style type="text/css">
+  .ui-info-item{color:black;border:0;}
+  .ui-submod-tr-grey td, .mod-item-tr td {
+    background-color: #fff;
+  }
+  .ui-info-list{border:0;}
+</style>
+<body>
+	<div class="ui-info-box">
+    <div class="ui-crumbs" id="crumbs">
+      <#include "/common/include/power.ftl">
+    </div>
+
+    <div class="ui-info-main ui-standardadd-info">
+      <ul class="ui-info-list ui-info-newlist">
+        <li>
+          <h2 class="ui-info-tit">产品基本信息</h2>
+        </li>
+        <li class="ui-info-item">
+          <label class="ui-info-lbl">产品ID</label>
+          ${product.productName}
+        </li>
+        <li class="ui-info-item">
+          <label class="ui-info-lbl">产品名称</label>
+          ${product.productName}
+          <#if product.productName??>
+          <span>-><span style='color:red'>product.productName</span></span>
+          </#if>
+        </li>
+        <li class="ui-info-item">
+          <label class="ui-info-lbl">产品亮点1</label>
+          ${product.perferWords}
+        </li>
+        <li class="ui-info-item">
+          <label class="ui-info-lbl">产品亮点2</label>
+          ${product.perferWords}
+        </li>
+       <!--  <li class="ui-info-item">
+         <label class="ui-info-lbl">承保公司</label>
+       
+         <#list iList as item>
+       
+         ${item.insurerName}
+       
+         </#list>
+       
+       </li> -->
+       <li class="ui-info-item ui-relative">
+        <label class="ui-info-lbl" style="position:relative;top:-45px; ">产品配图</label>
+        <img src="" width="120" height="120" data-leve='produce' id='produceImg1'/>
+        <label class="ui-info-lbl" style="position:relative;top:-45px;width:30px; ">产品标签</label>
+        <img src="" width="120" height="120" data-leve='produce' id='productTagUrls'/>
+      </li>
+      <li class="ui-info-item">
+        <label class="ui-info-lbl">承保公司</label>
+        ${product.perferWords}
+      </li>
+      <li class="ui-info-item">
+        <label class="ui-info-lbl">结算机构</label>
+        ${product.perferWords} <span>-</span> ${product.perferWords
+      </li>
+      <li class="ui-info-item">
+        <label class="ui-info-lbl">保险类别</label>
+        ${product.perferWords} <span>-</span> ${product.perferWords
+      </li>
+      <li class="ui-info-item ui-info-item-grey" id="aa" >
+       <label class="ui-info-lbl">总库存</label>
+       <!-- <#if product.maxQuantity == -1> -->
+       <!-- 不限 -->
+       <!-- <#else> -->
+       ${product.maxQuantity}
+       </#if>
+       <label class="ui-info-lbl">已分配库存</label>
+       <!-- <#if product.addQuantity == '-1'> -->
+       <!-- 不限 -->
+       <!-- <#else> -->
+       ${product.addQuantity}
+       <!-- </#if> -->
+       <!-- <input type="hidden" name="auditData" value="${product.addQuantity}" /> -->
+     </li>
+     <li class="ui-info-item">
+      <label class="ui-info-lbl">一级佣金</label>
+      ${product.perferWords}
+      <label class="ui-info-lbl">二级佣金</label>
+      ${product.perferWords}
+    </li>
+    <li class="ui-info-item">
+      <label class="ui-info-lbl">积分设置</label>
+      ${product.perferWords}
+      <span style="margin-left:20px">投保该产品后可获得积分</span>
+    </li>
+    <li class="ui-info-item">
+      <label class="ui-info-lbl ui-info-small">产品有效期</label>
+      <span data-qb="qb">
+        <#if product.longTime == 1>
+        长期
+        <#else>
+        ${product.effTimeStr} 至 ${product.expTimeStr}
+        </#if>
+      </span>
+    </li>
+    <li class="ui-info-item">
+      <label class="ui-info-lbl ui-info-small">生效方式</label>
+      <span>
+        <#if product.effectType==1>
+        即时生效
+        <#elseif product.effectType==2>
+        次日生效
+        <#elseif product.effectType==3>
+        延迟生效 &nbsp; ${product.effectDay}天
+        </#if>
+      </span> 
+    </li>
+    <li class="ui-info-item">
+      <label class="ui-info-lbl">投保年龄</label>
+      <#if product.ageStr == 1>
+      不限
+      <#else>
+      <#if product.minAge == product.maxAge>
+      ${product.maxAge} 岁
+      <#else>
+      ${product.minAge} - ${product.maxAge} 岁
+      </#if>
+      </#if>
+   <!--    <#--
+   <label class="ui-info-lbl ui-info-lblw">保险经纪人</label>
+   <input name="productAgent" type="text" value="" class="easyui-validatebox ui-info-input" 
+   data-options="required:true,validType:['letchi','length[1,10]']" missingMessage="请输入保险经纪人"/> -->
+ </li>
+ <li class="ui-info-item">
+   <label class="ui-info-lbl ui-info-small">被投保人性别限制</label>
+   <span>
+    <#if product.effectType==1>
+    男
+    <#elseif product.effectType==2>
+    女
+    <#elseif product.effectType==3>
+    不限
+    </#if>
+  </span> 
+</li>
+<li class="ui-info-item ui-info-item-grey">
+  <label class="ui-info-lbl">最高职业类别</label>
+  <#if product.occupationClass == 9>
+  不限
+  <#elseif product.occupationClass == 7>
+  特别费率
+  <#else>
+  ${product.occupationClass}
+  </#if>
+</li>
+<li class="ui-info-item  ui-info-item-grey">
+  <label class="ui-info-lbl ui-info-small">最多投保份数</label>
+  <#if product.buyQuota == 0>
+  不限
+  <#else>
+  ${product.buyQuota} 份
+  </#if>
+</li>
+<li class="ui-info-item">
+  <label class="ui-info-lbl">适用人群</label>
+  ${product.suitablePeople}
+</li>
+<li class="ui-info-item ui-relative">
+  <label class="ui-info-lbl">保险条款</label>
+  <span class="ui-article-text prod-edit-item-bef" style="width:84%;" >
+    <#if product.productsMap?if_exists>
+    <#list product.productsMap?values as item>
+    <a href="${item.insuranceTerms3}"><span class="ui-channel-phonemargin">${item.insuranceTerms}</span></a>
+    </#list>
+    </#if>
+  </span>
+</li>
+<li class="ui-info-item ui-info-item-grey ui-rich-wrap" >
+  <label class="ui-info-lbl">温馨提示</label>
+  <span class="ui-article-text prod-edit-item-bef" style="width:84%;" >
+
+    ${product.productPrompt}
+  </span>
+</li>
+<li class="ui-info-item ui-info-item-grey ui-rich-wrap">
+  <label class="ui-info-lbl">投保须知</label>
+  <span class="ui-article-text prod-edit-item-bef" style="width:84%;" >
+    ${product.productStatement}
+  </span>
+</li>
+<li class="ui-info-item ui-rich-wrap">
+  <label class="ui-info-lbl">理赔流程</label> 
+  <span class="ui-article-text prod-edit-item-bef" style="width:84%;" >
+    ${product.claimsGuide}
+  </span> 
+</li>
+<li class="ui-info-item ui-rich-wrap">
+  <label class="ui-info-lbl">产品问答</label> 
+  <span class="ui-article-text prod-edit-item-bef" style="width:84%;" >
+    ${product.claimsGuide}
+  </span> 
+</li>
+<li class="ui-info-item ui-rich-wrap">
+  <label class="ui-info-lbl">案例分析</label> 
+  <span class="ui-article-text prod-edit-item-bef" style="width:84%;" >
+    ${product.claimsGuide}
+  </span> 
+</li>
+<li class="ui-info-item ui-relative">
+  <label class="ui-info-lbl" style="position: relative;top:-45px">产品优势</label>
+  <span class="ui-pictureshow">
+    <#list product.productAdvantage?split(";") as productAdvanUrls>
+    <img src="" class="ui-page-fir ui-addimg" width="120" height="120"/>
+    </#list>
+  </span>
+</li>
+<li class="ui-info-item ui-relative">
+  <label class="ui-info-lbl">产品详情</label>
+  <span class="ui-pictureshow">
+    <#list product.productAdvantage?split(";") as productAdvanUrls>
+    <span>product.productAdvantage?split(";")</span>
+    </#list>
+  </span>
+</li>
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="ui-info-main">
+  <h2 class="ui-info-tit">保障信息</h2>
+  <ul class="ui-info-list" >
+    <li class="ui-info-item ui-rich-wrap" style="margin-bottom: 20px">
+      <label class="ui-info-lbl" style="margin-top:-15px;font-size:13px">理赔流程</label> 
+      <!-- <#list productList as item> -->
+      <table class="ui-submod-tab" width="90%" border="1"  style="text-align: center;display: inline-block;background:#fff;border:0;border-color:#ddd"  cellpadding='0' cellspacing='0'>
+        <tr class="ui-submod-tr-grey" style="font-size: 14px; font-weight: bold;color:#768399">
+          <td width='10%'>计划名称</td>
+          <td width='30%'>计划内容</td>
+          <td width='15%'>保额</td>
+        </tr>
+        <tr class="ui-submod-tr-grey" style="color: #565656;">
+         <td>${item.productId}</td>
+         <td>${item.insurerName}</td>
+         <td>${item.className}</td>
+       </tr>
+     </table>
+     </#list>
+   </li>
+   <li class="ui-info-item ui-rich-wrap" style="margin-bottom: 20px">
+     <label class="ui-info-lbl" style="margin-top:-15px;font-size:13px">计价因子</label> 
+
+     <table class="ui-submod-tab" width="90%" border="1"  style="text-align: center;display: inline-block;background:#fff;border:0;border-color:#ddd"  cellpadding='0' cellspacing='0'>
+      <tr class="ui-submod-tr-grey" style="color: #565656;">
+        <td width='10%'>年龄</td>
+        <td width='30%' style="text-align: left" >
+          <!-- <#list productList as item> -->
+          <!-- <#if product.longTime??> -->
+          <b style='font-weight: normal'>${item.insurerName}&nbsp;</b>
+          <!-- <#elseif product.longTime??> -->
+          <b style='font-weight: normal;color:red'>${item.insurerName}&nbsp;</b>
+          <!-- <#elseif product.longTime??> -->
+          <s style='font-weight: normal;color:red'>${item.insurerName}&nbsp;</s>
+          </#if>
+          </#list>
+
+        </td>
+      </tr>
+      <tr class="ui-submod-tr-grey" style="color: #565656;">
+       <td>名称</td>
+       <td style="text-align: left">
+        <!-- <#list productList as item> -->
+        <!-- <#if product.longTime??> -->
+        <b style='font-weight: normal'>${item.insurerName}&nbsp;</b>
+        <!-- <#elseif product.longTime??> -->
+        <b style='font-weight: normal;color:red'>${item.insurerName}&nbsp;</b>
+        <!-- <#elseif product.longTime??> -->
+        <s style='font-weight: normal;color:red'>${item.insurerName}&nbsp;</s>
+        </#if>
+        </#list>
+      </td>
+    </tr>
+  </table>
+
+</li>
+<li class="ui-info-item ui-rich-wrap" style="margin-bottom: 20px">
+ <label class="ui-info-lbl" style="margin-top:-12px;font-size:13px">保障期限：</label> 
+ <!-- <#list productList as item> -->
+ <!-- <#if product.longTime??> -->
+ <b style='font-weight: normal'>${item.insurerName}&nbsp;</b>
+ <!-- <#elseif product.longTime??> -->
+ <b style='font-weight: normal;color:red'>${item.insurerName}&nbsp;</b>
+ <!-- <#elseif product.longTime??> -->
+ <s style='font-weight: normal;color:red'>${item.insurerName}&nbsp;</s>
+ </#if>
+ </#list>
+</li>
+<li class="ui-info-item ui-rich-wrap" style="margin-bottom: 20px">
+ <label class="ui-info-lbl" style="margin-top:-12px;font-size:13px">结算价格比例：</label> 
+ ${item.insurerName}
+</li>
+<li class="ui-info-item ui-rich-wrap" style="margin-bottom: 20px">
+  <label class="ui-info-lbl" style="margin-top:-15px;font-size:13px">保险配置情况</label> 
+  <!-- <#list productList as item> -->
+  <table class="ui-submod-tab" width="90%" border="1"  style="text-align: center;display: inline-block;background:#fff;border:0;border-color:#ddd"  cellpadding='0' cellspacing='0'>
+    <tr class="ui-submod-tr-grey" style="font-size: 14px; font-weight: bold;color:#768399">
+      <td width='10%'>计划名称</td>
+      <td width='30%'>计价因子</td>
+      <td width='15%'>保障期限</td>
+      <td width='20%'>核算价格</td>
+      <td width='20%'>保费</td>
+    </tr>
+    <tr class="ui-submod-tr-grey" style="color: #565656;">
+     <td>${item.productId}</td>
+     <td>${item.insurerName}</td>
+     <td>${item.className}</td>
+     <td>
+      ${product.productName}
+      <!-- <#if product.longTime??> -->
+      -><b style='font-weight: normal;color:red'>product.productName</b>
+      <!-- <#if> -->
+    </td>
+    <td>
+      ${product.productName}
+      <!-- <#if product.longTime??> -->
+      -><b style='font-weight: normal;color:red'>product.productName</b>
+      <!-- <#if> -->
+    </td>
+  </tr>
+</table>
+</#list>
+</li>
+
+</ul>
+
+</div>
+<div class="ui-info-main ui-standardadd-info">
+ <h2 class="ui-info-tit">投保信息</h2>
+ <ul class="ui-info-list ui-info-newlist">
+  <li class="ui-info-item">
+    <label class="ui-info-lbl">是否支持退保</label>
+    ${product.productName}
+    <#if product.productName??>
+    <span>-><span style='color:red'>product.productName</span></span>
+    </#if>
+  </li>
+  <li class="ui-info-item">
+    <label class="ui-info-lbl">支持受益人自定义</label>
+    ${product.productName}
+  </li>
+  <li class="ui-info-item">
+    <label class="ui-info-lbl">支持在线理赔</label>
+    ${product.productName}
+  </li>
+  <li class="ui-info-item">
+    <label class="ui-info-lbl">是否为统保产品</label>
+    ${product.productName}
+  </li>
+  <li class="ui-info-item">
+    <label class="ui-info-lbl">是否支持电子表单</label>
+    ${product.productName}
+  </li>
+  <li class="ui-info-item ui-rich-wrap" style="margin-bottom: 20px">
+    <label class="ui-info-lbl" style="margin-top:-10px;font-size:13px">投保人信息</label> 
+    <table class="ui-submod-tab" width="30%" border="1"  style="text-align: center;display: inline-block;background:#fff;border:0;border-color:#ddd"  cellpadding='0' cellspacing='0'>
+      <tr class="ui-submod-tr-grey" style="font-size: 14px; font-weight: bold;color:#768399">
+        <td width='12%'>输入项名称</td>
+        <td width='30%'>是否显示</td>
+        <td width='15%'>是否必填</td>
+      </tr>
+      <tr class="ui-submod-tr-grey" style="color: #565656;">
+       <td>投保人姓名</td>
+       <td>
+        <!-- <#if product.longTime??> -->
+        -><b style='font-weight: normal;'>product.productName</b>
+        <!-- <#else product.longTime??> -->
+        -><b style='font-weight: normal;color:red'>product.productName</b>
+        <!-- <#if> -->
+      </td>
+      <td>
+        <!-- <#if product.longTime??> -->
+        -><b style='font-weight: normal;'>product.productName</b>
+        <!-- <#else product.longTime??> -->
+        -><b style='font-weight: normal;color:red'>product.productName</b>
+        <!-- <#if> -->
+      </td>
+    </tr>
+    <tr class="ui-submod-tr-grey" style="color: #565656;">
+      <td>联系人姓名</td>
+      <td>
+        <!-- <#if product.longTime??> -->
+        -><b style='font-weight: normal;'>product.productName</b>
+        <!-- <#else product.longTime??> -->
+        -><b style='font-weight: normal;color:red'>product.productName</b>
+        <!-- <#if> -->
+      </td>
+      <td>
+        <!-- <#if product.longTime??> -->
+        -><b style='font-weight: normal;'>product.productName</b>
+        <!-- <#else product.longTime??> -->
+        -><b style='font-weight: normal;color:red'>product.productName</b>
+        <!-- <#if> -->
+      </td>
+    </tr>
+    <tr class="ui-submod-tr-grey" style="color: #565656;">
+      <td>联系电话</td>
+      <td>
+        <!-- <#if product.longTime??> -->
+        -><b style='font-weight: normal;'>product.productName</b>
+        <!-- <#else product.longTime??> -->
+        -><b style='font-weight: normal;color:red'>product.productName</b>
+        <!-- <#if> -->
+      </td>
+      <td>
+        <!-- <#if product.longTime??> -->
+        -><b style='font-weight: normal;'>product.productName</b>
+        <!-- <#else product.longTime??> -->
+        -><b style='font-weight: normal;color:red'>product.productName</b>
+        <!-- <#if> -->
+      </td>
+    </tr>
+
+  </table>
+  <label class="ui-info-lbl" style="margin-top:-10px;font-size:13px">被保人信息</label> 
+  <table class="ui-submod-tab" width="30%" border="1"  style="text-align: center;display: inline-block;background:#fff;border:0;border-color:#ddd"  cellpadding='0' cellspacing='0'>
+    <tr class="ui-submod-tr-grey" style="font-size: 14px; font-weight: bold;color:#768399">
+      <td width='18%'>输入项名称</td>
+      <td width='30%'>是否显示</td>
+      <td width='15%'>是否必填</td>
+    </tr>
+    <tr class="ui-submod-tr-grey" style="color: #565656;">
+     <td>被投保人姓名</td>
+     <td>
+      <!-- <#if product.longTime??> -->
+      -><b style='font-weight: normal;'>product.productName</b>
+      <!-- <#else product.longTime??> -->
+      -><b style='font-weight: normal;color:red'>product.productName</b>
+      <!-- <#if> -->
+    </td>
+    <td>
+      <!-- <#if product.longTime??> -->
+      -><b style='font-weight: normal;'>product.productName</b>
+      <!-- <#else product.longTime??> -->
+      -><b style='font-weight: normal;color:red'>product.productName</b>
+      <!-- <#if> -->
+    </td>
+  </tr>
+  <tr class="ui-submod-tr-grey" style="color: #565656;">
+    <td>被保人身份证号码</td>
+    <td>
+      <!-- <#if product.longTime??> -->
+      -><b style='font-weight: normal;'>product.productName</b>
+      <!-- <#else product.longTime??> -->
+      -><b style='font-weight: normal;color:red'>product.productName</b>
+      <!-- <#if> -->
+    </td>
+    <td>
+      <!-- <#if product.longTime??> -->
+      -><b style='font-weight: normal;'>product.productName</b>
+      <!-- <#else product.longTime??> -->
+      -><b style='font-weight: normal;color:red'>product.productName</b>
+      <!-- <#if> -->
+    </td>
+  </tr>
+  <tr class="ui-submod-tr-grey" style="color: #565656;">
+    <td>被保人联系电话</td>
+    <td>
+      <!-- <#if product.longTime??> -->
+      -><b style='font-weight: normal;'>product.productName</b>
+      <!-- <#else product.longTime??> -->
+      -><b style='font-weight: normal;color:red'>product.productName</b>
+      <!-- <#if> -->
+    </td>
+    <td>
+      <!-- <#if product.longTime??> -->
+      -><b style='font-weight: normal;'>product.productName</b>
+      <!-- <#else product.longTime??> -->
+      -><b style='font-weight: normal;color:red'>product.productName</b>
+      <!-- <#if> -->
+    </td>
+  </tr>
+
+</table>
+</li>
+
+</ul>
+
+</div>
+<div class="ui-info-main">
+ <h2 class="ui-info-tit">审核信息</h2>
+ <div class="list-item fn-clear" style="padding-left:70px">
+   <table id="dg-list" class="ebao-datagrid"  style="margin-right:10px;">	
+   </table>
+ </div>
+</div>
+<form id="infoForm" method="post" action="">
+  <div class="ui-info-main">
+    <h2 class="ui-info-tit">本次审核意见</h2>
+    <input type="hidden" name="auditId" value="${auditPo.auditId}" />
+    <div>
+      <ul class="ui-info-list">
+       <li class="ui-info-item ui-info-item-grey  ui-audit-rdo">
+         <input type="radio" name="auditSts" id='aa'  value="1" class="easyui-validatebox"  data-options="required:true,validType:{radio:['auditSts']}"/><label>审核通过</label>
+         <input type="radio" name="auditSts" value="-1"/><label>审核不通过</label>
+       </li>
+       <li class="ui-info-item ui-audit-txta fn-hide">
+         <textarea class="easyui-validatebox" placeholder="审核不通过理由"  name="auditComment"
+         data-options="required:true"  missingMessage="请输入审核不通过理由" id="reason"></textarea>
+       </li>
+     </ul>
+   </div>
+   <div class="ui-btn-double">
+
+     <input type="button" onclick="saveproduct()" value="提交" class="ui-btn-blue"/>
+
+     <input type="button" value="返回" class="ui-btn-grey" onclick="tomain()"/>
+   </div>
+ </div>
+</form>
+<div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true" style="width:360px;">
+  <h3 class="ui-dlg-tit">审核完成!</h3>
+  <input type="button" class="ui-dlgOk-btn ui-dlgOkcancel-btn" onclick="tomain()"  value="确定"/>
+</div>
+<div id="dlg1" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true" style="width:360px;">
+  <h3 class="ui-dlg-tit">提交失败</h3>
+  <input type="button" class="ui-dlgOk-btn ui-dlgOkcancel-btn" onclick="tomain1()"  value="确定"/>
+</div>
+<div id="dlgn" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true" style="width:360px;">
+  <h3 class="ui-dlg-tit">审核完成!</h3>
+  <input type="button" class="ui-dlgOk-btn ui-dlgOkcancel-btn" onclick="tomain()"  value="确定"/>
+</div>
+<script>
+ $(function(){
+  validExtend(); 
+  var titlen = $(".config-tit-four").length;
+  if(titlen>4){
+   var wd = (1+0.1*(titlen-4))*100;
+   $("#configBox").css('width',wd+'%');
+ }
+});
+
+ function saveproduct(){
+   if($('#infoForm').form('validate')){
+     $.ajax({
+       url:'${base}/aduit/aduitPrice',
+       type: 'post',
+       datatype: 'text',
+       data: $('#infoForm').serialize(),
+       success: function (data) {
+         if(data.succ){
+           if(data.entity==null){
+            showAlert("dlg");
+          }else{
+            showAlert("dlgn");
+          }
+
+        }else{
+          alert(data.entity);
+        }
+      }
+    });
+   }
+ }
+
+ <!-- 查询审核日志 -->
+ $("#dg-list").datagrid({
+   url:'datagrid_data1.json',
+   method:'post',
+   fitColumns:true,
+   rownumbers:true,
+  nowrap: true,//当数据长度超出列宽时将会自动截取
+  resizable:false,      
+  // checkOnSelect:false,
+  pagination:true,
+  pageSize:10,
+  idField:'agentId',
+  sortName:'maxPremium',
+  sortOrder:'desc',
+  columns:[[
+  {field:'aa',align:'center',width:'10%',title:'审核结果',
+  formatter:function(value,rec,index){
+    var rec2=rec.orderStatus;
+        // console.log(rec2)
+        if(rec2==2){
+          bb='待审核'
+        }else{
+          bb='审核不通过'
+        }
+        return '<a class="list-redact" style="color:#0000EE" href="javascript:;">'+bb+'</a>';
+
+      }
+    },
+    {field:'agentId',align:'center',width:"10%",title:'产品ID',},
+    {field:'agentBranchName',align:'center',width:"10%",title:'审核不通过原因',
+    formatter:function(value,rec,index){
+      var rec2=rec.orderStatus;
+    // console.log(rec2)
+    if(rec2==2){
+      bb='/';
+      return bb;
+    }else{
+      bb=rec.agentBranchName;
+      return '<a class="list-redact" style="color:red" href="javascript:;">'+bb+'</a>';
+    }
+    
+  }
+},
+{field:'businessName',align:'center',width:"10%",title:'审核员',
+formatter:function(value,rec,index){
+  var rec2=rec.orderStatus;
+  // console.log(rec2)
+  if(rec2==2){
+    bb='/'
+  }else{
+    bb=rec.businessName
+  }
+  return bb
+}
+},
+{field:'effTime',align:'center',width:"13%",title:'审核时间',sortable:true,
+formatter:function(value,rec,index){
+  var rec2=rec.orderStatus;
+  // console.log(rec2)
+  if(rec2==2){
+    bb='/'
+  }else{
+    bb=rec.orderAmount
+  }
+  return bb
+}
+},
+{field:'agentAreaProvinceName',align:'center',width:"10%",title:'操作员'},
+{field:'orderAccount',align:'center',width:"10%",title:'提交时间'}
+]],
+loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+            
+          },
+          onLoadSuccess:function(){
+            pageCls();
+            sortCell(['maxPremium','minPremium','effTime','expTime']);//排序要显示箭头的，以数组形式传
+          }
+
+        });
+pageAction2()
+$("#dg-list").datagrid('hideColumn', 'agentId');
+<!-- end-->
+
+//最后提交
+function saveproduct(){
+  if($('#infoForm').form('validate')){
+    $('#infoForm').form('submit',{
+      url:'',
+      success:function(){
+        if($("#aa").prop("checked")){
+         showAlert("dlg");
+       }else{
+         showAlert("dlgn");
+       }
+     },
+     error:function(){
+      showAlert("dlg1")
+    }
+
+
+  })
+  }
+
+
+
+}
+
+function tomain1(){
+  $('dlg1').dialog({
+    closed: true
+  });
+}
+
+function tomain(){
+  window.location.href="专题审核列表.html";
+}
+</script>
+</body>
+</html>

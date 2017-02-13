@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>修改产品定价-审核管理-系统管理</title>
+	<link rel="stylesheet" type="text/css" href="../../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../style/style.css">
+</head>
+<body>
+	<div class="ui-info-box">
+    <div class="ui-crumbs">
+    	 <span>当前位置：</span>
+    	 <a href="#">系统管理</a><em>></em>
+    	 <span>审核管理</span>
+    </div>
+    <form id="infoForm" method="post" action="product_add_insure.html">
+    <div class="ui-info-main">
+        <ul class="ui-info-list ui-subjectmod-list">
+          <li class="ui-info-item  no-topbor">
+            <label class="ui-info-lbl">操作内容</label>
+            <span>运营-修改产品定价请求</span>
+          </li>
+          <li class="ui-info-item">
+             <h2 class="ui-info-tit">修改详情</h2>
+          </li>
+          <li class="ui-info-item">
+             <h2 class="ui-info-subtit">产品信息</h2>
+          </li>
+         	<li class="ui-info-item ui-info-item-grey ">
+            <div class="ui-info-subitem">
+           		<label class="ui-info-lbl">产品ID</label>
+           		<span>123456789</span>
+            </div>
+            <div class="ui-info-subitem">
+              <label class="ui-info-lbl">保险名称</label>
+              <span>宝贝计划B</span>
+            </div>
+         	</li>
+          <li class="ui-info-item">
+            <div class="ui-info-subitem ui-vtop">
+              <label class="ui-info-lbl">产品总量</label>
+              <span>123456789</span>
+            </div>
+            <div class="ui-info-subitem">
+              <label class="ui-info-lbl">剩余数量</label>
+              <span class="ui-red-text">8000</span> 份
+            </div>
+          </li>
+          <li class="ui-info-item">
+             <h2 class="ui-info-subtit">定价记录</h2>
+          </li>
+         	<li class="ui-info-item ui-normal-lbl  ui-info-item-grey">
+         		<label class="ui-info-lbl">2015-7-1 00:00:00 至 2015-7-30 23:59:59</label>
+            <span>59%</span>
+            <span class="ui-red-text">定价记录按照定价开始时间倒序排列，至显示最新的5条记录</span>
+         	</li>
+          <li class="ui-info-item ui-normal-lbl">
+            <label class="ui-info-lbl">2015-6-1 00:00:00 至 2015-7-30 23:59:59</label>
+            <span>80%</span>
+          </li>
+           <li class="ui-info-item">
+             <h2 class="ui-info-subtit">定价信息</h2>
+          </li>
+         	<li class="ui-info-item ui-info-item-grey">
+         		<label class="ui-info-lbl">折扣度</label>
+            <span>80%</span>
+            <div class="mod-item">
+                <label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+                <span class="ui-org-text">70%</span>
+              </div>
+         	</li>
+          <li class="ui-info-item">
+            <div class="ui-info-subitem">
+              <label class="ui-info-lbl">开始时间</label>
+              <span>2015-04-20 20:20:00</span>
+              <div class="mod-item">
+                <label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+                <span class="ui-org-text">2015-04-20 20:20:00</span>
+              </div>
+            </div>
+            <div class="ui-info-subitem">
+              <label class="ui-info-lbl">结束时间</label>
+              <span>2015-04-20 20:20:00</span>
+              <div class="mod-item">
+                <label class="ui-info-lbl"><em class="ui-downorg-arr"></em></label>
+                <span class="ui-org-text">2015-04-20 20:20:00</span>
+              </div>
+            </div>
+          </li>
+        
+         	<li class="ui-info-item">
+             <h2 class="ui-info-tit">审核记录</h2>
+          </li>
+          <li class="ui-info-item ui-info-item-grey">
+            <div class="ui-info-subitem">
+              <label class="ui-info-lbl">提交时间</label>
+              <span>2015-04-20 20:20:00</span>
+            </div>
+            <div class="ui-info-subitem">
+              <label class="ui-info-lbl">操作员</label>
+              <span>方华</span>
+            </div>
+            <div class="ui-info-subitem">
+              <label class="ui-info-lbl">审核结果</label>
+              <span class="ui-red-text">审核不通过</span>
+            </div>
+          </li>
+          <li class="ui-info-item">
+            <div class="ui-info-subitem">
+              <label class="ui-info-lbl">审核时间</label>
+              <span>2015-04-20 20:20:00</span>
+            </div>
+            <div class="ui-info-subitem">
+              <label class="ui-info-lbl">审核员</label>
+              <span>方华</span>
+            </div>
+          </li>
+         	<li class="ui-info-item ui-info-item-grey">
+         		<label class="ui-info-lbl">审核不通过理由</label>
+         		<span>方华不知道</span>
+         	</li>
+          <li class="ui-info-item">
+             <h2 class="ui-info-tit">审核意见</h2>
+          </li>
+         
+         	<li class="ui-info-item ui-info-item-grey  ui-audit-rdo">
+         		  <input type="radio" name="audit" value="1"/><label>审核通过</label>
+              <input type="radio" name="audit" value="2"/><label>审核不通过</label>
+         	</li>
+          <li class="ui-info-item ui-audit-txta fn-hide">
+              <textarea class="easyui-validatebox" placeholder="审核不通过理由" 
+                    data-options="required:true,validType:['money']"  missingMessage="请输入审核不通过理由"></textarea>
+          </li>
+        </ul>
+  	</div>
+    <div class="ui-btn-double">
+      <input type="button" value="提交" class="ui-btn-blue ui-submit"/>
+      <input type="button" value="返回"  class="ui-btn-grey ui-back"/>
+    </div>
+   </form>
+
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../js/kindeditor/kindeditor.js"></script>
+	<script type="text/javascript" src="../../js/base.js"></script>
+	<script>
+   $(function(){
+    validExtend();
+    
+	});
+   
+  
+	</script>
+</body>
+</html>

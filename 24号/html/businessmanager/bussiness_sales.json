@@ -1,0 +1,30 @@
+﻿{   "succ":true,
+    "total": 50,
+    "pageSize": 5,
+    "pageCount": 2,
+    "currentPage": 1,
+    "records": [
+        {
+			"agentAreaCity":"E保APP",
+			"agentAreaCityName":"10,000"
+				
+        },
+		{
+			"agentAreaCity":"京东",
+			"agentAreaCityName":"10,000"
+				
+        },{
+			"agentAreaCity":"美团",
+			"agentAreaCityName":"10,000"
+				
+        },{
+			"agentAreaCity":"淘宝",
+			"agentAreaCityName":"10,000"
+				
+        },{
+			"agentAreaCity":"总计",
+			"agentAreaCityName":"10,000"
+				
+        } 
+    ]
+}

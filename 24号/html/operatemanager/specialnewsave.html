@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>新增编辑保存</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+</head>
+<body>
+	<div class="ui-info-box">
+        <div class="ui-crumbs">
+        	 <span>当前位置：</span><a href="#">运营管理</a><em>></em><span>专题管理</span>
+        </div>
+        <div class="ui-info-main">
+            <div class="ui-informate">
+             	<div class="ui-informate-base ui-channel-baseinfor">
+                    <h4 class="ui-info-tit">新增专题</h4>
+                    <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-base-label ui-special-label">专题名称:</label>
+                        <span class="ui-base-data">宝贝计划B</span>
+                    </div>
+                    <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-base-label ui-special-label">专题说明:</label>
+                        <span class="ui-base-data">E保精选10款宝贝成长计划</span>
+                    </div>
+                     <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-base-label ui-special-label">专题图片:</label>
+                       <span class="ui-base-data">
+                           <img src="" alt="" width="200" height="100">
+                       </span>
+                       
+                    </div>
+                    <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-special-tabletit">关联产品:</label>
+                        <div class="list-item fn-clear">
+                            <table id="dg-list" class="easyui-datagrid"  style="margin-right:10px;">    
+                            </table>
+                        </div>
+                    </div>
+                    <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-special-tabletit">A计划保险你值得拥有</label>
+                        <div class="list-item fn-clear">
+                            <table id="dg-list2" class="easyui-datagrid"  style="margin-right:10px;">    
+                            </table>
+                        </div>
+                    </div>
+                     <div class="ui-base-colsinfor ui-base-colwidth-business">
+                         <label class="ui-special-tabletit">给宝贝一份爱</label>
+                     </div>
+                    <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-base-label ui-special-label">开始时间:</label>
+                        <span class="ui-base-data">2015-04-20 20:00:01</span>
+                    </div>
+
+                    <div class="ui-base-colsinfor ui-base-colwidth-business">
+                        <label class="ui-base-label ui-special-label">结束时间:</label>
+                        <span class="ui-base-data">2015-04-20 20:00:01</span>
+                    </div>   
+                    <div class="ui-btn-double ui-channel-inforspan">
+                        <input type="button" value="完成并提交审核" class="ui-btn-blue ui-submit ui-detail-bntwidth" onclick="showAlert('dlg')"/>
+                        <input type="button" value="返回修改"  class="ui-btn-grey ui-back ui-detail-bntwidth"/>
+                    </div>
+                </div>	
+         	</div>
+    	</div>
+        <!--确认审核start-->
+        <div id="dlg" class="easyui-dialog ui-dlg-alert"  data-options="iconCls:'icon-save',modal:true,closed: true">
+           <h3 class="ui-dlg-tit">您新增的专题已提交审核！</h3>
+           <input type="button" class="ui-dlgOk-btn" value="去查看审核情况"/>
+        </div>
+        <!--确认审核start-->
+	</div>
+
+	<script>
+    $(function(){
+        validExtend();
+        //列表
+        $("#dg-list").datagrid({
+            url:'operate_special.json',
+            method:'post',
+            fitColumns:true,
+            rownumbers:true,
+            nowrap: true,//当数据长度超出列宽时将会自动截取
+            resizable:false,
+            checkOnSelect:false,
+            columns:[[
+                {field:'agentAreaCity',align:'center',width:"12%",title:'产品ID'},
+                {field:'agentAreaCityName',align:'center',width:"22%",title:'保险名称'},
+                {field:'truename',align:'center',width:"16%",title:'保险公司'},
+                {field:'agentAreaCounty',align:'center',width:"12%",title:'产品总量'},
+                {field:'agentId',align:'center',width:"12%",title:'保费金额(元)'},
+                {field:'agentProduceName',align:'center',width:"12%",title:'保险类别'},
+                {field:'agentProduceCount',align:'center',width:"12%",title:'来源'}
+            ]],
+            queryParams: eb.form2Json("search-ff"),
+            loadFilter:function(data){
+                 return eb.loadFilter(data);//自定义过滤方法
+            },
+            onLoadSuccess:pageCls
+        });
+
+        $("#dg-list2").datagrid({
+            url:'operate_special.json',
+            method:'post',
+            fitColumns:true,
+            rownumbers:true,
+            nowrap: true,//当数据长度超出列宽时将会自动截取
+            resizable:false,
+            checkOnSelect:false,
+            columns:[[
+                {field:'agentAreaCity',align:'center',width:"12%",title:'产品ID'},
+                {field:'agentAreaCityName',align:'center',width:"22%",title:'保险名称'},
+                {field:'truename',align:'center',width:"16%",title:'保险公司'},
+                {field:'agentAreaCounty',align:'center',width:"12%",title:'产品总量'},
+                {field:'agentId',align:'center',width:"12%",title:'保费金额(元)'},
+                {field:'agentProduceName',align:'center',width:"12%",title:'保险类别'},
+                {field:'agentProduceCount',align:'center',width:"12%",title:'来源'}
+            ]],
+            queryParams: eb.form2Json("search-ff"),
+            loadFilter:function(data){
+                 return eb.loadFilter(data);//自定义过滤方法
+            },
+            onLoadSuccess:pageCls
+        });
+    
+
+        
+   });
+    
+    
+    </script>
+</body>
+</html>

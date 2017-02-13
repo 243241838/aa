@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>投保条款</title>
+	<link rel="stylesheet" type="text/css" href="../style/base.css">
+	<link rel="stylesheet" type="text/css" href="../style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../style/style.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/kindeditor/kindeditor.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+</head>
+<body>
+	<div class="ui-info-box">
+    <div class="ui-crumbs">
+    	 <span>当前位置：</span><a href="#">内容管理</a><em>></em><span>投保条款</span>
+    </div>
+    <div class="ui-info-main">
+         <div class="ui-informate">
+            <div class="clause-editor">
+            <form action="">
+                <h4  class="ui-info-lbl">投保条款</h4>
+                <div class="clause-cap">
+                    <label class="ui-info-lbl clause-editor-label">投保条款标题：</label>
+                    <span class="ui-client-content-label clause-editor-span">承包指南</span>
+                </div>
+                <div class="clause-edtor">
+                    <label class="ui-info-lbl clause-editor-label">投保条款内容：</label>
+                    <span > <textarea class="ui-client-content-label" readonly="true" cols="100" rows="20" >速度返回来大神进来看大家死过来看电视剧</textarea></span>
+                </div>
+                <div class="ui-btn-double">
+                      <input type="button" value="编辑" class="ui-btn-blue ui-submit"/>
+          
+                </div>
+            </form>
+        </div>
+    	</div>
+    	
+	</div>
+
+	<script>
+	$(function(){
+
+        var editor;
+        KindEditor.ready(function(K) {
+            editor = K.create('#clause-textarea',{
+                width : 670 
+            })
+                
+        });
+    });	
+	</script>
+</body>
+</html>

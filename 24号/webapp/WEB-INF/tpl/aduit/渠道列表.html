@@ -1,0 +1,163 @@
+
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>系统管理-审核管理-审核员管理</title>
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/base.css">
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../resource/style/style.css">
+	<script type="text/javascript" src="../../../resource/js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../resource/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../resource/js/base.js"></script>
+	
+	
+</head>
+
+<body style="">
+	<div class="ui-info-box">
+		<div class="ui-crumbs" id="crumbs">
+			<#include "/common/include/power.ftl">
+		</div>
+		<div class="ui-datagrid-wrap">
+			<!-- 搜索 -->
+			<div class="search-wrap">
+				<form  id="search-ff" class="ui-search-form">
+					<ul class="search-list fn-clear" style="">
+						<li>
+							<label class="name" style="width:70px;margin-left:-20px">渠道ID</label>
+							<span class="textbox"><input class="textbox-text textbox-prompt intOnly" type="text" name="productId" maxlength=9/>
+							</span>
+						</li>
+						<li>
+							<label class="name">渠道名称</label>
+							<span class="textbox"><input class="textbox-text textbox-prompt" type="text" name="productName" value="" maxlength=40/></span>
+						</li>
+						<li>
+							<label class="name"  style="margin-right:5px;">渠道类型</label>
+							<select class="ui-combobox" name="itemType" id="itemType">
+								<option value="">全部</option>
+								<option value="11">自有渠道</option>
+								<option value="12">其他</option>
+								<option value="13">。。。</option>
+							</select>
+						</li>
+						<li>
+							<label class="name"  style="margin-right:5px;">渠道状态</label>
+							<select class="ui-combobox" name="auditSts" id="auditSts">
+								<option value="">全部</option>
+								<option value="0" selected ="selected">有效</option>
+								<option value="-1">无效</option>
+							</select>
+						</li>
+						<li class="date">
+							<label class="name ui-change-item-label" style="margin-right:5px;">渠道合作时间：</label>
+							<input id="startTime" name="effTimestr" class="easyui-datebox" data-options="editable:false" vlaue="" validType="md['#endTime']">
+							<em class="ui-channel-titcolor">至</em>
+							<input id="endTime" name="expTimestr" class="easyui-datebox" data-options="editable:false" vlaue="" validType="md['#startTime']">
+						</li>
+						<li class="btn-group" style="margin-left: 5px;">
+							<a href="javascript:void(0)" class="search-btn" onclick="submitForm()">搜索</a>
+							<a href="javascript:void(0)" class="search-btn" onclick="clearForm()">重置</a>
+						</li>
+					</ul>
+				</form>
+				<a href="javascript:;" class="dash-add-btn"><i class="ui-icon ui-icon-add"></i>新增</a>
+			</div>
+			<!-- 搜索end -->
+			<!-- 列表 -->
+			<div class="list-item list-noadd fn-clear">
+				
+				<table id="dg-list" class="ebao-datagrid"  style="margin-right:10px;">	
+				</table>
+			</div>
+			<!-- 列表end -->
+		</div>
+	</div>
+	
+	<script>
+		$(function(){
+			validExtend();
+		//列表
+		$("#dg-list").datagrid({
+			url:'datagrid_data1.json',
+			method:'post',
+			fitColumns:true,
+			rownumbers:true,
+			nowrap: true,//当数据长度超出列宽时将会自动截取
+			resizable:false,
+			checkOnSelect:false,
+			pagination:true,
+			  singleSelect: true,//只能选择一行
+			  pageSize:10,
+			  idField:'agentId',
+			  sortName:'maxPremium',
+			  sortOrder:'desc',
+			  columns:[[
+			  {field:'aa',align:'center',width:'14%',title:'操作',
+			  formatter:function(value,rec,index){
+			  	var rec1=rec.agentId;
+			  	var url='';
+			  	var rec2=rec.orderStatus;
+			  	return '<a class="list-copy" href="'+url+'?productId='+rec1+'" onclick="">编辑</a>&nbsp;&nbsp;&nbsp;'+'<a class="list-copy" href="javascript:;" onclick="job_admit($(this).parent().parent().parent())">分配产品</a>&nbsp;&nbsp;&nbsp;' +
+			  	'<a class="list-redact" style="color:#0000EE" href="javascript:;" onclick="job_remove($(this).parent().parent().parent())">终止合作</a>'
+
+			  }
+			},
+			{field:'agentId',align:'center',width:'9%',title:'渠道ID',},
+			{field:'businessName',align:'center',width:"10%",title:'渠道名称',
+			formatter: function (value, rec) {
+				var rec1=rec.agentId;
+				var rec2=rec.businessName;
+				var url='';
+				return '<a class="list-copy" href="'+url+'?productId='+rec1+'" onclick="">'+rec2+'</a>';
+				
+			}
+		},
+		{field:'agentBranchName',align:'center',width:"7%",title:'渠道类型',},
+		{field:'agentBranchName',align:'center',width:"10%",title:'佣金比例',},
+		{field:'agentBranchName',align:'center',width:"10%",title:'合作产品数',},
+		{field:'agentBranchName',align:'center',width:"10%",title:'联系人',},
+		{field:'agentBranchName',align:'center',width:"10%",title:'联系电话',},
+		{field:'effTime',align:'center',width:"10%",title:'合作开始时间',sortable:true,
+		formatter:function(value,rec){
+			return formatTimestamp(rec.effTime);
+		}
+	},
+	{field:'effTime',align:'center',width:"10%",title:'合作结束时间',sortable:true,
+		formatter:function(value,rec){
+			return formatTimestamp(rec.effTime);
+		}
+	},
+	{field:'orderStatus',align:'center',width:"5%",title:'状态',sortable:true,
+		formatter:function(value,rec){
+			var rec1=rec.orderStatus;
+			if(rec1==2){
+				return '有效'
+			}else{
+				return '无效'
+			}
+		}
+	}
+
+
+	]],
+
+
+	queryParams: eb.form2Json("search-ff"),
+	loadFilter:function(data){
+            return eb.loadFilter(data);    //自定义过滤方法
+        },
+        onLoadSuccess:function(){
+        	pageCls();
+      			sortCell(['maxPremium','minPremium','effTime','expTime']);//排序要显示箭头的，以数组形式传
+      		}
+      	});
+		//分页
+		pageAction();
+		
+	});
+
+</script>
+</body>
+</html>

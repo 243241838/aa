@@ -1,0 +1,18 @@
+﻿{
+	"RESPONSECODE": "000000",
+	"RESPONSECONTENT": "操作成功!",
+	"COUNTS": "6",
+	"TRADETAILS": [{
+        "CATEGORYID": "1006",
+		"name": "服务指南类",
+		"path": "contentmanager/serviceguide.html"
+    },{
+        "CATEGORYID": "1007",
+		"name": "客户业务类",
+		"path": "contentmanager/clinetcontent.html"
+    },{
+        "CATEGORYID": "1007",
+		"name": "投保条款",
+		"path": "contentmanager/clausecontent.html"
+    }]
+}
